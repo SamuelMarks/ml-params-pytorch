@@ -1,23 +1,24 @@
 import torch
-import torch.nn.functional as F
 
 
-def train(model, device, train_loader, optimizer, epoch, log_interval):
+def train(model, device, train_loader, optimizer, epoch, metric_emit_freq, loss_func):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
         data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
         output = model(data)
-        loss = F.nll_loss(output, target)
+        loss = loss_func(output, target)
         loss.backward()
         optimizer.step()
-        if batch_idx % log_interval == 0:
-            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+        if metric_emit_freq(batch_idx):
+            print('Train Epoch: {} [{}/{} ({:.0f}%)]\t'
+                  'Loss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
-                       100. * batch_idx / len(train_loader), loss.item()))
+                       100. * batch_idx / len(train_loader), loss.item()
+            ))
 
 
-def test(model, device, test_loader):
+def test(model, device, test_loader, loss_func):
     model.eval()
     test_loss = 0
     correct = 0
@@ -25,7 +26,7 @@ def test(model, device, test_loader):
         for data, target in test_loader:
             data, target = data.to(device), target.to(device)
             output = model(data)
-            test_loss += F.nll_loss(output, target, reduction='sum').item()  # sum up batch loss
+            test_loss += loss_func(output, target, reduction='sum').item()  # sum up batch loss
             pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
             correct += pred.eq(target.view_as(pred)).sum().item()
 

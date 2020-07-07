@@ -3,8 +3,11 @@ from shutil import rmtree
 from tempfile import mkdtemp
 from unittest import TestCase, main as unittest_main
 
+import torch.nn.functional as F
+from torch import optim
+
 from ml_params_pytorch.example_model import Net
-from ml_params_pytorch.ml_params_impl import TensorFlowTrainer
+from ml_params_pytorch.ml_params_impl import PyTorchTrainer
 
 
 class TestMnist(TestCase):
@@ -23,14 +26,22 @@ class TestMnist(TestCase):
 
     def test_mnist(self) -> None:
         num_classes = 10
-        trainer = TensorFlowTrainer(Net)
-        trainer.load_data('mnist', data_loader_kwargs={
-            'pytorch_datasets_dir': TestMnist.pytorch_datasets_dir,
-            'data_loader_kwargs': {'num_classes': num_classes}
-        })
-
         epochs = 3
-        trainer.train(epochs=epochs, model_dir=TestMnist.model_dir)
+
+        trainer = PyTorchTrainer()
+        trainer.load_data(
+            'MNIST',
+            datasets_dir=TestMnist.pytorch_datasets_dir,
+            num_classes=num_classes
+        )
+        trainer.load_model(Net, call=True)
+        trainer.train(epochs=epochs, model_dir=TestMnist.model_dir,
+                      optimizer=optim.Adadelta,
+                      loss=F.nll_loss,
+                      metrics=None,
+                      callbacks=None,
+                      save_directory=None,
+                      metric_emit_freq=lambda batch_idx: batch_idx % 10 == 0)
 
 
 if __name__ == '__main__':
