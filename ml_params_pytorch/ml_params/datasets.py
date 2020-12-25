@@ -1,7 +1,14 @@
+from importlib import import_module
+from pkgutil import find_loader
+
 from ml_params.datasets import load_data_from_ml_prepare
-from ml_prepare.datasets import datasets2classes
 from torchvision import datasets, transforms
 
+datasets2classes = (
+    {}
+    if find_loader("ml_prepare") is None
+    else getattr(import_module("ml_prepare.datasets"), "datasets2classes")
+)
 
 def load_data_from_torchvision_or_ml_prepare(
     dataset_name, datasets_dir=None, K=None, as_numpy=True, **data_loader_kwargs
