@@ -1,36 +1,50 @@
 # -*- coding: utf-8 -*-
 
+"""
+setup.py implementation, interesting because it parsed the first __init__.py and
+    extracts the `__author__` and `__version__`
+"""
+
 from ast import parse
 from distutils.sysconfig import get_python_lib
 from functools import partial
 from os import listdir, path
-from platform import python_version_tuple
 
 from setuptools import find_packages, setup
 
-if python_version_tuple()[0] == "3":
-    imap = map
-    ifilter = filter
-else:
-    from itertools import ifilter, imap
+package_name = "ml_params_pytorch"
 
-if __name__ == "__main__":
-    package_name = "ml_params_pytorch"
 
-    with open(path.join(package_name, "__init__.py")) as f:
-        __author__, __version__ = imap(
-            lambda buf: next(imap(lambda e: e.value.s, parse(buf).body)),
-            ifilter(
+def to_funcs(*paths):
+    """
+    Produce function tuples that produce the local and install dir, respectively.
+
+    :param paths: one or more str, referring to relative folder names
+    :type paths: ```*paths```
+
+    :return: 2 functions
+    :rtype: ```Tuple[Callable[Optional[List[str]], str], Callable[Optional[List[str]], str]]```
+    """
+    return (
+        partial(path.join, path.dirname(__file__), package_name, *paths),
+        partial(path.join, get_python_lib(prefix=""), package_name, *paths),
+    )
+
+
+def main():
+    """ Main function for setup.py; this actually does the installation """
+    with open(
+        path.join(path.abspath(path.dirname(__file__)), package_name, "__init__.py")
+    ) as f:
+        __author__, __version__ = map(
+            lambda buf: next(map(lambda e: e.value.s, parse(buf).body)),
+            filter(
                 lambda line: line.startswith("__version__")
                 or line.startswith("__author__"),
                 f,
             ),
         )
 
-    to_funcs = lambda *paths: (
-        partial(path.join, path.dirname(__file__), package_name, *paths),
-        partial(path.join, get_python_lib(prefix=""), package_name, *paths),
-    )
     _data_join, _data_install_dir = to_funcs("_data")
 
     setup(
@@ -41,7 +55,30 @@ if __name__ == "__main__":
         test_suite=package_name + ".tests",
         packages=find_packages(),
         package_dir={package_name: package_name},
+        classifiers=[
+            "Development Status :: 3 - Alpha",
+            "Environment :: Console",
+            "Intended Audience :: Developers",
+            "License :: OSI Approved",
+            "License :: OSI Approved :: Apache Software License",
+            "License :: OSI Approved :: MIT License",
+            "Natural Language :: English",
+            "Operating System :: OS Independent",
+            "Programming Language :: Python :: 3 :: Only",
+            "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: Implementation",
+            "Topic :: Software Development",
+        ],
         data_files=[
-            (_data_install_dir(), list(imap(_data_join, listdir(_data_join()))))
+            (_data_install_dir(), list(map(_data_join, listdir(_data_join()))))
         ],
     )
+
+
+def setup_py_main():
+    """ Calls main if `__name__ == '__main__'` """
+    if __name__ == "__main__":
+        main()
+
+
+setup_py_main()

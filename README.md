@@ -22,15 +22,76 @@ After installing as above, follow usage from https://github.com/SamuelMarks/ml-p
 
 ## Sibling projects
 
-  - https://github.com/SamuelMarks/ml-params-jax
-  - https://github.com/SamuelMarks/ml-params-trax
-  - https://github.com/SamuelMarks/ml-params-flax
-  - https://github.com/SamuelMarks/ml-params-keras
-  - https://github.com/SamuelMarks/ml-params-tensorflow
+| Google | Other vendors |
+| -------| ------------- |
+| [tensorflow](https://github.com/SamuelMarks/ml-params-tensorflow)  | [_pytorch_](https://github.com/SamuelMarks/ml-params-pytorch) |
+| [keras](https://github.com/SamuelMarks/ml-params-keras)  | [skorch](https://github.com/SamuelMarks/ml-params-skorch) |
+| [flax](https://github.com/SamuelMarks/ml-params-flax) | [sklearn](https://github.com/SamuelMarks/ml-params-sklearn) |
+| [trax](https://github.com/SamuelMarks/ml-params-trax) | [xgboost](https://github.com/SamuelMarks/ml-params-xgboost) |
+| [jax](https://github.com/SamuelMarks/ml-params-jax) | [cntk](https://github.com/SamuelMarks/ml-params-cntk) |
 
-## Related projects
+## Related official projects
 
-  - https://github.com/SamuelMarks/ml-prepare
+  - [ml-prepare](https://github.com/SamuelMarks/ml-prepare)
+
+---
+
+
+## Development guide
+
+To make the development of _ml-params-tensorflow_ type safer and maintain consistency with the other ml-params implementing projects, the [doctrans](https://github.com/SamuelMarks/doctrans) was created.
+
+When TensorFlow itself changes—i.e., a new major version of TensorFlow is releases—then run the `sync_properties`, as shown in the module-level docstring here [`ml_params_pytorch/ml_params/type_generators.py`](ml_params_pytorch/ml_params/type_generators.py);
+
+To synchronise all the various other APIs, edit one and it'll translate to the others, but make sure you select which one is the gold-standard.
+
+As an example, using the `class TensorFlowTrainer` methods as truth, this will update the CLI parsers and config classes:
+
+    python -m doctrans sync --class 'ml_params_pytorch/ml_params/config.py' \
+                            --class-name 'TrainConfig' \
+                            --function 'ml_params_pytorch/ml_params/trainer.py' \
+                            --function-name 'TensorFlowTrainer.train' \
+                            --argparse-function 'ml_params_pytorch/ml_params/cli.py' \
+                            --argparse-function-name 'train_parser' \
+                            --truth 'function'
+
+    python -m doctrans sync --class 'ml_params_pytorch/ml_params/config.py' \
+                            --class-name 'LoadDataConfig' \
+                            --function 'ml_params_pytorch/ml_params/trainer.py' \
+                            --function-name 'TensorFlowTrainer.load_data' \
+                            --argparse-function 'ml_params_pytorch/ml_params/cli.py' \
+                            --argparse-function-name 'load_data_parser' \
+                            --truth 'function'
+
+    python -m doctrans sync --class 'ml_params_pytorch/ml_params/config.py' \
+                            --class-name 'LoadModelConfig' \
+                            --function 'ml_params_pytorch/ml_params/trainer.py' \
+                            --function-name 'TensorFlowTrainer.load_model' \
+                            --argparse-function 'ml_params_pytorch/ml_params/cli.py' \
+                            --argparse-function-name 'load_model_parser' \
+                            --truth 'function'
+
+Another example, that you'd run before ^, to generate custom config CLI parsers for members of `tf.keras.losses`:
+
+    $ python -m doctrans gen --name-tpl '{name}Config' \
+                             --input-mapping 'ml_params_pytorch.ml_params.type_generators.exposed_losses' \
+                             --prepend '""" Generated Loss config classes """\nimport tensorflow as tf\n' \
+                             --imports-from-file 'tf.keras.losses.Loss' \
+                             --type 'argparse' \
+                             --output-filename 'ml_params_pytorch/ml_params/losses.py'
+
+There's a bit of boilerplate here, so let's automate it:
+
+    $ for name in 'activation' 'losses' 'optimizer_lr' 'optimizers'; do
+        rm 'ml_params_pytorch/ml_params/'"$name"'.py';        
+        python -m ml_params_tensorflow.ml_params.doctrans_cli_gen "$name" | xargs python -m doctrans gen;
+      done
+
+Cleanup the code everywhere, removing unused imports and autolinting/autoformatting:
+
+    $ fd -epy -x autoflake --remove-all-unused-imports -i {} \;
+    $ isort --atomic .
+    $ python -m black .
 
 ---
 

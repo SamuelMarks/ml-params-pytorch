@@ -1,19 +1,19 @@
 from os import path
 from shutil import rmtree
 from tempfile import mkdtemp
+from typing import Optional
 from unittest import TestCase
 from unittest import main as unittest_main
 
 import torch.nn.functional as F
-from torch import optim
 
-from ml_params_pytorch.example_model import Net
-from ml_params_pytorch.ml_params_impl import PyTorchTrainer
+from ml_params_pytorch.ml_params.trainer import TorchTrainer
+from ml_params_pytorch.tests.example_model import Net
 
 
 class TestMnist(TestCase):
-    pytorch_datasets_dir = None  # type: str or None
-    model_dir = None  # type: str or None
+    pytorch_datasets_dir: Optional[str] = None
+    model_dir: Optional[str] = None
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -31,21 +31,19 @@ class TestMnist(TestCase):
         num_classes = 10
         epochs = 3
 
-        trainer = PyTorchTrainer()
+        trainer = TorchTrainer()
         trainer.load_data(
             "MNIST",
             datasets_dir=TestMnist.pytorch_datasets_dir,
             num_classes=num_classes,
         )
-        trainer.load_model(Net, call=True)
+        trainer.load_model(model=Net, call=True)
         trainer.train(
             epochs=epochs,
             model_dir=TestMnist.model_dir,
-            optimizer=optim.Adadelta,
+            optimizer="Adadelta",
             loss=F.nll_loss,
-            metrics=None,
-            callbacks=None,
-            save_directory=None,
+            save_directory="/tmp",
             metric_emit_freq=lambda batch_idx: batch_idx % 10 == 0,
         )
 
