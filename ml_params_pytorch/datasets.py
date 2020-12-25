@@ -1,10 +1,11 @@
 from ml_params.datasets import load_data_from_ml_prepare
 from ml_prepare.datasets import datasets2classes
-from torchvision import transforms, datasets
+from torchvision import datasets, transforms
 
 
-def load_data_from_torchvision_or_ml_prepare(dataset_name, datasets_dir=None,
-                                             K=None, as_numpy=True, **data_loader_kwargs):
+def load_data_from_torchvision_or_ml_prepare(
+    dataset_name, datasets_dir=None, K=None, as_numpy=True, **data_loader_kwargs
+):
     """
     Acquire from the official torchvision model zoo, or the ophthalmology focussed ml-prepare library
 
@@ -15,7 +16,7 @@ def load_data_from_torchvision_or_ml_prepare(dataset_name, datasets_dir=None,
     :type datasets_dir: ```None or str```
 
     :param K: backend engine, e.g., `np` or `tf`
-    :type K: ```None or np or tf or Any```
+    :type K: ```Literal['np', 'tf']```
 
     :param as_numpy: Convert to numpy ndarrays
     :type as_numpy: ```bool```
@@ -27,24 +28,26 @@ def load_data_from_torchvision_or_ml_prepare(dataset_name, datasets_dir=None,
     :rtype: ```Tuple[np.ndarray, np.ndarray]```
     """
     if dataset_name in datasets2classes:
-        return load_data_from_ml_prepare(dataset_name=dataset_name,
-                                         tfds_dir=datasets_dir,
-                                         as_numpy=as_numpy,
-                                         **data_loader_kwargs)
+        return load_data_from_ml_prepare(
+            dataset_name=dataset_name,
+            tfds_dir=datasets_dir,
+            as_numpy=as_numpy,
+            **data_loader_kwargs
+        )
 
-    data_loader_kwargs.update({
-        'dataset_name': dataset_name,
-        'datasets_dir': datasets_dir,
-
-    })
-    if 'scale' not in data_loader_kwargs:
-        data_loader_kwargs['scale'] = 255
-    transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.1307,), (0.3081,))
-    ])
+    data_loader_kwargs.update(
+        {
+            "dataset_name": dataset_name,
+            "datasets_dir": datasets_dir,
+        }
+    )
+    if "scale" not in data_loader_kwargs:
+        data_loader_kwargs["scale"] = 255
+    transform = transforms.Compose(
+        [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
+    )
     dataset = getattr(datasets, dataset_name)
-    return (dataset(datasets_dir, train=True, download=True,
-                    transform=transform),
-            dataset(datasets_dir, train=False,
-                    transform=transform))
+    return (
+        dataset(datasets_dir, train=True, download=True, transform=transform),
+        dataset(datasets_dir, train=False, transform=transform),
+    )

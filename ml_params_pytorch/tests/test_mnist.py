@@ -1,7 +1,8 @@
 from os import path
 from shutil import rmtree
 from tempfile import mkdtemp
-from unittest import TestCase, main as unittest_main
+from unittest import TestCase
+from unittest import main as unittest_main
 
 import torch.nn.functional as F
 from torch import optim
@@ -16,8 +17,10 @@ class TestMnist(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        TestMnist.pytorch_datasets_dir = path.join(path.expanduser('~'), 'pytorch_datasets')
-        TestMnist.model_dir = mkdtemp('_model_dir')
+        TestMnist.pytorch_datasets_dir = path.join(
+            path.expanduser("~"), "pytorch_datasets"
+        )
+        TestMnist.model_dir = mkdtemp("_model_dir")
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -30,19 +33,22 @@ class TestMnist(TestCase):
 
         trainer = PyTorchTrainer()
         trainer.load_data(
-            'MNIST',
+            "MNIST",
             datasets_dir=TestMnist.pytorch_datasets_dir,
-            num_classes=num_classes
+            num_classes=num_classes,
         )
         trainer.load_model(Net, call=True)
-        trainer.train(epochs=epochs, model_dir=TestMnist.model_dir,
-                      optimizer=optim.Adadelta,
-                      loss=F.nll_loss,
-                      metrics=None,
-                      callbacks=None,
-                      save_directory=None,
-                      metric_emit_freq=lambda batch_idx: batch_idx % 10 == 0)
+        trainer.train(
+            epochs=epochs,
+            model_dir=TestMnist.model_dir,
+            optimizer=optim.Adadelta,
+            loss=F.nll_loss,
+            metrics=None,
+            callbacks=None,
+            save_directory=None,
+            metric_emit_freq=lambda batch_idx: batch_idx % 10 == 0,
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest_main()

@@ -13,10 +13,16 @@ from torch.optim.lr_scheduler import StepLR
 
 from ml_params_pytorch import get_logger
 from ml_params_pytorch.datasets import load_data_from_torchvision_or_ml_prepare
-from ml_params_pytorch.utils import train, test
+from ml_params_pytorch.utils import test, train
 
-logger = get_logger('.'.join((path.basename(path.dirname(__file__)),
-                              path.basename(__file__).rpartition('.')[0])))
+logger = get_logger(
+    ".".join(
+        (
+            path.basename(path.dirname(__file__)),
+            path.basename(__file__).rpartition(".")[0],
+        )
+    )
+)
 
 
 class PyTorchTrainer(BaseTrainer):
@@ -25,9 +31,15 @@ class PyTorchTrainer(BaseTrainer):
     data = None  # type: (None or Tuple[np.ndarry, np.ndarray] )
     model = None  # contains the model, e.g., a `tl.Serial`
 
-    def load_data(self, dataset_name, data_loader=load_data_from_torchvision_or_ml_prepare,
-                  data_type='infer', output_type='numpy', K=None,
-                  **data_loader_kwargs):
+    def load_data(
+        self,
+        dataset_name,
+        data_loader=load_data_from_torchvision_or_ml_prepare,
+        data_type="infer",
+        output_type="numpy",
+        K=None,
+        **data_loader_kwargs
+    ):
         """
         Load the data for your ML pipeline. Will be fed into `train`.
 
@@ -36,52 +48,69 @@ class PyTorchTrainer(BaseTrainer):
 
         :param data_loader: function that returns the expected data type.
          Defaults to TensorFlow Datasets and ml_prepare combined one.
-        :type data_loader: ```None or (*args, **kwargs) -> tf.data.Datasets or Any```
+        :type data_loader: ```Callable[[...], Union[Tuple[tf.data.Dataset, tf.data.Dataset],
+         Tuple[np.ndarray, np.ndarray], Tuple[Any, Any]]```
 
         :param data_loader_kwargs: pass this as arguments to data_loader function
         :type data_loader_kwargs: ```**data_loader_kwargs```
 
-        :param data_type: incoming data type, defaults to 'infer'
+        :param data_type: incoming data type
         :type data_type: ```str```
 
         :param output_type: outgoing data_type, defaults to no conversion
-        :type output_type: ```None or 'numpy'```
+        :type output_type: ```Optional[Literal['numpy']]```
 
         :param K: backend engine, e.g., `np` or `tf`
-        :type K: ```None or np or tf or Any```
+        :type K: ```Literal['np', 'tf']```
 
         :return: Dataset splits (by default, your train and test)
         :rtype: ```Tuple[np.ndarray, np.ndarray]```
         """
-        self.data = super(PyTorchTrainer, self).load_data(dataset_name=dataset_name,
-                                                          data_loader=data_loader,
-                                                          data_type=data_type,
-                                                          output_type=output_type,
-                                                          K=K,
-                                                          **data_loader_kwargs)
+        self.data = super(PyTorchTrainer, self).load_data(
+            dataset_name=dataset_name,
+            data_loader=data_loader,
+            data_type=data_type,
+            output_type=output_type,
+            K=K,
+            **data_loader_kwargs
+        )
 
-    def train(self, callbacks, epochs, loss, metrics, metric_emit_freq, optimizer,
-              save_directory, output_type='infer', writer=stdout,
-              batch_size=64, test_batch_size=1000, lr=1.0,
-              gamma=0.7, no_cuda=True, seed=1,
-              *args, **kwargs):
+    def train(
+        self,
+        callbacks,
+        epochs,
+        loss,
+        metrics,
+        metric_emit_freq,
+        optimizer,
+        save_directory,
+        output_type="infer",
+        writer=stdout,
+        batch_size=64,
+        test_batch_size=1000,
+        lr=1.0,
+        gamma=0.7,
+        seed=1,
+        *args,
+        **kwargs
+    ):
         """
         Run the training loop for your ML pipeline.
 
         :param callbacks: Collection of callables that are run inside the training loop
-        :type callbacks: ```None or List[Callable] or Tuple[Callable]```
+        :type callbacks: ```Optional[Union[List[Callable], Tuple[Callable]]]```
 
         :param epochs: number of epochs (must be greater than 0)
         :type epochs: ```int```
 
         :param loss: Loss function, can be a string (depending on the framework) or an instance of a class
-        :type loss: ```str or Callable or Any```
+        :type loss: ```Union[str, Callable, Any]```
 
         :param metrics: Collection of metrics to monitor, e.g., accuracy, f1
-        :type metrics: ```None or List[Callable or str] or Tuple[Callable or str]```
+        :type metrics: ```Optional[Union[List[Union[Callable, str]], Tuple[Union[Callable, str]]]]```
 
-        :param metric_emit_freq: Frequency of metric emission, e.g., `lambda: epochs % 10 == 0`, defaults to every epoch
-        :type metric_emit_freq: ```None or (*args, **kwargs) -> bool```
+        :param metric_emit_freq: `None` for every epoch. E.g., `eq(mod(epochs, 10), 0)` for every 10. Defaults to None
+        :type metric_emit_freq: ```Optional[Callable[[...], bool]]```
 
         :param optimizer: Optimizer, can be a string (depending on the framework) or an instance of a class
         :type callbacks: ```str or Callable or Any```
@@ -93,7 +122,7 @@ class PyTorchTrainer(BaseTrainer):
         :type output_type: ```str```
 
         :param writer: Writer for all output, could be a TensorBoard instance, a file handler like stdout or stderr
-        :type writer: ```stdout or Any```
+        :type writer: ```Union[stdout, Any]```
 
         :param batch_size:
         :type batch_size: ```int```
@@ -107,9 +136,6 @@ class PyTorchTrainer(BaseTrainer):
         :param gamma:
         :type gamma: ```float```
 
-        :param no_cuda:
-        :type no_cuda: ```bool```
-
         :param seed:
         :type seed: ```int```
 
@@ -117,16 +143,19 @@ class PyTorchTrainer(BaseTrainer):
         :param kwargs:
         :return:
         """
-        super(PyTorchTrainer, self).train(callbacks=callbacks,
-                                          epochs=epochs,
-                                          loss=loss,
-                                          metrics=metrics,
-                                          metric_emit_freq=metric_emit_freq,
-                                          optimizer=optimizer,
-                                          save_directory=save_directory,
-                                          output_type=output_type,
-                                          writer=writer,
-                                          *args, **kwargs)
+        super(PyTorchTrainer, self).train(
+            callbacks=callbacks,
+            epochs=epochs,
+            loss=loss,
+            metrics=metrics,
+            metric_emit_freq=metric_emit_freq,
+            optimizer=optimizer,
+            save_directory=save_directory,
+            output_type=output_type,
+            writer=writer,
+            *args,
+            **kwargs
+        )
         assert self.data is not None
         assert self.model is not None
 
@@ -134,13 +163,11 @@ class PyTorchTrainer(BaseTrainer):
 
         device = torch.device("cuda" if use_cuda else "cpu")
 
-        data_loader_kwargs = {'batch_size': batch_size}
+        data_loader_kwargs = {"batch_size": batch_size}
         if use_cuda:
-            data_loader_kwargs.update({
-                'num_workers': 1,
-                'pin_memory': True,
-                'shuffle': True
-            })
+            data_loader_kwargs.update(
+                {"num_workers": 1, "pin_memory": True, "shuffle": True}
+            )
 
         train_loader = torch.utils.data.DataLoader(self.data[0], **data_loader_kwargs)
         test_loader = torch.utils.data.DataLoader(self.data[1], **data_loader_kwargs)
@@ -149,14 +176,19 @@ class PyTorchTrainer(BaseTrainer):
         optimizer = optimizer(self.model.parameters(), lr=lr)
 
         scheduler = StepLR(optimizer, step_size=1, gamma=gamma)
-        common_kwargs = {'model': self.model, 'device': device, 'loss_func': loss}
+        common_kwargs = {"model": self.model, "device": device, "loss_func": loss}
         for epoch in range(1, epochs + 1):
-            train(train_loader=train_loader, epoch=epoch, metric_emit_freq=metric_emit_freq,
-                  optimizer=optimizer, **common_kwargs)
+            train(
+                train_loader=train_loader,
+                epoch=epoch,
+                metric_emit_freq=metric_emit_freq,
+                optimizer=optimizer,
+                **common_kwargs
+            )
             test(test_loader=test_loader, **common_kwargs)
             scheduler.step(None)
 
 
 del Tuple, get_logger
 
-__all__ = ['PyTorchTrainer']
+__all__ = ["PyTorchTrainer"]
