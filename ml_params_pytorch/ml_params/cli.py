@@ -8,7 +8,7 @@ from pkgutil import find_loader
 
 datasets2classes = (
     {}
-    if find_loader("ml_prepare") is None
+    if find_loader("ml_prepare") is None or find_loader("tensorflow_datasets") is None
     else getattr(import_module("ml_prepare.datasets"), "datasets2classes")
 )
 
