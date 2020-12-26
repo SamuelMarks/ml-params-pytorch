@@ -6,9 +6,15 @@ from torchvision import datasets, transforms
 
 datasets2classes = (
     {}
-    if find_loader("ml_prepare") is None or find_loader("tensorflow_datasets") is None
+    if any(
+        map(
+            lambda mod: find_loader(mod) is None,
+            ("ml_prepare", "tensorflow_datasets", "tensorflow"),
+        )
+    )
     else getattr(import_module("ml_prepare.datasets"), "datasets2classes")
 )
+
 
 def load_data_from_torchvision_or_ml_prepare(
     dataset_name, datasets_dir=None, K=None, as_numpy=True, **data_loader_kwargs

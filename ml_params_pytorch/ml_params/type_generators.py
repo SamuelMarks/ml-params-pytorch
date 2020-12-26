@@ -7,14 +7,16 @@ Install doctrans then run, for example:
                        --input-file 'ml_params_pytorch/ml_params/type_generators.py' \
                        --input-eval \
                        --output-file 'ml_params_pytorch/ml_params/trainer.py' \
-                       --input-param 'exposed_loss_keys' \
-                       --output-param 'TorchTrainer.train.loss' \
                        --input-param 'exposed_activation_keys' \
                        --output-param 'TorchTrainer.train.activation' \
-                       --input-param 'exposed_optimizers_keys' \
-                       --output-param 'TorchTrainer.train.optimizer' \
+                       --input-param 'exposed_datasets_keys' \
+                       --output-param 'TorchTrainer.load_data.dataset_name' \
+                       --input-param 'exposed_loss_keys' \
                        --input-param 'exposed_optimizer_lr_schedulers' \
-                       --output-param 'TorchTrainer.train.lr_scheduler'
+                       --output-param 'TorchTrainer.train.lr_scheduler' \
+                       --output-param 'TorchTrainer.train.loss' \
+                       --input-param 'exposed_optimizers_keys' \
+                       --output-param 'TorchTrainer.train.optimizer'
 
 """
 from inspect import getmembers
@@ -22,6 +24,7 @@ from types import ModuleType
 from typing import Any, Dict, Tuple, Union
 
 import torch.nn.modules
+import torchvision
 
 
 def _torch_members(mod: Union[ModuleType, Any], ignore=frozenset()) -> Dict[str, Any]:
@@ -54,6 +57,9 @@ exposed_activation: Dict[str, Any] = _torch_members(
 )
 exposed_activation_keys: Tuple[str, ...] = tuple(sorted(exposed_activation.keys()))
 
+exposed_datasets: Dict[str, Any] = _torch_members(torchvision.datasets)
+exposed_datasets_keys: Tuple[str, ...] = tuple(sorted(exposed_datasets.keys()))
+
 exposed_losses: Dict[str, Any] = _torch_members(torch.nn.modules.loss)
 exposed_loss_keys: Tuple[str, ...] = tuple(sorted(exposed_losses.keys()))
 
@@ -72,6 +78,8 @@ exposed_optimizers_keys: Tuple[str, ...] = tuple(sorted(exposed_optimizers.keys(
 __all__ = [
     "exposed_activation",
     "exposed_activation_keys",
+    "exposed_datasets",
+    "exposed_datasets_keys",
     "exposed_loss_keys",
     "exposed_losses",
     "exposed_optimizer_lr_schedulers",

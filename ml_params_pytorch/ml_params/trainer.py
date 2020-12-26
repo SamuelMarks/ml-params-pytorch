@@ -1,6 +1,6 @@
 """
-Implementation of ml_params BaseTrainer API
-"""
+    Implementation of ml_params BaseTrainer API
+    """
 from functools import partial
 from os import path
 from typing import Any, Callable, Optional
@@ -9,9 +9,9 @@ import torch.cuda
 import torch.optim
 import torch.utils.data
 from ml_params.base import BaseTrainer
-from ml_params_tensorflow import get_logger
 from typing_extensions import Literal
 
+from ml_params_pytorch import get_logger
 from ml_params_pytorch.ml_params.datasets import (
     load_data_from_torchvision_or_ml_prepare,
 )
@@ -40,7 +40,44 @@ class TorchTrainer(BaseTrainer):
 
     def load_data(
         self,
-        dataset_name,
+        dataset_name: Literal[
+            "CIFAR10",
+            "CIFAR100",
+            "Caltech101",
+            "Caltech256",
+            "CelebA",
+            "Cityscapes",
+            "CocoCaptions",
+            "CocoDetection",
+            "DatasetFolder",
+            "EMNIST",
+            "FakeData",
+            "FashionMNIST",
+            "Flickr30k",
+            "Flickr8k",
+            "HMDB51",
+            "ImageFolder",  # Should include this in the README for how to bring in your own data
+            "ImageNet",
+            "KMNIST",
+            "Kinetics400",
+            "LSUN",
+            "LSUNClass",
+            "MNIST",
+            "Omniglot",
+            "PhotoTour",
+            "Places365",
+            "QMNIST",
+            "SBDataset",
+            "SBU",
+            "SEMEION",
+            "STL10",
+            "SVHN",
+            "UCF101",
+            "USPS",
+            "VOCDetection",
+            "VOCSegmentation",
+            "VisionDataset",
+        ],
         data_loader=load_data_from_torchvision_or_ml_prepare,
         data_type="infer",
         output_type="numpy",
@@ -125,6 +162,19 @@ class TorchTrainer(BaseTrainer):
             "SparseAdam",
         ],
         loss: Literal[
+            "CosineAnnealingLR",
+            "CosineAnnealingWarmRestarts",
+            "Counter",
+            "CyclicLR",
+            "ExponentialLR",
+            "LambdaLR",
+            "MultiStepLR",
+            "MultiplicativeLR",
+            "OneCycleLR",
+            "ReduceLROnPlateau",
+            "StepLR",
+        ],
+        lr_scheduler: Literal[
             "BCELoss",
             "BCEWithLogitsLoss",
             "CTCLoss",
@@ -146,19 +196,6 @@ class TorchTrainer(BaseTrainer):
             "SoftMarginLoss",
             "TripletMarginLoss",
             "TripletMarginWithDistanceLoss",
-        ],
-        lr_scheduler: Literal[
-            "CosineAnnealingLR",
-            "CosineAnnealingWarmRestarts",
-            "Counter",
-            "CyclicLR",
-            "ExponentialLR",
-            "LambdaLR",
-            "MultiStepLR",
-            "MultiplicativeLR",
-            "OneCycleLR",
-            "ReduceLROnPlateau",
-            "StepLR",
         ] = "StepLR",
         activation: Literal[
             "CELU",
@@ -238,7 +275,6 @@ class TorchTrainer(BaseTrainer):
             )
         train_loader = torch.utils.data.DataLoader(self.data[0], **data_loader_kwargs)
         test_loader = torch.utils.data.DataLoader(self.data[1], **data_loader_kwargs)
-
         self.model = self.get_model().to(device)
         optim: torch.optim.Optimizer = (
             partial(acquire_symbols_from(exposed_optimizers, optimizer), lr=1.0)

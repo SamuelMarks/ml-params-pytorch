@@ -1,5 +1,5 @@
 """
-Config interface to ml-params-tensorflow. Expected to be bootstrapped by ml-params, as well as internally.
+Config interface to ml-params-pytorch. Expected to be bootstrapped by ml-params, as well as internally.
 """
 from json import loads
 from typing import Any
