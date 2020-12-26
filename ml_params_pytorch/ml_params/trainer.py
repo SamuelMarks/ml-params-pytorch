@@ -56,7 +56,7 @@ class TorchTrainer(BaseTrainer):
             "Flickr30k",
             "Flickr8k",
             "HMDB51",
-            "ImageFolder",  # Should include this in the README for how to bring in your own data
+            "ImageFolder",
             "ImageNet",
             "KMNIST",
             "Kinetics400",
@@ -76,7 +76,6 @@ class TorchTrainer(BaseTrainer):
             "USPS",
             "VOCDetection",
             "VOCSegmentation",
-            "VisionDataset",
         ],
         data_loader=load_data_from_torchvision_or_ml_prepare,
         data_type="infer",

@@ -36,7 +36,6 @@ After installing as above, follow usage from https://github.com/SamuelMarks/ml-p
 
 ---
 
-
 ## Development guide
 
 To make the development of _ml-params-tensorflow_ type safer and maintain consistency with the other ml-params implementing projects, the [doctrans](https://github.com/SamuelMarks/doctrans) was created.
@@ -71,21 +70,22 @@ As an example, using the `class TensorFlowTrainer` methods as truth, this will u
                             --argparse-function-name 'load_model_parser' \
                             --truth 'function'
 
-Another example, that you'd run before ^, to generate custom config CLI parsers for members of `tf.keras.losses`:
-
-    $ python -m doctrans gen --name-tpl '{name}Config' \
-                             --input-mapping 'ml_params_pytorch.ml_params.type_generators.exposed_losses' \
-                             --prepend '""" Generated Loss config classes """\nimport tensorflow as tf\n' \
-                             --imports-from-file 'tf.keras.losses.Loss' \
-                             --type 'argparse' \
-                             --output-filename 'ml_params_pytorch/ml_params/losses.py'
-
-There's a bit of boilerplate here, so let's automate it:
+To generate custom config CLI parsers, run this before ^:
 
     $ for name in 'activation' 'losses' 'optimizer_lr' 'optimizers'; do
         rm 'ml_params_pytorch/ml_params/'"$name"'.py';        
-        python -m ml_params_tensorflow.ml_params.doctrans_cli_gen "$name" | xargs python -m doctrans gen;
+        python -m ml_params_pytorch.ml_params.doctrans_cli_gen "$name" | xargs python -m doctrans gen;
       done
+
+To see what this is doing, here it is expanded for datasets:
+
+   $ python -m doctrans gen --name-tpl '{name}Config' \
+                            --input-mapping 'ml_params_pytorch.ml_params.type_generators.exposed_datasets' \
+                            --prepend '""" Generated Dataset CLI parsers """\nfrom typing import Optional, Union\n\n' \
+                                      'from dataclasses import dataclass\n\nfrom yaml import safe_load as loads\n\n' \
+                                      'NoneType = type(None)\n' \
+                            --type 'argparse' \
+                            --output-filename 'ml_params_pytorch/ml_params/datasets.py'
 
 Cleanup the code everywhere, removing unused imports and autolinting/autoformatting:
 

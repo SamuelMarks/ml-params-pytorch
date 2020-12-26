@@ -57,7 +57,9 @@ exposed_activation: Dict[str, Any] = _torch_members(
 )
 exposed_activation_keys: Tuple[str, ...] = tuple(sorted(exposed_activation.keys()))
 
-exposed_datasets: Dict[str, Any] = _torch_members(torchvision.datasets)
+exposed_datasets: Dict[str, Any] = _torch_members(
+    torchvision.datasets, frozenset(("VisionDataset",))
+)
 exposed_datasets_keys: Tuple[str, ...] = tuple(sorted(exposed_datasets.keys()))
 
 exposed_losses: Dict[str, Any] = _torch_members(torch.nn.modules.loss)

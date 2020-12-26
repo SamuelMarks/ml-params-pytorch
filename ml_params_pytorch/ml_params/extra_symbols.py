@@ -7,8 +7,8 @@ from importlib import import_module
 extra_symbols = {
     "loss"
     if mod == "losses"
-    else mod: import_module("ml_params_tensorflow.ml_params.{mod}".format(mod=mod))
-    for mod in ("callbacks", "losses", "metrics", "optimizers")
+    else mod: import_module("ml_params_pytorch.ml_params.{mod}".format(mod=mod))
+    for mod in ("activation", "datasets", "losses", "optimizer_lr", "optimizers")
 }
 
 del import_module
