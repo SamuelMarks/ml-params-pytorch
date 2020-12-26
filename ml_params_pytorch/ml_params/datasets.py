@@ -28,7 +28,7 @@ def load_data_from_torchvision_or_ml_prepare(
     :param dataset_name: name of dataset
     :type dataset_name: ```str```
 
-    :param datasets_dir: directory to look for models in. Default is ~/tensorflow_datasets.
+    :param datasets_dir: directory to look for models in. Default is ~/pytorch_datasets.
     :type datasets_dir: ```None or str```
 
     :param K: backend engine, e.g., `np` or `tf`

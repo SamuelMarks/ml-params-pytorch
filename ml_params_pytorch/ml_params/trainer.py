@@ -33,7 +33,7 @@ logger = get_logger(
 
 
 class TorchTrainer(BaseTrainer):
-    """ Implementation of ml_params BaseTrainer for TensorFlow """
+    """ Implementation of ml_params BaseTrainer for PyTorch """
 
     data = None
     get_model: Optional[Callable[[], torch.nn.Module]] = None
@@ -90,7 +90,7 @@ class TorchTrainer(BaseTrainer):
         :type dataset_name: ```str```
 
         :param data_loader: function that returns the expected data type.
-         Defaults to TensorFlow Datasets and ml_prepare combined one.
+         Defaults to PyTorch Datasets and ml_prepare combined one.
         :type data_loader: ```Callable[[...], Union[Tuple[tf.data.Dataset, tf.data.Dataset],
          Tuple[np.ndarray, np.ndarray], Tuple[Any, Any]]```
 

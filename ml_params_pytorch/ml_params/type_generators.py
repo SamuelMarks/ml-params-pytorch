@@ -7,11 +7,11 @@ Install doctrans then run, for example:
                        --input-file 'ml_params_pytorch/ml_params/type_generators.py' \
                        --input-eval \
                        --output-file 'ml_params_pytorch/ml_params/trainer.py' \
-                       --input-param 'exposed_activation_keys' \
+                       --input-param 'exposed_activations_keys' \
                        --output-param 'TorchTrainer.train.activation' \
                        --input-param 'exposed_datasets_keys' \
                        --output-param 'TorchTrainer.load_data.dataset_name' \
-                       --input-param 'exposed_loss_keys' \
+                       --input-param 'exposed_losses_keys' \
                        --input-param 'exposed_optimizer_lr_schedulers' \
                        --output-param 'TorchTrainer.train.lr_scheduler' \
                        --output-param 'TorchTrainer.train.loss' \
@@ -52,10 +52,10 @@ def _torch_members(mod: Union[ModuleType, Any], ignore=frozenset()) -> Dict[str,
 
 _global_exclude: frozenset = frozenset(("Module", "Tensor"))
 
-exposed_activation: Dict[str, Any] = _torch_members(
+exposed_activations: Dict[str, Any] = _torch_members(
     torch.nn.modules.activation, frozenset(("Parameter",))
 )
-exposed_activation_keys: Tuple[str, ...] = tuple(sorted(exposed_activation.keys()))
+exposed_activations_keys: Tuple[str, ...] = tuple(sorted(exposed_activations.keys()))
 
 exposed_datasets: Dict[str, Any] = _torch_members(
     torchvision.datasets, frozenset(("VisionDataset",))
@@ -63,7 +63,7 @@ exposed_datasets: Dict[str, Any] = _torch_members(
 exposed_datasets_keys: Tuple[str, ...] = tuple(sorted(exposed_datasets.keys()))
 
 exposed_losses: Dict[str, Any] = _torch_members(torch.nn.modules.loss)
-exposed_loss_keys: Tuple[str, ...] = tuple(sorted(exposed_losses.keys()))
+exposed_losses_keys: Tuple[str, ...] = tuple(sorted(exposed_losses.keys()))
 
 exposed_optimizer_lr_schedulers: Dict[str, Any] = _torch_members(
     torch.optim.lr_scheduler, frozenset(("Optimizer",))
@@ -78,11 +78,11 @@ exposed_optimizers: Dict[str, Any] = _torch_members(
 exposed_optimizers_keys: Tuple[str, ...] = tuple(sorted(exposed_optimizers.keys()))
 
 __all__ = [
-    "exposed_activation",
-    "exposed_activation_keys",
+    "exposed_activations",
+    "exposed_activations_keys",
     "exposed_datasets",
     "exposed_datasets_keys",
-    "exposed_loss_keys",
+    "exposed_losses_keys",
     "exposed_losses",
     "exposed_optimizer_lr_schedulers",
     "exposed_optimizer_lr_schedulers_keys",
