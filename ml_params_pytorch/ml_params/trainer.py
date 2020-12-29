@@ -1,15 +1,14 @@
 """
-    Implementation of ml_params BaseTrainer API
-    """
+Implementation of ml_params BaseTrainer API
+"""
 from functools import partial
 from os import path
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Literal, Optional
 
 import torch.cuda
 import torch.optim
 import torch.utils.data
 from ml_params.base import BaseTrainer
-from typing_extensions import Literal
 
 from ml_params_pytorch import get_logger
 from ml_params_pytorch.ml_params.datasets import (
@@ -298,17 +297,6 @@ class TorchTrainer(BaseTrainer):
         )(optim)
         del lr_scheduler
         common_kwargs = {"device": device, "loss_func": loss_func, "model": self.model}
-        print(
-            "loss:",
-            loss_func,
-            ";\noptim:",
-            optim,
-            ";\nlr_sched:",
-            lr_sched,
-            ";\nmodel:",
-            self.model,
-            ";",
-        )
         for epoch in range(1, epochs + 1):
             train(
                 epoch=epoch,

@@ -38,18 +38,18 @@ After installing as above, follow usage from https://github.com/SamuelMarks/ml-p
 
 ## Development guide
 
-To make the development of _ml-params-tensorflow_ type safer and maintain consistency with the other ml-params implementing projects, the [doctrans](https://github.com/SamuelMarks/doctrans) was created.
+To make the development of _ml-params-pytorch_ type safer and maintain consistency with the other ml-params implementing projects, the [doctrans](https://github.com/SamuelMarks/doctrans) was created.
 
-When TensorFlow itself changes—i.e., a new major version of TensorFlow is releases—then run the `sync_properties`, as shown in the module-level docstring here [`ml_params_pytorch/ml_params/type_generators.py`](ml_params_pytorch/ml_params/type_generators.py);
+When PyTorch itself changes—i.e., a new major version of PyTorch is released—then run the `sync_properties`, as shown in the module-level docstring here [`ml_params_pytorch/ml_params/type_generators.py`](ml_params_pytorch/ml_params/type_generators.py);
 
 To synchronise all the various other APIs, edit one and it'll translate to the others, but make sure you select which one is the gold-standard.
 
-As an example, using the `class TensorFlowTrainer` methods as truth, this will update the CLI parsers and config classes:
+As an example, using the `class TorchTrainer` methods as truth, this will update the CLI parsers and config classes:
 
     python -m doctrans sync --class 'ml_params_pytorch/ml_params/config.py' \
                             --class-name 'TrainConfig' \
                             --function 'ml_params_pytorch/ml_params/trainer.py' \
-                            --function-name 'TensorFlowTrainer.train' \
+                            --function-name 'TorchTrainer.train' \
                             --argparse-function 'ml_params_pytorch/ml_params/cli.py' \
                             --argparse-function-name 'train_parser' \
                             --truth 'function'
@@ -57,7 +57,7 @@ As an example, using the `class TensorFlowTrainer` methods as truth, this will u
     python -m doctrans sync --class 'ml_params_pytorch/ml_params/config.py' \
                             --class-name 'LoadDataConfig' \
                             --function 'ml_params_pytorch/ml_params/trainer.py' \
-                            --function-name 'TensorFlowTrainer.load_data' \
+                            --function-name 'TorchTrainer.load_data' \
                             --argparse-function 'ml_params_pytorch/ml_params/cli.py' \
                             --argparse-function-name 'load_data_parser' \
                             --truth 'function'
@@ -65,25 +65,22 @@ As an example, using the `class TensorFlowTrainer` methods as truth, this will u
     python -m doctrans sync --class 'ml_params_pytorch/ml_params/config.py' \
                             --class-name 'LoadModelConfig' \
                             --function 'ml_params_pytorch/ml_params/trainer.py' \
-                            --function-name 'TensorFlowTrainer.load_model' \
+                            --function-name 'TorchTrainer.load_model' \
                             --argparse-function 'ml_params_pytorch/ml_params/cli.py' \
                             --argparse-function-name 'load_model_parser' \
                             --truth 'function'
 
 To generate custom config CLI parsers, run this before ^:
 
-    $ for name in 'activation' 'losses' 'optimizer_lr' 'optimizers'; do
+    $ for name in 'activations' 'losses' 'optimizer_lr_schedulers' 'optimizers'; do
         rm 'ml_params_pytorch/ml_params/'"$name"'.py';        
-        python -m ml_params_pytorch.ml_params.doctrans_cli_gen "$name" | xargs python -m doctrans gen;
+        python -m ml_params_pytorch.ml_params.doctrans_cli_gen "$name" 2>/dev/null | xargs python -m doctrans gen;
       done
 
 To see what this is doing, here it is expanded for datasets:
 
    $ python -m doctrans gen --name-tpl '{name}Config' \
                             --input-mapping 'ml_params_pytorch.ml_params.type_generators.exposed_datasets' \
-                            --prepend '""" Generated Dataset CLI parsers """\nfrom typing import Optional, Union\n\n' \
-                                      'from dataclasses import dataclass\n\nfrom yaml import safe_load as loads\n\n' \
-                                      'NoneType = type(None)\n' \
                             --type 'argparse' \
                             --output-filename 'ml_params_pytorch/ml_params/datasets.py'
 

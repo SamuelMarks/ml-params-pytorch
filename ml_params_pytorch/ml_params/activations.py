@@ -1,6 +1,8 @@
 """ Generated Activation CLI parsers """
 from yaml import safe_load as loads
 
+NoneType = type(None)
+
 
 def CELUConfig(argument_parser):
     """
@@ -12,7 +14,29 @@ def CELUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{CELU}(x) = \\max(0,x) + \\min(0, \\alpha * (\\exp(x/\\alpha) - 1))\n\nMore details can be found in the paper `Continuously Differentiable Exponential Linear Units`_ .\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/CELU.png\n\nExamples::\n\n    >>> m = nn.CELU()\n    >>> input = torch.randn(2)\n    >>> output = m(input)\n\n.. _`Continuously Differentiable Exponential Linear Units`:\n    https://arxiv.org/abs/1704.07483"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{CELU}(x) = \\max(0,x) + \\min(0, \\alpha * (\\exp(x/\\alpha) - 1))
+
+More details can be found in the paper `Continuously Differentiable Exponential Linear Units`_ .
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/CELU.png
+
+Examples::
+
+    >>> m = nn.CELU()
+    >>> input = torch.randn(2)
+    >>> output = m(input)
+
+.. _`Continuously Differentiable Exponential Linear Units`:
+    https://arxiv.org/abs/1704.07483"""
     argument_parser.add_argument(
         "--alpha",
         type=float,
@@ -28,11 +52,7 @@ def CELUConfig(argument_parser):
         default=False,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=loads,
-        help="",
-        required=True,
-        default="['alpha', 'inplace']",
+        "--__constants__", type=loads, required=True, default="['alpha', 'inplace']"
     )
     return argument_parser
 
@@ -47,7 +67,27 @@ def ELUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{ELU}(x) = \\begin{cases}\n    x, & \\text{ if } x > 0\\\\\n    \\alpha * (\\exp(x) - 1), & \\text{ if } x \\leq 0\n    \\end{cases}\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/ELU.png\n\nExamples::\n\n    >>> m = nn.ELU()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{ELU}(x) = \\begin{cases}
+    x, & \\text{ if } x > 0\\\\
+    \\alpha * (\\exp(x) - 1), & \\text{ if } x \\leq 0
+    \\end{cases}
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/ELU.png
+
+Examples::
+
+    >>> m = nn.ELU()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--alpha",
         type=float,
@@ -63,11 +103,7 @@ def ELUConfig(argument_parser):
         default=False,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=loads,
-        help="",
-        required=True,
-        default="['alpha', 'inplace']",
+        "--__constants__", type=loads, required=True, default="['alpha', 'inplace']"
     )
     return argument_parser
 
@@ -82,7 +118,24 @@ def GELUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the Gaussian Error Linear Units function:\n\n.. math:: \\text{GELU}(x) = x * \\Phi(x)\n\nwhere :math:`\\Phi(x)` is the Cumulative Distribution Function for Gaussian Distribution.\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/GELU.png\n\nExamples::\n\n    >>> m = nn.GELU()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the Gaussian Error Linear Units function:
+
+.. math:: \\text{GELU}(x) = x * \\Phi(x)
+
+where :math:`\\Phi(x)` is the Cumulative Distribution Function for Gaussian Distribution.
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/GELU.png
+
+Examples::
+
+    >>> m = nn.GELU()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     return argument_parser
 
 
@@ -96,7 +149,21 @@ def GLUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the gated linear unit function\n:math:`{GLU}(a, b)= a \\otimes \\sigma(b)` where :math:`a` is the first half\nof the input matrices and :math:`b` is the second half.\n\n\nShape:\n    - Input: :math:`(\\ast_1, N, \\ast_2)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(\\ast_1, M, \\ast_2)` where :math:`M=N/2`\n\nExamples::\n\n    >>> m = nn.GLU()\n    >>> input = torch.randn(4, 2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the gated linear unit function
+:math:`{GLU}(a, b)= a \\otimes \\sigma(b)` where :math:`a` is the first half
+of the input matrices and :math:`b` is the second half.
+
+
+Shape:
+    - Input: :math:`(\\ast_1, N, \\ast_2)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(\\ast_1, M, \\ast_2)` where :math:`M=N/2`
+
+Examples::
+
+    >>> m = nn.GLU()
+    >>> input = torch.randn(4, 2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--dim",
         type=int,
@@ -105,12 +172,7 @@ def GLUConfig(argument_parser):
         default=-1,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="dim",
+        "--__constants__", type=str, action="append", required=True, default="dim"
     )
     return argument_parser
 
@@ -125,7 +187,29 @@ def HardshrinkConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the hard shrinkage function element-wise:\n\n.. math::\n    \\text{HardShrink}(x) =\n    \\begin{cases}\n    x, & \\text{ if } x > \\lambda \\\\\n    x, & \\text{ if } x < -\\lambda \\\\\n    0, & \\text{ otherwise }\n    \\end{cases}\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/Hardshrink.png\n\nExamples::\n\n    >>> m = nn.Hardshrink()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the hard shrinkage function element-wise:
+
+.. math::
+    \\text{HardShrink}(x) =
+    \\begin{cases}
+    x, & \\text{ if } x > \\lambda \\\\
+    x, & \\text{ if } x < -\\lambda \\\\
+    0, & \\text{ otherwise }
+    \\end{cases}
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/Hardshrink.png
+
+Examples::
+
+    >>> m = nn.Hardshrink()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--lambd",
         type=float,
@@ -134,12 +218,7 @@ def HardshrinkConfig(argument_parser):
         default=0.5,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="lambd",
+        "--__constants__", type=str, action="append", required=True, default="lambd"
     )
     return argument_parser
 
@@ -154,7 +233,26 @@ def HardsigmoidConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{Hardsigmoid}(x) = \\begin{cases}\n        0 & \\text{if~} x \\le -3, \\\\\n        1 & \\text{if~} x \\ge +3, \\\\\n        x / 6 + 1 / 2 & \\text{otherwise}\n    \\end{cases}\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\nExamples::\n\n    >>> m = nn.Hardsigmoid()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{Hardsigmoid}(x) = \\begin{cases}
+        0 & \\text{if~} x \\le -3, \\\\
+        1 & \\text{if~} x \\ge +3, \\\\
+        x / 6 + 1 / 2 & \\text{otherwise}
+    \\end{cases}
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+Examples::
+
+    >>> m = nn.Hardsigmoid()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--inplace",
         type=bool,
@@ -163,12 +261,7 @@ def HardsigmoidConfig(argument_parser):
         default=False,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="inplace",
+        "--__constants__", type=str, action="append", required=True, default="inplace"
     )
     return argument_parser
 
@@ -183,7 +276,31 @@ def HardswishConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the hardswish function, element-wise, as described in the paper:\n\n`Searching for MobileNetV3`_.\n\n.. math::\n    \\text{Hardswish}(x) = \\begin{cases}\n        0 & \\text{if~} x \\le -3, \\\\\n        x & \\text{if~} x \\ge +3, \\\\\n        x \\cdot (x + 3) /6 & \\text{otherwise}\n    \\end{cases}\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\nExamples::\n\n    >>> m = nn.Hardswish()\n    >>> input = torch.randn(2)\n    >>> output = m(input)\n\n.. _`Searching for MobileNetV3`:\n    https://arxiv.org/abs/1905.02244"
+    argument_parser.description = """Applies the hardswish function, element-wise, as described in the paper:
+
+`Searching for MobileNetV3`_.
+
+.. math::
+    \\text{Hardswish}(x) = \\begin{cases}
+        0 & \\text{if~} x \\le -3, \\\\
+        x & \\text{if~} x \\ge +3, \\\\
+        x \\cdot (x + 3) /6 & \\text{otherwise}
+    \\end{cases}
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+Examples::
+
+    >>> m = nn.Hardswish()
+    >>> input = torch.randn(2)
+    >>> output = m(input)
+
+.. _`Searching for MobileNetV3`:
+    https://arxiv.org/abs/1905.02244"""
     argument_parser.add_argument(
         "--inplace",
         type=bool,
@@ -192,12 +309,7 @@ def HardswishConfig(argument_parser):
         default=False,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="inplace",
+        "--__constants__", type=str, action="append", required=True, default="inplace"
     )
     return argument_parser
 
@@ -212,7 +324,36 @@ def HardtanhConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the HardTanh function element-wise\n\nHardTanh is defined as:\n\n.. math::\n    \\text{HardTanh}(x) = \\begin{cases}\n        1 & \\text{ if } x > 1 \\\\\n        -1 & \\text{ if } x < -1 \\\\\n        x & \\text{ otherwise } \\\\\n    \\end{cases}\n\nThe range of the linear region :math:`[-1, 1]` can be adjusted using\n:attr:`min_val` and :attr:`max_val`.\n\n\nKeyword arguments :attr:`min_value` and :attr:`max_value`\nhave been deprecated in favor of :attr:`min_val` and :attr:`max_val`.\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/Hardtanh.png\n\nExamples::\n\n    >>> m = nn.Hardtanh(-2, 2)\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the HardTanh function element-wise
+
+HardTanh is defined as:
+
+.. math::
+    \\text{HardTanh}(x) = \\begin{cases}
+        1 & \\text{ if } x > 1 \\\\
+        -1 & \\text{ if } x < -1 \\\\
+        x & \\text{ otherwise } \\\\
+    \\end{cases}
+
+The range of the linear region :math:`[-1, 1]` can be adjusted using
+:attr:`min_val` and :attr:`max_val`.
+
+
+Keyword arguments :attr:`min_value` and :attr:`max_value`
+have been deprecated in favor of :attr:`min_val` and :attr:`max_val`.
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/Hardtanh.png
+
+Examples::
+
+    >>> m = nn.Hardtanh(-2, 2)
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--min_val",
         type=float,
@@ -237,12 +378,11 @@ def HardtanhConfig(argument_parser):
     argument_parser.add_argument(
         "--__constants__",
         type=loads,
-        help="",
         required=True,
         default="['min_val', 'max_val', 'inplace']",
     )
-    argument_parser.add_argument("--min_value", type=float, help=None)
-    argument_parser.add_argument("--max_value", type=float, help=None)
+    argument_parser.add_argument("--min_value", type=float)
+    argument_parser.add_argument("--max_value", type=float)
     return argument_parser
 
 
@@ -256,7 +396,34 @@ def LeakyReLUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{LeakyReLU}(x) = \\max(0, x) + \\text{negative\\_slope} * \\min(0, x)\n\n\nor\n\n.. math::\n    \\text{LeakyRELU}(x) =\n    \\begin{cases}\n    x, & \\text{ if } x \\geq 0 \\\\\n    \\text{negative\\_slope} \\times x, & \\text{ otherwise }\n    \\end{cases}\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/LeakyReLU.png\n\nExamples::\n\n    >>> m = nn.LeakyReLU(0.1)\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{LeakyReLU}(x) = \\max(0, x) + \\text{negative\\_slope} * \\min(0, x)
+
+
+or
+
+.. math::
+    \\text{LeakyRELU}(x) =
+    \\begin{cases}
+    x, & \\text{ if } x \\geq 0 \\\\
+    \\text{negative\\_slope} \\times x, & \\text{ otherwise }
+    \\end{cases}
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/LeakyReLU.png
+
+Examples::
+
+    >>> m = nn.LeakyReLU(0.1)
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--negative_slope",
         type=float,
@@ -274,7 +441,6 @@ def LeakyReLUConfig(argument_parser):
     argument_parser.add_argument(
         "--__constants__",
         type=loads,
-        help="",
         required=True,
         default="['inplace', 'negative_slope']",
     )
@@ -291,7 +457,23 @@ def LogSigmoidConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{LogSigmoid}(x) = \\log\\left(\\frac{ 1 }{ 1 + \\exp(-x)}\\right)\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/LogSigmoid.png\n\nExamples::\n\n    >>> m = nn.LogSigmoid()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{LogSigmoid}(x) = \\log\\left(\\frac{ 1 }{ 1 + \\exp(-x)}\\right)
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/LogSigmoid.png
+
+Examples::
+
+    >>> m = nn.LogSigmoid()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     return argument_parser
 
 
@@ -302,19 +484,33 @@ def LogSoftmaxConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser, values in the range [-inf, 0)
+    :return: argument_parser,     a Tensor of the same dimension and shape as the input with
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the :math:`\\log(\\text{Softmax}(x))` function to an n-dimensional\ninput Tensor. The LogSoftmax formulation can be simplified as:\n\n.. math::\n    \\text{LogSoftmax}(x_{i}) = \\log\\left(\\frac{\\exp(x_i) }{ \\sum_j \\exp(x_j)} \\right)\n\nShape:\n    - Input: :math:`(*)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(*)`, same shape as the input\n\nArguments:\n    dim (int): A dimension along which LogSoftmax will be computed.\n\n\nExamples::\n\n    >>> m = nn.LogSoftmax()\n    >>> input = torch.randn(2, 3)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the :math:`\\log(\\text{Softmax}(x))` function to an n-dimensional
+input Tensor. The LogSoftmax formulation can be simplified as:
+
+.. math::
+    \\text{LogSoftmax}(x_{i}) = \\log\\left(\\frac{\\exp(x_i) }{ \\sum_j \\exp(x_j)} \\right)
+
+Shape:
+    - Input: :math:`(*)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(*)`, same shape as the input
+
+Arguments:
+    dim (int): A dimension along which LogSoftmax will be computed.
+
+
+Examples::
+
+    >>> m = nn.LogSoftmax()
+    >>> input = torch.randn(2, 3)
+    >>> output = m(input)"""
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="dim",
+        "--__constants__", type=str, action="append", required=True, default="dim"
     )
-    argument_parser.add_argument("--dim", type=int, help="")
+    argument_parser.add_argument("--dim", type=int)
     return argument_parser
 
 
@@ -328,7 +524,22 @@ def MultiheadAttentionConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Allows the model to jointly attend to information\nfrom different representation subspaces.\nSee reference: Attention Is All You Need\n\n.. math::\n    \\text{MultiHead}(Q, K, V) = \\text{Concat}(head_1,\\dots,head_h)W^O\n    \\text{where} head_i = \\text{Attention}(QW_i^Q, KW_i^K, VW_i^V)\n\n\n    Note: if kdim and vdim are None, they will be set to embed_dim such that\n    query, key, and value have the same number of features.\n\nExamples::\n\n    >>> multihead_attn = nn.MultiheadAttention(embed_dim, num_heads)\n    >>> attn_output, attn_output_weights = multihead_attn(query, key, value)"
+    argument_parser.description = """Allows the model to jointly attend to information
+from different representation subspaces.
+See reference: Attention Is All You Need
+
+.. math::
+    \\text{MultiHead}(Q, K, V) = \\text{Concat}(head_1,\\dots,head_h)W^O
+    \\text{where} head_i = \\text{Attention}(QW_i^Q, KW_i^K, VW_i^V)
+
+
+    Note: if kdim and vdim are None, they will be set to embed_dim such that
+    query, key, and value have the same number of features.
+
+Examples::
+
+    >>> multihead_attn = nn.MultiheadAttention(embed_dim, num_heads)
+    >>> attn_output, attn_output_weights = multihead_attn(query, key, value)"""
     argument_parser.add_argument(
         "--embed_dim",
         type=float,
@@ -367,7 +578,8 @@ def MultiheadAttentionConfig(argument_parser):
     argument_parser.add_argument(
         "--add_zero_attn",
         type=bool,
-        help="add a new batch of zeros to the key and\n                   value sequences at dim=1.",
+        help="""add a new batch of zeros to the key and
+                   value sequences at dim=1.""",
         required=True,
         default=False,
     )
@@ -385,8 +597,8 @@ def MultiheadAttentionConfig(argument_parser):
         required=True,
         default="None",
     )
-    argument_parser.add_argument("--bias_v", type=str, help="")
-    argument_parser.add_argument("--bias_k", type=str, help="")
+    argument_parser.add_argument("--bias_k", type=str)
+    argument_parser.add_argument("--bias_v", type=str)
     return argument_parser
 
 
@@ -400,11 +612,54 @@ def PReLUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{PReLU}(x) = \\max(0,x) + a * \\min(0,x)\n\nor\n\n.. math::\n    \\text{PReLU}(x) =\n    \\begin{cases}\n    x, & \\text{ if } x \\geq 0 \\\\\n    ax, & \\text{ otherwise }\n    \\end{cases}\n\nHere :math:`a` is a learnable parameter. When called without arguments, `nn.PReLU()` uses a single\nparameter :math:`a` across all input channels. If called with `nn.PReLU(nChannels)`,\na separate :math:`a` is used for each input channel.\n\n\n.. note::\n    weight decay should not be used when learning :math:`a` for good performance.\n\n.. note::\n    Channel dim is the 2nd dim of input. When input has dims < 2, then there is\n    no channel dim and the number of channels = 1.\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\nAttributes:\n    weight (Tensor): the learnable weights of shape (:attr:`num_parameters`).\n\n.. image:: ../scripts/activation_images/PReLU.png\n\nExamples::\n\n    >>> m = nn.PReLU()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{PReLU}(x) = \\max(0,x) + a * \\min(0,x)
+
+or
+
+.. math::
+    \\text{PReLU}(x) =
+    \\begin{cases}
+    x, & \\text{ if } x \\geq 0 \\\\
+    ax, & \\text{ otherwise }
+    \\end{cases}
+
+Here :math:`a` is a learnable parameter. When called without arguments, `nn.PReLU()` uses a single
+parameter :math:`a` across all input channels. If called with `nn.PReLU(nChannels)`,
+a separate :math:`a` is used for each input channel.
+
+
+.. note::
+    weight decay should not be used when learning :math:`a` for good performance.
+
+.. note::
+    Channel dim is the 2nd dim of input. When input has dims < 2, then there is
+    no channel dim and the number of channels = 1.
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+Attributes:
+    weight (Tensor): the learnable weights of shape (:attr:`num_parameters`).
+
+.. image:: ../scripts/activation_images/PReLU.png
+
+Examples::
+
+    >>> m = nn.PReLU()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--num_parameters",
         type=int,
-        help="number of :math:`a` to learn.\n        Although it takes an int as input, there is only two values are legitimate:\n        1, or the number of channels at input.",
+        help="""number of :math:`a` to learn.
+        Although it takes an int as input, there is only two values are legitimate:
+        1, or the number of channels at input.""",
         required=True,
         default=1,
     )
@@ -419,7 +674,6 @@ def PReLUConfig(argument_parser):
         "--__constants__",
         type=str,
         action="append",
-        help="",
         required=True,
         default="num_parameters",
     )
@@ -436,7 +690,39 @@ def RReLUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the randomized leaky rectified liner unit function, element-wise,\nas described in the paper:\n\n`Empirical Evaluation of Rectified Activations in Convolutional Network`_.\n\nThe function is defined as:\n\n.. math::\n    \\text{RReLU}(x) =\n    \\begin{cases}\n        x & \\text{if } x \\geq 0 \\\\\n        ax & \\text{ otherwise }\n    \\end{cases}\n\nwhere :math:`a` is randomly sampled from uniform distribution\n:math:`\\mathcal{U}(\\text{lower}, \\text{upper})`.\n\n See: https://arxiv.org/pdf/1505.00853.pdf\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\nExamples::\n\n    >>> m = nn.RReLU(0.1, 0.3)\n    >>> input = torch.randn(2)\n    >>> output = m(input)\n\n.. _`Empirical Evaluation of Rectified Activations in Convolutional Network`:\n    https://arxiv.org/abs/1505.00853"
+    argument_parser.description = """Applies the randomized leaky rectified liner unit function, element-wise,
+as described in the paper:
+
+`Empirical Evaluation of Rectified Activations in Convolutional Network`_.
+
+The function is defined as:
+
+.. math::
+    \\text{RReLU}(x) =
+    \\begin{cases}
+        x & \\text{if } x \\geq 0 \\\\
+        ax & \\text{ otherwise }
+    \\end{cases}
+
+where :math:`a` is randomly sampled from uniform distribution
+:math:`\\mathcal{U}(\\text{lower}, \\text{upper})`.
+
+ See: https://arxiv.org/pdf/1505.00853.pdf
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+Examples::
+
+    >>> m = nn.RReLU(0.1, 0.3)
+    >>> input = torch.randn(2)
+    >>> output = m(input)
+
+.. _`Empirical Evaluation of Rectified Activations in Convolutional Network`:
+    https://arxiv.org/abs/1505.00853"""
     argument_parser.add_argument(
         "--lower",
         type=float,
@@ -461,7 +747,6 @@ def RReLUConfig(argument_parser):
     argument_parser.add_argument(
         "--__constants__",
         type=loads,
-        help="",
         required=True,
         default="['lower', 'upper', 'inplace']",
     )
@@ -478,7 +763,30 @@ def ReLUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the rectified linear unit function element-wise:\n\n:math:`\\text{ReLU}(x) = (x)^+ = \\max(0, x)`\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/ReLU.png\n\nExamples::\n\n    >>> m = nn.ReLU()\n    >>> input = torch.randn(2)\n    >>> output = m(input)\n\n\n  An implementation of CReLU - https://arxiv.org/abs/1603.05201\n\n    >>> m = nn.ReLU()\n    >>> input = torch.randn(2).unsqueeze(0)\n    >>> output = torch.cat((m(input),m(-input)))"
+    argument_parser.description = """Applies the rectified linear unit function element-wise:
+
+:math:`\\text{ReLU}(x) = (x)^+ = \\max(0, x)`
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/ReLU.png
+
+Examples::
+
+    >>> m = nn.ReLU()
+    >>> input = torch.randn(2)
+    >>> output = m(input)
+
+
+  An implementation of CReLU - https://arxiv.org/abs/1603.05201
+
+    >>> m = nn.ReLU()
+    >>> input = torch.randn(2).unsqueeze(0)
+    >>> output = torch.cat((m(input),m(-input)))"""
     argument_parser.add_argument(
         "--inplace",
         type=bool,
@@ -487,12 +795,7 @@ def ReLUConfig(argument_parser):
         default=False,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="inplace",
+        "--__constants__", type=str, action="append", required=True, default="inplace"
     )
     return argument_parser
 
@@ -507,7 +810,24 @@ def ReLU6Config(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{ReLU6}(x) = \\min(\\max(0,x), 6)\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/ReLU6.png\n\nExamples::\n\n    >>> m = nn.ReLU6()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{ReLU6}(x) = \\min(\\max(0,x), 6)
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/ReLU6.png
+
+Examples::
+
+    >>> m = nn.ReLU6()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--inplace",
         type=bool,
@@ -528,7 +848,31 @@ def SELUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applied element-wise, as:\n\n.. math::\n    \\text{SELU}(x) = \\text{scale} * (\\max(0,x) + \\min(0, \\alpha * (\\exp(x) - 1)))\n\nwith :math:`\\alpha = 1.6732632423543772848170429916717` and\n:math:`\\text{scale} = 1.0507009873554804934193349852946`.\n\nMore details can be found in the paper `Self-Normalizing Neural Networks`_ .\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/SELU.png\n\nExamples::\n\n    >>> m = nn.SELU()\n    >>> input = torch.randn(2)\n    >>> output = m(input)\n\n.. _Self-Normalizing Neural Networks: https://arxiv.org/abs/1706.02515"
+    argument_parser.description = """Applied element-wise, as:
+
+.. math::
+    \\text{SELU}(x) = \\text{scale} * (\\max(0,x) + \\min(0, \\alpha * (\\exp(x) - 1)))
+
+with :math:`\\alpha = 1.6732632423543772848170429916717` and
+:math:`\\text{scale} = 1.0507009873554804934193349852946`.
+
+More details can be found in the paper `Self-Normalizing Neural Networks`_ .
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/SELU.png
+
+Examples::
+
+    >>> m = nn.SELU()
+    >>> input = torch.randn(2)
+    >>> output = m(input)
+
+.. _Self-Normalizing Neural Networks: https://arxiv.org/abs/1706.02515"""
     argument_parser.add_argument(
         "--inplace",
         type=bool,
@@ -537,12 +881,7 @@ def SELUConfig(argument_parser):
         default=False,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="inplace",
+        "--__constants__", type=str, action="append", required=True, default="inplace"
     )
     return argument_parser
 
@@ -557,18 +896,33 @@ def SiLUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the silu function, element-wise.\n\n.. math::\n    \\text{silu}(x) = x * \\sigma(x), \\text{where } \\sigma(x) \\text{ is the logistic sigmoid.}\n\n.. note::\n    See `Gaussian Error Linear Units (GELUs) <https://arxiv.org/abs/1606.08415>`_ \n    where the SiLU (Sigmoid Linear Unit) was originally coined, and see \n    `Sigmoid-Weighted Linear Units for Neural Network Function Approximation \n    in Reinforcement Learning <https://arxiv.org/abs/1702.03118>`_ and `Swish: \n    a Self-Gated Activation Function <https://arxiv.org/abs/1710.05941v1>`_ \n    where the SiLU was experimented with later.\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\nExamples::\n\n    >>> m = nn.SiLU()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the silu function, element-wise.
+
+.. math::
+    \\text{silu}(x) = x * \\sigma(x), \\text{where } \\sigma(x) \\text{ is the logistic sigmoid.}
+
+.. note::
+    See `Gaussian Error Linear Units (GELUs) <https://arxiv.org/abs/1606.08415>`_ 
+    where the SiLU (Sigmoid Linear Unit) was originally coined, and see 
+    `Sigmoid-Weighted Linear Units for Neural Network Function Approximation 
+    in Reinforcement Learning <https://arxiv.org/abs/1702.03118>`_ and `Swish: 
+    a Self-Gated Activation Function <https://arxiv.org/abs/1710.05941v1>`_ 
+    where the SiLU was experimented with later.
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+Examples::
+
+    >>> m = nn.SiLU()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="inplace",
+        "--__constants__", type=str, action="append", required=True, default="inplace"
     )
-    argument_parser.add_argument(
-        "--inplace", type=bool, help="", required=True, default=False
-    )
+    argument_parser.add_argument("--inplace", type=bool, required=True, default=False)
     return argument_parser
 
 
@@ -582,7 +936,24 @@ def SigmoidConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{Sigmoid}(x) = \\sigma(x) = \\frac{1}{1 + \\exp(-x)}\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/Sigmoid.png\n\nExamples::\n\n    >>> m = nn.Sigmoid()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{Sigmoid}(x) = \\sigma(x) = \\frac{1}{1 + \\exp(-x)}
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/Sigmoid.png
+
+Examples::
+
+    >>> m = nn.Sigmoid()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     return argument_parser
 
 
@@ -593,19 +964,45 @@ def SoftmaxConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser, values in the range [0, 1]
+    :return: argument_parser,     a Tensor of the same dimension and shape as the input with
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the Softmax function to an n-dimensional input Tensor\nrescaling them so that the elements of the n-dimensional output Tensor\nlie in the range [0,1] and sum to 1.\n\nSoftmax is defined as:\n\n.. math::\n    \\text{Softmax}(x_{i}) = \\frac{\\exp(x_i)}{\\sum_j \\exp(x_j)}\n\nWhen the input Tensor is a sparse tensor then the unspecifed\nvalues are treated as ``-inf``.\n\nShape:\n    - Input: :math:`(*)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(*)`, same shape as the input\n\n\nArguments:\n    dim (int): A dimension along which Softmax will be computed (so every slice\n        along dim will sum to 1).\n\n.. note::\n    This module doesn't work directly with NLLLoss,\n    which expects the Log to be computed between the Softmax and itself.\n    Use `LogSoftmax` instead (it's faster and has better numerical properties).\n\nExamples::\n\n    >>> m = nn.Softmax(dim=1)\n    >>> input = torch.randn(2, 3)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the Softmax function to an n-dimensional input Tensor
+rescaling them so that the elements of the n-dimensional output Tensor
+lie in the range [0,1] and sum to 1.
+
+Softmax is defined as:
+
+.. math::
+    \\text{Softmax}(x_{i}) = \\frac{\\exp(x_i)}{\\sum_j \\exp(x_j)}
+
+When the input Tensor is a sparse tensor then the unspecifed
+values are treated as ``-inf``.
+
+Shape:
+    - Input: :math:`(*)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(*)`, same shape as the input
+
+
+Arguments:
+    dim (int): A dimension along which Softmax will be computed (so every slice
+        along dim will sum to 1).
+
+.. note::
+    This module doesn't work directly with NLLLoss,
+    which expects the Log to be computed between the Softmax and itself.
+    Use `LogSoftmax` instead (it's faster and has better numerical properties).
+
+Examples::
+
+    >>> m = nn.Softmax(dim=1)
+    >>> input = torch.randn(2, 3)
+    >>> output = m(input)"""
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="dim",
+        "--__constants__", type=str, action="append", required=True, default="dim"
     )
-    argument_parser.add_argument("--dim", type=int, help="")
+    argument_parser.add_argument("--dim", type=int)
     return argument_parser
 
 
@@ -616,10 +1013,25 @@ def Softmax2dConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser, values in the range [0, 1]
+    :return: argument_parser,     a Tensor of the same dimension and shape as the input with
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies SoftMax over features to each spatial location.\n\nWhen given an image of ``Channels x Height x Width``, it will\napply `Softmax` to each location :math:`(Channels, h_i, w_j)`\n\nShape:\n    - Input: :math:`(N, C, H, W)`\n    - Output: :math:`(N, C, H, W)` (same shape as input)\n\n\nExamples::\n\n    >>> m = nn.Softmax2d()\n    >>> # you softmax over the 2nd dimension\n    >>> input = torch.randn(2, 3, 12, 13)\n    >>> output = m(input)"
+    argument_parser.description = """Applies SoftMax over features to each spatial location.
+
+When given an image of ``Channels x Height x Width``, it will
+apply `Softmax` to each location :math:`(Channels, h_i, w_j)`
+
+Shape:
+    - Input: :math:`(N, C, H, W)`
+    - Output: :math:`(N, C, H, W)` (same shape as input)
+
+
+Examples::
+
+    >>> m = nn.Softmax2d()
+    >>> # you softmax over the 2nd dimension
+    >>> input = torch.randn(2, 3, 12, 13)
+    >>> output = m(input)"""
     return argument_parser
 
 
@@ -630,19 +1042,37 @@ def SoftminConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser, values in the range [0, 1]
+    :return: argument_parser,     a Tensor of the same dimension and shape as the input, with
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the Softmin function to an n-dimensional input Tensor\nrescaling them so that the elements of the n-dimensional output Tensor\nlie in the range `[0, 1]` and sum to 1.\n\nSoftmin is defined as:\n\n.. math::\n    \\text{Softmin}(x_{i}) = \\frac{\\exp(-x_i)}{\\sum_j \\exp(-x_j)}\n\nShape:\n    - Input: :math:`(*)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(*)`, same shape as the input\n\nArguments:\n    dim (int): A dimension along which Softmin will be computed (so every slice\n        along dim will sum to 1).\n\n\nExamples::\n\n    >>> m = nn.Softmin()\n    >>> input = torch.randn(2, 3)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the Softmin function to an n-dimensional input Tensor
+rescaling them so that the elements of the n-dimensional output Tensor
+lie in the range `[0, 1]` and sum to 1.
+
+Softmin is defined as:
+
+.. math::
+    \\text{Softmin}(x_{i}) = \\frac{\\exp(-x_i)}{\\sum_j \\exp(-x_j)}
+
+Shape:
+    - Input: :math:`(*)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(*)`, same shape as the input
+
+Arguments:
+    dim (int): A dimension along which Softmin will be computed (so every slice
+        along dim will sum to 1).
+
+
+Examples::
+
+    >>> m = nn.Softmin()
+    >>> input = torch.randn(2, 3)
+    >>> output = m(input)"""
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="dim",
+        "--__constants__", type=str, action="append", required=True, default="dim"
     )
-    argument_parser.add_argument("--dim", type=int, help="")
+    argument_parser.add_argument("--dim", type=int)
     return argument_parser
 
 
@@ -656,7 +1086,30 @@ def SoftplusConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{Softplus}(x) = \\frac{1}{\\beta} * \\log(1 + \\exp(\\beta * x))\n\nSoftPlus is a smooth approximation to the ReLU function and can be used\nto constrain the output of a machine to always be positive.\n\nFor numerical stability the implementation reverts to the linear function\nwhen :math:`input \\times \\beta > threshold`.\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/Softplus.png\n\nExamples::\n\n    >>> m = nn.Softplus()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{Softplus}(x) = \\frac{1}{\\beta} * \\log(1 + \\exp(\\beta * x))
+
+SoftPlus is a smooth approximation to the ReLU function and can be used
+to constrain the output of a machine to always be positive.
+
+For numerical stability the implementation reverts to the linear function
+when :math:`input \\times \\beta > threshold`.
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/Softplus.png
+
+Examples::
+
+    >>> m = nn.Softplus()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--beta",
         type=int,
@@ -672,11 +1125,7 @@ def SoftplusConfig(argument_parser):
         default=20,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=loads,
-        help="",
-        required=True,
-        default="['beta', 'threshold']",
+        "--__constants__", type=loads, required=True, default="['beta', 'threshold']"
     )
     return argument_parser
 
@@ -691,7 +1140,29 @@ def SoftshrinkConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the soft shrinkage function elementwise:\n\n.. math::\n    \\text{SoftShrinkage}(x) =\n    \\begin{cases}\n    x - \\lambda, & \\text{ if } x > \\lambda \\\\\n    x + \\lambda, & \\text{ if } x < -\\lambda \\\\\n    0, & \\text{ otherwise }\n    \\end{cases}\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/Softshrink.png\n\nExamples::\n\n    >>> m = nn.Softshrink()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the soft shrinkage function elementwise:
+
+.. math::
+    \\text{SoftShrinkage}(x) =
+    \\begin{cases}
+    x - \\lambda, & \\text{ if } x > \\lambda \\\\
+    x + \\lambda, & \\text{ if } x < -\\lambda \\\\
+    0, & \\text{ otherwise }
+    \\end{cases}
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/Softshrink.png
+
+Examples::
+
+    >>> m = nn.Softshrink()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--lambd",
         type=float,
@@ -700,12 +1171,7 @@ def SoftshrinkConfig(argument_parser):
         default=0.5,
     )
     argument_parser.add_argument(
-        "--__constants__",
-        type=str,
-        action="append",
-        help="",
-        required=True,
-        default="lambd",
+        "--__constants__", type=str, action="append", required=True, default="lambd"
     )
     return argument_parser
 
@@ -720,7 +1186,23 @@ def SoftsignConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{SoftSign}(x) = \\frac{x}{ 1 + |x|}\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/Softsign.png\n\nExamples::\n\n    >>> m = nn.Softsign()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{SoftSign}(x) = \\frac{x}{ 1 + |x|}
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/Softsign.png
+
+Examples::
+
+    >>> m = nn.Softsign()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     return argument_parser
 
 
@@ -734,7 +1216,23 @@ def TanhConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{Tanh}(x) = \\tanh(x) = \\frac{\\exp(x) - \\exp(-x)} {\\exp(x) + \\exp(-x)}\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/Tanh.png\n\nExamples::\n\n    >>> m = nn.Tanh()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{Tanh}(x) = \\tanh(x) = \\frac{\\exp(x) - \\exp(-x)} {\\exp(x) + \\exp(-x)}
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/Tanh.png
+
+Examples::
+
+    >>> m = nn.Tanh()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     return argument_parser
 
 
@@ -748,7 +1246,23 @@ def TanhshrinkConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Applies the element-wise function:\n\n.. math::\n    \\text{Tanhshrink}(x) = x - \\tanh(x)\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\n.. image:: ../scripts/activation_images/Tanhshrink.png\n\nExamples::\n\n    >>> m = nn.Tanhshrink()\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Applies the element-wise function:
+
+.. math::
+    \\text{Tanhshrink}(x) = x - \\tanh(x)
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+.. image:: ../scripts/activation_images/Tanhshrink.png
+
+Examples::
+
+    >>> m = nn.Tanhshrink()
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     return argument_parser
 
 
@@ -762,10 +1276,31 @@ def ThresholdConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "Thresholds each element of the input Tensor.\n\nThreshold is defined as:\n\n.. math::\n    y =\n    \\begin{cases}\n    x, &\\text{ if } x > \\text{threshold} \\\\\n    \\text{value}, &\\text{ otherwise }\n    \\end{cases}\n\n\nShape:\n    - Input: :math:`(N, *)` where `*` means, any number of additional\n      dimensions\n    - Output: :math:`(N, *)`, same shape as the input\n\nExamples::\n\n    >>> m = nn.Threshold(0.1, 20)\n    >>> input = torch.randn(2)\n    >>> output = m(input)"
+    argument_parser.description = """Thresholds each element of the input Tensor.
+
+Threshold is defined as:
+
+.. math::
+    y =
+    \\begin{cases}
+    x, &\\text{ if } x > \\text{threshold} \\\\
+    \\text{value}, &\\text{ otherwise }
+    \\end{cases}
+
+
+Shape:
+    - Input: :math:`(N, *)` where `*` means, any number of additional
+      dimensions
+    - Output: :math:`(N, *)`, same shape as the input
+
+Examples::
+
+    >>> m = nn.Threshold(0.1, 20)
+    >>> input = torch.randn(2)
+    >>> output = m(input)"""
     argument_parser.add_argument(
         "--threshold",
-        type=float,
+        type=bool,
         help="The value to threshold at",
         required=True,
         default=False,
@@ -783,7 +1318,6 @@ def ThresholdConfig(argument_parser):
     argument_parser.add_argument(
         "--__constants__",
         type=loads,
-        help="",
         required=True,
         default="['threshold', 'value', 'inplace']",
     )

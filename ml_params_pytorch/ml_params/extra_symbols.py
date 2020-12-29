@@ -9,7 +9,7 @@ extra_symbols = {
     if mod == "losses"
     else mod: import_module("ml_params_pytorch.ml_params.{mod}".format(mod=mod))
     for mod in (
-        "activation",
+        "activations",
         "datasets",
         "losses",
         "optimizer_lr_schedulers",
