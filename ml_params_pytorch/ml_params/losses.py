@@ -1,8 +1,6 @@
 """ Generated Loss CLI parsers """
 from yaml import safe_load as loads
 
-NoneType = type(None)
-
 
 def BCELossConfig(argument_parser):
     """
@@ -81,7 +79,6 @@ Examples::
         type=str,
         help="""a manual rescaling weight given to the loss
         of each batch element. If given, has to be a Tensor of size `nbatch`.""",
-        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -201,7 +198,6 @@ Shape:
         type=str,
         help="""a manual rescaling weight given to the loss
         of each batch element. If given, has to be a Tensor of size `nbatch`.""",
-        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -358,7 +354,7 @@ Note:
         default=0,
     )
     argument_parser.add_argument(
-        "--__constants__", type=loads, required=True, default="['blank', 'reduction']"
+        "--__constants__", type=loads, required=True, default='["blank", "reduction"]'
     )
     argument_parser.add_argument(
         "--zero_infinity", type=bool, required=True, default=False
@@ -428,7 +424,7 @@ The loss function for each sample is:
         default=True,
     )
     argument_parser.add_argument(
-        "--__constants__", type=loads, required=True, default="['margin', 'reduction']"
+        "--__constants__", type=loads, required=True, default='["margin", "reduction"]'
     )
     argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
@@ -519,7 +515,6 @@ Examples::
         type=str,
         help="""a manual rescaling weight given to each class.
         If given, has to be a Tensor of size `C`""",
-        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -553,7 +548,7 @@ Examples::
         "--__constants__",
         type=loads,
         required=True,
-        default="['ignore_index', 'reduction']",
+        default='["ignore_index", "reduction"]',
     )
     argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
@@ -634,7 +629,7 @@ Shape:
         default=True,
     )
     argument_parser.add_argument(
-        "--__constants__", type=loads, required=True, default="['margin', 'reduction']"
+        "--__constants__", type=loads, required=True, default='["margin", "reduction"]'
     )
     argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
@@ -982,7 +977,7 @@ Examples::
         default=True,
     )
     argument_parser.add_argument(
-        "--__constants__", type=loads, required=True, default="['margin', 'reduction']"
+        "--__constants__", type=loads, required=True, default='["margin", "reduction"]'
     )
     argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
@@ -1109,7 +1104,6 @@ Shape:
         help="""a manual rescaling weight given to each
         class. If given, it has to be a Tensor of size `C`. Otherwise, it is
         treated as if having all ones.""",
-        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -1197,7 +1191,6 @@ The loss function then becomes:
         help="""a manual rescaling weight given to each
         class. If given, it has to be a Tensor of size `C`. Otherwise, it is
         treated as if having all ones.""",
-        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -1222,7 +1215,7 @@ The loss function then becomes:
         "--__constants__",
         type=loads,
         required=True,
-        default="['p', 'margin', 'reduction']",
+        default='["p", "margin", "reduction"]',
     )
     argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
@@ -1334,7 +1327,6 @@ Examples::
         help="""a manual rescaling weight given to each
         class. If given, it has to be a Tensor of size `C`. Otherwise, it is
         treated as if having all ones.""",
-        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -1369,7 +1361,7 @@ Examples::
         "--__constants__",
         type=loads,
         required=True,
-        default="['ignore_index', 'reduction']",
+        default='["ignore_index", "reduction"]',
     )
     argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
@@ -1481,7 +1473,6 @@ Examples::
         help="""a manual rescaling weight given to each
         class. If given, it has to be a Tensor of size `C`. Otherwise, it is
         treated as if having all ones.""",
-        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -1557,12 +1548,12 @@ Examples::
         required=True,
         default=False,
     )
-    argument_parser.add_argument("--norm", type=float, required=True)
+    argument_parser.add_argument("--norm", type=str)
     argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
-        default="['norm', 'eps', 'keepdim']",
+        default='["norm", "eps", "keepdim"]',
     )
     return argument_parser
 
@@ -1643,16 +1634,16 @@ Shape:
         required=True,
         default=False,
     )
+    argument_parser.add_argument("--eps", type=float, required=True, default=1e-08)
     argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
-        default="['log_input', 'full', 'eps', 'reduction']",
+        default='["log_input", "full", "eps", "reduction"]',
     )
-    argument_parser.add_argument("--eps", type=float, required=True, default=1e-08)
-    argument_parser.add_argument("--size_average", required=True)
+    argument_parser.add_argument("--size_average", type=str)
+    argument_parser.add_argument("--reduce", type=str)
     argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
-    argument_parser.add_argument("--reduce", required=True)
     return argument_parser
 
 
@@ -1733,8 +1724,8 @@ Shape:
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     argument_parser.add_argument("--beta", type=float, required=True, default=1.0)
+    argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
 
 
@@ -1896,7 +1887,7 @@ Shape:
         "--__constants__",
         type=loads,
         required=True,
-        default="['margin', 'p', 'eps', 'swap', 'reduction']",
+        default='["margin", "p", "eps", "swap", "reduction"]',
     )
     argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
@@ -2002,8 +1993,6 @@ Reference:
         help="""A nonnegative, real-valued function that
         quantifies the closeness of two tensors. If not specified,
         `nn.PairwiseDistance` will be used. """,
-        required=True,
-        default="None",
     )
     argument_parser.add_argument(
         "--margin",
@@ -2030,7 +2019,7 @@ Reference:
         "--__constants__",
         type=loads,
         required=True,
-        default="['margin', 'swap', 'reduction']",
+        default='["margin", "swap", "reduction"]',
     )
     return argument_parser
 

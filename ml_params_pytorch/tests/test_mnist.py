@@ -28,10 +28,10 @@ class TestMnist(TestCase):
         rmtree(TestMnist.model_dir)
 
     def test_mnist(self) -> None:
-        num_classes = 10
-        epochs = 3
+        num_classes: int = 10
+        epochs: int = 3
 
-        trainer = TorchTrainer()
+        trainer: TorchTrainer = TorchTrainer()
         trainer.load_data(
             "MNIST",
             datasets_dir=TestMnist.pytorch_datasets_dir,

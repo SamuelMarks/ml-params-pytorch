@@ -1,14 +1,25 @@
 """
-Implementation of ml_params BaseTrainer API
-"""
+    Implementation of ml_params BaseTrainer API
+    """
 from functools import partial
 from os import path
-from typing import Any, Callable, Literal, Optional
+from typing import (
+    Any,
+    AnyStr,
+    Callable,
+    Dict,
+    Iterable,
+    Iterator,
+    Optional,
+    Tuple,
+    Union,
+)
 
 import torch.cuda
 import torch.optim
 import torch.utils.data
 from ml_params.base import BaseTrainer
+from typing_extensions import Literal
 
 from ml_params_pytorch import get_logger
 from ml_params_pytorch.ml_params.datasets import (
@@ -29,6 +40,14 @@ logger = get_logger(
         )
     )
 )
+try:
+    import tensorflow as tf
+except ImportError:
+    tf = None
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 
 class TorchTrainer(BaseTrainer):
@@ -76,7 +95,88 @@ class TorchTrainer(BaseTrainer):
             "VOCDetection",
             "VOCSegmentation",
         ],
-        data_loader=load_data_from_torchvision_or_ml_prepare,
+        data_loader: Optional[
+            Callable[
+                [AnyStr, Literal["np", "tf"], bool, Dict],
+                Tuple[
+                    Union[
+                        Tuple[tf.data.Dataset, tf.data.Dataset],
+                        Tuple[
+                            Iterator[
+                                Union[
+                                    tf.RaggedTensor,
+                                    np.ndarray,
+                                    np.generic,
+                                    bytes,
+                                    Iterable[
+                                        Union[
+                                            tf.RaggedTensor,
+                                            np.ndarray,
+                                            np.generic,
+                                            bytes,
+                                        ]
+                                    ],
+                                ]
+                            ],
+                            Iterator[
+                                Union[
+                                    tf.RaggedTensor,
+                                    np.ndarray,
+                                    np.generic,
+                                    bytes,
+                                    Iterable[
+                                        Union[
+                                            tf.RaggedTensor,
+                                            np.ndarray,
+                                            np.generic,
+                                            bytes,
+                                        ]
+                                    ],
+                                ]
+                            ],
+                        ],
+                    ],
+                    Union[
+                        Tuple[tf.data.Dataset, tf.data.Dataset],
+                        Tuple[
+                            Iterator[
+                                Union[
+                                    tf.RaggedTensor,
+                                    np.ndarray,
+                                    np.generic,
+                                    bytes,
+                                    Iterable[
+                                        Union[
+                                            tf.RaggedTensor,
+                                            np.ndarray,
+                                            np.generic,
+                                            bytes,
+                                        ]
+                                    ],
+                                ]
+                            ],
+                            Iterator[
+                                Union[
+                                    tf.RaggedTensor,
+                                    np.ndarray,
+                                    np.generic,
+                                    bytes,
+                                    Iterable[
+                                        Union[
+                                            tf.RaggedTensor,
+                                            np.ndarray,
+                                            np.generic,
+                                            bytes,
+                                        ]
+                                    ],
+                                ]
+                            ],
+                        ],
+                    ],
+                    Dict,
+                ],
+            ]
+        ] = load_data_from_torchvision_or_ml_prepare,
         data_type="infer",
         output_type="numpy",
         K=None,

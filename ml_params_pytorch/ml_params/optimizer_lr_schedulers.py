@@ -1,5 +1,4 @@
 """ Generated Optimizer_lr_scheduler CLI parsers """
-NoneType = type(None)
 
 
 def CosineAnnealingLRConfig(argument_parser):
@@ -50,7 +49,7 @@ implements the cosine annealing part of SGDR, and not the restarts.
         type=str,
         help="Maximum number of iterations.",
         required=True,
-        default="```(-1)```",
+        default="(-1)",
     )
     argument_parser.add_argument(
         "--eta_min", type=int, help="Minimum learning rate.", required=True, default=0
@@ -279,7 +278,6 @@ Example:
         type=str,
         help="""Initial learning rate which is the
         lower boundary in the cycle for each parameter group.""",
-        required=True,
     )
     argument_parser.add_argument(
         "--max_lr",
@@ -308,8 +306,6 @@ Example:
         help="""Number of training iterations in the
         decreasing half of a cycle. If step_size_down is None,
         it is set to step_size_up.""",
-        required=True,
-        default="None",
     )
     argument_parser.add_argument(
         "--mode",
@@ -321,16 +317,18 @@ Example:
         required=True,
         default="triangular",
     )
+    argument_parser.add_argument("--max_momentum")
+    argument_parser.add_argument("--verbose")
+    argument_parser.add_argument("--last_epoch")
     argument_parser.add_argument("--scale_mode", type=float, required=True, default=0.9)
-    argument_parser.add_argument("--verbose", required=True)
-    argument_parser.add_argument("--base_momentum", required=True, default=False)
-    argument_parser.add_argument("--scale_fn", type=float, required=True, default=0.8)
-    argument_parser.add_argument("--gamma", type=bool, required=True, default=True)
-    argument_parser.add_argument("--max_momentum", required=True)
-    argument_parser.add_argument("--last_epoch", required=True)
     argument_parser.add_argument(
-        "--cycle_momentum", type=str, required=True, default="```(-1)```"
+        "--cycle_momentum", type=str, required=True, default="(-1)"
     )
+    argument_parser.add_argument(
+        "--base_momentum", type=bool, required=True, default=False
+    )
+    argument_parser.add_argument("--gamma", type=bool, required=True, default=True)
+    argument_parser.add_argument("--scale_fn", type=float, required=True, default=0.8)
     return argument_parser
 
 
@@ -351,7 +349,7 @@ When last_epoch=-1, sets initial lr as lr."""
         type=str,
         help="Wrapped optimizer.",
         required=True,
-        default="```(-1)```",
+        default="(-1)",
     )
     argument_parser.add_argument(
         "--gamma",
@@ -406,7 +404,7 @@ Example:
         type=str,
         help="Wrapped optimizer.",
         required=True,
-        default="```(-1)```",
+        default="(-1)",
     )
     argument_parser.add_argument(
         "--lr_lambda",
@@ -469,7 +467,7 @@ Example:
         type=str,
         help="List of epoch indices. Must be increasing.",
         required=True,
-        default="```(-1)```",
+        default="(-1)",
     )
     argument_parser.add_argument(
         "--gamma",
@@ -523,7 +521,7 @@ Example:
         type=str,
         help="Wrapped optimizer.",
         required=True,
-        default="```(-1)```",
+        default="(-1)",
     )
     argument_parser.add_argument(
         "--lr_lambda",
@@ -600,15 +598,12 @@ Example:
 
 .. _Super-Convergence\\: Very Fast Training of Neural Networks Using Large Learning Rates:
     https://arxiv.org/abs/1708.07120"""
-    argument_parser.add_argument(
-        "--optimizer", type=str, help="Wrapped optimizer.", required=True
-    )
+    argument_parser.add_argument("--optimizer", type=str, help="Wrapped optimizer.")
     argument_parser.add_argument(
         "--max_lr",
         type=str,
         help="""Upper learning rate boundaries in the cycle
         for each parameter group.""",
-        required=True,
     )
     argument_parser.add_argument(
         "--total_steps",
@@ -617,18 +612,16 @@ Example:
         if a value is not provided here, then it must be inferred by providing
         a value for epochs and steps_per_epoch.
        """,
-        required=True,
-        default="None",
     )
     argument_parser.add_argument(
         "--epochs",
-        type=str,
+        type=float,
         help="""The number of epochs to train for. This is used along
         with steps_per_epoch in order to infer the total number of steps in the cycle
         if a value for total_steps is not provided.
        """,
         required=True,
-        default="None",
+        default=0.3,
     )
     argument_parser.add_argument(
         "--steps_per_epoch",
@@ -638,7 +631,7 @@ Example:
         cycle if a value for total_steps is not provided.
        """,
         required=True,
-        default="None",
+        default="cos",
     )
     argument_parser.add_argument(
         "--pct_start",
@@ -882,7 +875,7 @@ Example:
         type=str,
         help="Period of learning rate decay.",
         required=True,
-        default="```(-1)```",
+        default="(-1)",
     )
     argument_parser.add_argument(
         "--gamma",

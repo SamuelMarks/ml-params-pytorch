@@ -17,20 +17,15 @@ def train_parser(argument_parser):
     """
     argument_parser.description = "Run the training loop for your ML pipeline."
     argument_parser.add_argument(
-        "--epochs",
-        type=int,
-        help="number of epochs (must be greater than 0)",
-        required=True,
+        "--epochs", help="number of epochs (must be greater than 0)", required=True
     )
     argument_parser.add_argument(
         "--optimizer",
-        type=str,
         help="Optimizer, can be a string (depending on the framework) or an instance of a class",
         required=True,
     )
     argument_parser.add_argument(
         "--loss",
-        type=str,
         help="Loss function, can be a string (depending on the framework) or an instance of a class",
         required=True,
     )
@@ -42,9 +37,7 @@ def train_parser(argument_parser):
         required=True,
         default="StepLR",
     )
-    argument_parser.add_argument(
-        "--activation", type=str, help="Activation function", required=True
-    )
+    argument_parser.add_argument("--activation", type=str, help="Activation function")
     argument_parser.add_argument(
         "--metric_emit_freq",
         type=int,
@@ -119,7 +112,6 @@ def load_data_parser(argument_parser):
     argument_parser.add_argument("--output_type", type=str, help="outgoing data_type,")
     argument_parser.add_argument(
         "--K",
-        type=str,
         choices=("np", "tf"),
         help="backend engine, e.g., `np` or `tf`",
         required=True,
@@ -146,7 +138,6 @@ def load_model_parser(argument_parser):
 Takes a model object, or a pipeline that downloads & configures before returning a model object."""
     argument_parser.add_argument(
         "--model",
-        type=str,
         help="model object, e.g., a tf.keras.Sequential, tl.Serial,  nn.Module instance",
         required=True,
     )

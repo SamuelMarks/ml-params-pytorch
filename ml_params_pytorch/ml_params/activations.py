@@ -1,8 +1,6 @@
 """ Generated Activation CLI parsers """
 from yaml import safe_load as loads
 
-NoneType = type(None)
-
 
 def CELUConfig(argument_parser):
     """
@@ -52,7 +50,7 @@ Examples::
         default=False,
     )
     argument_parser.add_argument(
-        "--__constants__", type=loads, required=True, default="['alpha', 'inplace']"
+        "--__constants__", type=loads, required=True, default='["alpha", "inplace"]'
     )
     return argument_parser
 
@@ -103,7 +101,7 @@ Examples::
         default=False,
     )
     argument_parser.add_argument(
-        "--__constants__", type=loads, required=True, default="['alpha', 'inplace']"
+        "--__constants__", type=loads, required=True, default='["alpha", "inplace"]'
     )
     return argument_parser
 
@@ -379,10 +377,10 @@ Examples::
         "--__constants__",
         type=loads,
         required=True,
-        default="['min_val', 'max_val', 'inplace']",
+        default='["min_val", "max_val", "inplace"]',
     )
-    argument_parser.add_argument("--min_value", type=float)
     argument_parser.add_argument("--max_value", type=float)
+    argument_parser.add_argument("--min_value", type=float)
     return argument_parser
 
 
@@ -442,7 +440,7 @@ Examples::
         "--__constants__",
         type=loads,
         required=True,
-        default="['inplace', 'negative_slope']",
+        default='["inplace", "negative_slope"]',
     )
     return argument_parser
 
@@ -484,8 +482,8 @@ def LogSoftmaxConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser,     a Tensor of the same dimension and shape as the input with
-    :rtype: ```ArgumentParser```
+    :return: argument_parser, values in the range [-inf, 0)
+    :rtype: ```Tuple[ArgumentParser, a Tensor of the same dimension and shape as the input wit]```
     """
     argument_parser.description = """Applies the :math:`\\log(\\text{Softmax}(x))` function to an n-dimensional
 input Tensor. The LogSoftmax formulation can be simplified as:
@@ -498,8 +496,6 @@ Shape:
       dimensions
     - Output: :math:`(*)`, same shape as the input
 
-Arguments:
-    dim (int): A dimension along which LogSoftmax will be computed.
 
 
 Examples::
@@ -508,9 +504,11 @@ Examples::
     >>> input = torch.randn(2, 3)
     >>> output = m(input)"""
     argument_parser.add_argument(
+        "--dim", type=str, help="A dimension along which LogSoftmax will be computed."
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
     )
-    argument_parser.add_argument("--dim", type=int)
     return argument_parser
 
 
@@ -584,18 +582,10 @@ Examples::
         default=False,
     )
     argument_parser.add_argument(
-        "--kdim",
-        type=str,
-        help="total number of features in key.",
-        required=True,
-        default="None",
+        "--kdim", type=str, help="total number of features in key."
     )
     argument_parser.add_argument(
-        "--vdim",
-        type=str,
-        help="total number of features in value.",
-        required=True,
-        default="None",
+        "--vdim", type=str, help="total number of features in value."
     )
     argument_parser.add_argument("--bias_k", type=str)
     argument_parser.add_argument("--bias_v", type=str)
@@ -748,7 +738,7 @@ Examples::
         "--__constants__",
         type=loads,
         required=True,
-        default="['lower', 'upper', 'inplace']",
+        default='["lower", "upper", "inplace"]',
     )
     return argument_parser
 
@@ -964,7 +954,7 @@ def SoftmaxConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser,     a Tensor of the same dimension and shape as the input with
+    :return: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the Softmax function to an n-dimensional input Tensor
@@ -984,10 +974,10 @@ Shape:
       dimensions
     - Output: :math:`(*)`, same shape as the input
 
+Returns:
+    a Tensor of the same dimension and shape as the input with
+    values in the range [0, 1]
 
-Arguments:
-    dim (int): A dimension along which Softmax will be computed (so every slice
-        along dim will sum to 1).
 
 .. note::
     This module doesn't work directly with NLLLoss,
@@ -1000,9 +990,14 @@ Examples::
     >>> input = torch.randn(2, 3)
     >>> output = m(input)"""
     argument_parser.add_argument(
+        "--dim",
+        type=str,
+        help="""A dimension along which Softmax will be computed (so every slice
+        along dim will sum to 1).""",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
     )
-    argument_parser.add_argument("--dim", type=int)
     return argument_parser
 
 
@@ -1042,8 +1037,8 @@ def SoftminConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser,     a Tensor of the same dimension and shape as the input, with
-    :rtype: ```ArgumentParser```
+    :return: argument_parser, values in the range [0, 1]
+    :rtype: ```Tuple[ArgumentParser, a Tensor of the same dimension and shape as the input, wit]```
     """
     argument_parser.description = """Applies the Softmin function to an n-dimensional input Tensor
 rescaling them so that the elements of the n-dimensional output Tensor
@@ -1059,9 +1054,6 @@ Shape:
       dimensions
     - Output: :math:`(*)`, same shape as the input
 
-Arguments:
-    dim (int): A dimension along which Softmin will be computed (so every slice
-        along dim will sum to 1).
 
 
 Examples::
@@ -1070,9 +1062,14 @@ Examples::
     >>> input = torch.randn(2, 3)
     >>> output = m(input)"""
     argument_parser.add_argument(
+        "--dim",
+        type=str,
+        help="""A dimension along which Softmin will be computed (so every slice
+        along dim will sum to 1).""",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
     )
-    argument_parser.add_argument("--dim", type=int)
     return argument_parser
 
 
@@ -1125,7 +1122,7 @@ Examples::
         default=20,
     )
     argument_parser.add_argument(
-        "--__constants__", type=loads, required=True, default="['beta', 'threshold']"
+        "--__constants__", type=loads, required=True, default='["beta", "threshold"]'
     )
     return argument_parser
 
@@ -1306,7 +1303,7 @@ Examples::
         default=False,
     )
     argument_parser.add_argument(
-        "--value", type=float, help="The value to replace with", required=True
+        "--value", type=float, help="The value to replace with"
     )
     argument_parser.add_argument(
         "--inplace",
@@ -1319,7 +1316,7 @@ Examples::
         "--__constants__",
         type=loads,
         required=True,
-        default="['threshold', 'value', 'inplace']",
+        default='["threshold", "value", "inplace"]',
     )
     return argument_parser
 
