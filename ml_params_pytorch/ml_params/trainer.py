@@ -44,7 +44,7 @@ logger = get_logger(
 try:
     import tensorflow as tf
 except ImportError:
-    tf = type("tf", tuple(), {"data": type("Dataset", tuple(), {"Dataset": None})})
+    tf = type("tf", tuple(), {"data": type("Dataset", tuple(), {"Dataset": None}), "RaggedTensor": None})
 try:
     import numpy as np
 except ImportError:
