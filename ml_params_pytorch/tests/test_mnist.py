@@ -38,13 +38,17 @@ class TestMnist(TestCase):
             num_classes=num_classes,
         )
         trainer.load_model(model=Net, call=True)
-        trainer.train(
-            epochs=epochs,
-            model_dir=TestMnist.model_dir,
-            optimizer="Adadelta",
-            loss=F.nll_loss,
-            save_directory="/tmp",
-            metric_emit_freq=lambda batch_idx: batch_idx % 10 == 0,
+        print(
+            "trainer.train:",
+            trainer.train(
+                epochs=epochs,
+                model_dir=TestMnist.model_dir,
+                optimizer="Adadelta",
+                loss=F.nll_loss,
+                save_directory="/tmp",
+                metric_emit_freq=lambda batch_idx: batch_idx % 10 == 0,
+            ),
+            ";",
         )
 
 

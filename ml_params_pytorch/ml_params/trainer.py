@@ -401,7 +401,9 @@ class TorchTrainer(BaseTrainer):
                 **common_kwargs
             )
             test(test_loader=test_loader, **common_kwargs)
+            print("lr_sched.step next")
             lr_sched.step(None)
+        print("returning self.model")
         return self.model
 
 
