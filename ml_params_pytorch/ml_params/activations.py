@@ -587,8 +587,6 @@ Examples::
     argument_parser.add_argument(
         "--vdim", type=str, help="total number of features in value."
     )
-    argument_parser.add_argument("--bias_k", type=str)
-    argument_parser.add_argument("--bias_v", type=str)
     return argument_parser
 
 

@@ -126,7 +126,7 @@ class TrainConfig(object):
     batch_size: int = 128
     tpu_address: Optional[str] = None
     kwargs: Optional[dict] = None
-    return_type: Any = None
+    return_type: str = "```self.model```"
 
 
 class LoadDataConfig(object):
@@ -134,13 +134,12 @@ class LoadDataConfig(object):
     Load the data for your ML pipeline. Will be fed into `train`.
 
     :cvar dataset_name: name of dataset
-    :cvar data_loader: function that returns the expected data type.
-
+    :cvar data_loader: function returning the expected data type. PyTorch Datasets & ml_prepare combined if unset.
     :cvar data_type: incoming data type
-    :cvar output_type: outgoing data_type,
+    :cvar output_type: outgoing data_type, when unset, there is no conversion
     :cvar K: backend engine, e.g., `np` or `tf`
     :cvar data_loader_kwargs: pass this as arguments to data_loader function
-    :cvar return_type: Dataset splits (by default, your train and test)"""
+    :cvar return_type: Dataset splits (setup to give your train and test)"""
 
     dataset_name: Literal[
         "CIFAR10",
@@ -248,9 +247,9 @@ class LoadDataConfig(object):
                 Dict,
             ],
         ]
-    ] = "PyTorch Datasets and ml_prepare combined one"
+    ] = "infer"
     data_type: str = "numpy"
-    output_type: Optional[Literal["numpy"]] = "no conversion"
+    output_type: Optional[Literal["numpy"]] = None
     K: Literal["np", "tf"] = None
     data_loader_kwargs: Optional[dict] = None
     return_type: Tuple[np.ndarray, np.ndarray] = "```self.data```"

@@ -9,6 +9,7 @@ from collections import namedtuple
 from importlib import import_module
 from importlib.util import find_spec
 from os import path
+from typing import List, Optional
 
 from ml_params_pytorch import get_logger
 
@@ -24,12 +25,11 @@ p = (
 )
 
 
-def main(argv=None):
+def main(argv: Optional[List[str]] = None):
     """
     CLI main function for doctrans_cli_gen
 
     :param argv: argv, defaults to ```sys.argv```
-    :type argv: ```Optional[List[str]]```
     """
     argv = argv or sys.argv
     usage = "Usage: {executable} {script} <module_name>".format(

@@ -27,18 +27,17 @@ import torch.nn.modules
 import torchvision
 
 
-def _torch_members(mod: Union[ModuleType, Any], ignore=frozenset()) -> Dict[str, Any]:
+def _torch_members(
+    mod: Union[ModuleType, Any], ignore: frozenset = frozenset()
+) -> Dict[str, Any]:
     """
     Acquire the members from a torch module (filtered)
 
     :param mod: The module to run `dir` or `getmembers` against
-    :type mod: ```Union[ModuleType, Any]```
 
     :param ignore: The members to ignore
-    :type ignore: ```frozenset```
 
     :return: members
-    :rtype: ```Dict[str, Any]```
     """
 
     return {

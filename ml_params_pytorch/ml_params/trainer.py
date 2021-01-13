@@ -1,6 +1,6 @@
 """
-    Implementation of ml_params BaseTrainer API
-    """
+Implementation of ml_params BaseTrainer API
+"""
 from functools import partial
 from os import path
 from typing import (
@@ -10,6 +10,7 @@ from typing import (
     Dict,
     Iterable,
     Iterator,
+    List,
     Optional,
     Tuple,
     Union,
@@ -178,35 +179,26 @@ class TorchTrainer(BaseTrainer):
             ]
         ] = load_data_from_torchvision_or_ml_prepare,
         data_type="infer",
-        output_type="numpy",
-        K=None,
+        output_type: Optional[Literal["numpy"]] = "numpy",
+        K: Literal["np", "tf"] = None,
         **data_loader_kwargs
-    ):
+    ) -> Union[Tuple[tf.data.Dataset, tf.data.Dataset], Tuple[np.ndarray, np.ndarray]]:
         """
         Load the data for your ML pipeline. Will be fed into `train`.
 
         :param dataset_name: name of dataset
-        :type dataset_name: ```str```
 
-        :param data_loader: function that returns the expected data type.
-         Defaults to PyTorch Datasets and ml_prepare combined one.
-        :type data_loader: ```Callable[[...], Union[Tuple[tf.data.Dataset, tf.data.Dataset],
-         Tuple[np.ndarray, np.ndarray], Tuple[Any, Any]]```
-
-        :param data_loader_kwargs: pass this as arguments to data_loader function
-        :type data_loader_kwargs: ```**data_loader_kwargs```
+        :param data_loader: function returning the expected data type. PyTorch Datasets & ml_prepare combined if unset.
 
         :param data_type: incoming data type
-        :type data_type: ```str```
 
-        :param output_type: outgoing data_type, defaults to no conversion
-        :type output_type: ```Optional[Literal['numpy']]```
+        :param output_type: outgoing data_type, when unset, there is no conversion
 
         :param K: backend engine, e.g., `np` or `tf`
-        :type K: ```Literal['np', 'tf']```
 
-        :return: Dataset splits (by default, your train and test)
-        :rtype: ```Tuple[np.ndarray, np.ndarray]```
+        :param data_loader_kwargs: pass this as arguments to data_loader function
+
+        :return: Dataset splits (setup to give your train and test)
         """
         self.data = super(TorchTrainer, self).load_data(
             dataset_name=dataset_name,
@@ -231,7 +223,7 @@ class TorchTrainer(BaseTrainer):
 
         :param call: whether to call `model()` even if `len(model_kwargs) == 0`
 
-        :param **model_kwargs: to be passed into the model. If empty, doesn't call, unless call=True.
+        :param model_kwargs: to be passed into the model. If empty, doesn't call, unless call=True.
 
         :return: self.model, e.g., the result of applying `model_kwargs` on model
         """
@@ -331,7 +323,7 @@ class TorchTrainer(BaseTrainer):
         batch_size: int = 128,
         tpu_address: Optional[str] = None,
         **kwargs
-    ):
+    ) -> torch.nn.Module:
         """
         Run the training loop for your ML pipeline.
 
@@ -359,7 +351,6 @@ class TorchTrainer(BaseTrainer):
         :param kwargs: additional keyword arguments
 
         :return: the model
-        :rtype: ```Any```
         """
         super(TorchTrainer, self).train(epochs=epochs)
         assert self.data is not None
@@ -407,23 +398,22 @@ class TorchTrainer(BaseTrainer):
             )
             test(test_loader=test_loader, **common_kwargs)
             lr_sched.step(None)
+        return self.model
 
 
-def acquire_symbols_from(name2sym, name, never_str=False):
+def acquire_symbols_from(
+    name2sym: Dict[str, Any], name: Union[Any, str], never_str: bool = False
+) -> Optional[Union[Any, str, List[Union[Any, str]]]]:
     """
     Acquire the symbol(s) from the iterable
 
     :param name2sym: Dict from symbol name to symbol
-    :type name2sym: ```Dict[Str, Any]```
 
     :param name: Name of symbol. All namespace is removed.
-    :type name: ```Union[Any, str]```
 
     :param never_str: If True, ensure that `getattr` on the module is always called
-    :type never_str: ```bool```
 
     :return: The list of symbols acquired from the module
-    :rtype: ```Optional[List[Union[Any, str]]]```
     """
     if isinstance(name, str):
         name = name.rpartition(".")[2] if name.count(".") > 0 else name

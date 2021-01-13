@@ -46,10 +46,10 @@ implements the cosine annealing part of SGDR, and not the restarts.
     )
     argument_parser.add_argument(
         "--T_max",
-        type=str,
+        type=int,
         help="Maximum number of iterations.",
         required=True,
-        default="(-1)",
+        default=-1,
     )
     argument_parser.add_argument(
         "--eta_min", type=int, help="Minimum learning rate.", required=True, default=0
@@ -317,18 +317,18 @@ Example:
         required=True,
         default="triangular",
     )
-    argument_parser.add_argument("--max_momentum")
-    argument_parser.add_argument("--verbose")
-    argument_parser.add_argument("--last_epoch")
     argument_parser.add_argument("--scale_mode", type=float, required=True, default=0.9)
-    argument_parser.add_argument(
-        "--cycle_momentum", type=str, required=True, default="(-1)"
-    )
     argument_parser.add_argument(
         "--base_momentum", type=bool, required=True, default=False
     )
+    argument_parser.add_argument(
+        "--cycle_momentum", type=int, required=True, default=-1
+    )
     argument_parser.add_argument("--gamma", type=bool, required=True, default=True)
+    argument_parser.add_argument("--verbose")
+    argument_parser.add_argument("--last_epoch")
     argument_parser.add_argument("--scale_fn", type=float, required=True, default=0.8)
+    argument_parser.add_argument("--max_momentum")
     return argument_parser
 
 
@@ -345,11 +345,7 @@ def ExponentialLRConfig(argument_parser):
     argument_parser.description = """Decays the learning rate of each parameter group by gamma every epoch.
 When last_epoch=-1, sets initial lr as lr."""
     argument_parser.add_argument(
-        "--optimizer",
-        type=str,
-        help="Wrapped optimizer.",
-        required=True,
-        default="(-1)",
+        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=-1
     )
     argument_parser.add_argument(
         "--gamma",
@@ -400,11 +396,7 @@ Example:
     >>>     validate(...)
     >>>     scheduler.step()"""
     argument_parser.add_argument(
-        "--optimizer",
-        type=str,
-        help="Wrapped optimizer.",
-        required=True,
-        default="(-1)",
+        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=-1
     )
     argument_parser.add_argument(
         "--lr_lambda",
@@ -464,10 +456,10 @@ Example:
     )
     argument_parser.add_argument(
         "--milestones",
-        type=str,
+        type=int,
         help="List of epoch indices. Must be increasing.",
         required=True,
-        default="(-1)",
+        default=-1,
     )
     argument_parser.add_argument(
         "--gamma",
@@ -517,11 +509,7 @@ Example:
     >>>     validate(...)
     >>>     scheduler.step()"""
     argument_parser.add_argument(
-        "--optimizer",
-        type=str,
-        help="Wrapped optimizer.",
-        required=True,
-        default="(-1)",
+        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=-1
     )
     argument_parser.add_argument(
         "--lr_lambda",
@@ -872,10 +860,10 @@ Example:
     )
     argument_parser.add_argument(
         "--step_size",
-        type=str,
+        type=int,
         help="Period of learning rate decay.",
         required=True,
-        default="(-1)",
+        default=-1,
     )
     argument_parser.add_argument(
         "--gamma",
