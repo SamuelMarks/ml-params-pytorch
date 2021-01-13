@@ -12,7 +12,7 @@ from yaml import safe_load as loads
 try:
     import numpy as np
 except ImportError:
-    np = None
+    np = type("np", tuple(), {"ndarray": None})
 
 datasets2classes = (
     {}

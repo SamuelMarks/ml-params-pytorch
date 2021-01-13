@@ -16,11 +16,11 @@ from typing import (
 try:
     import tensorflow as tf
 except ImportError:
-    tf = None
+    tf = type("tf", tuple(), {"data": type("Dataset", tuple(), {"Dataset": None})})
 try:
     import numpy as np
 except ImportError:
-    np = None
+    np = type("np", tuple(), {"ndarray": None})
 import torch.nn
 
 
