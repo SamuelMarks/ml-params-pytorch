@@ -317,18 +317,18 @@ Example:
         required=True,
         default="triangular",
     )
-    argument_parser.add_argument("--scale_mode", type=float, required=True, default=0.9)
+    argument_parser.add_argument("--verbose")
+    argument_parser.add_argument("--max_momentum")
+    argument_parser.add_argument("--last_epoch")
     argument_parser.add_argument(
         "--base_momentum", type=bool, required=True, default=False
     )
+    argument_parser.add_argument("--gamma", type=bool, required=True, default=True)
+    argument_parser.add_argument("--scale_fn", type=float, required=True, default=0.8)
     argument_parser.add_argument(
         "--cycle_momentum", type=int, required=True, default=-1
     )
-    argument_parser.add_argument("--gamma", type=bool, required=True, default=True)
-    argument_parser.add_argument("--verbose")
-    argument_parser.add_argument("--last_epoch")
-    argument_parser.add_argument("--scale_fn", type=float, required=True, default=0.8)
-    argument_parser.add_argument("--max_momentum")
+    argument_parser.add_argument("--scale_mode", type=float, required=True, default=0.9)
     return argument_parser
 
 

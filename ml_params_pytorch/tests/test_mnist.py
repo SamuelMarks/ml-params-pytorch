@@ -35,7 +35,7 @@ class TestMnist(TestCase):
         trainer.load_data(
             "MNIST",
             tfds_dir=TestMnist.pytorch_datasets_dir,
-            # num_classes=num_classes,
+            num_classes=num_classes,
         )
         trainer.load_model(model=Net, call=True)
         trainer.train(

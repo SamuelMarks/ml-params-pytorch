@@ -1,3 +1,5 @@
+""" Generated Config parsers """
+
 from typing import (
     Any,
     AnyStr,
@@ -252,7 +254,9 @@ class LoadDataConfig(object):
     output_type: Optional[Literal["numpy"]] = None
     K: Literal["np", "tf"] = None
     data_loader_kwargs: Optional[dict] = None
-    return_type: Tuple[np.ndarray, np.ndarray] = "```self.data```"
+    return_type: Union[
+        Tuple[tf.data.Dataset, tf.data.Dataset], Tuple[np.ndarray, np.ndarray]
+    ] = "```self.data```"
 
 
 class LoadModelConfig(object):

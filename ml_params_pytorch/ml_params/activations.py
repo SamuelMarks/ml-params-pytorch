@@ -379,8 +379,8 @@ Examples::
         required=True,
         default='["min_val", "max_val", "inplace"]',
     )
-    argument_parser.add_argument("--max_value", type=float)
     argument_parser.add_argument("--min_value", type=float)
+    argument_parser.add_argument("--max_value", type=float)
     return argument_parser
 
 

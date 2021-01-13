@@ -356,10 +356,10 @@ Note:
     argument_parser.add_argument(
         "--__constants__", type=loads, required=True, default='["blank", "reduction"]'
     )
+    argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     argument_parser.add_argument(
         "--zero_infinity", type=bool, required=True, default=False
     )
-    argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
 
 
@@ -1639,9 +1639,9 @@ Shape:
         required=True,
         default='["log_input", "full", "eps", "reduction"]',
     )
-    argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
-    argument_parser.add_argument("--size_average", type=str)
     argument_parser.add_argument("--reduce", type=str)
+    argument_parser.add_argument("--size_average", type=str)
+    argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     argument_parser.add_argument("--eps", type=float, required=True, default=1e-08)
     return argument_parser
 
@@ -1723,8 +1723,8 @@ Shape:
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     argument_parser.add_argument("--beta", type=float, required=True, default=1.0)
+    argument_parser.add_argument("--reduction", type=str, required=True, default="mean")
     return argument_parser
 
 
