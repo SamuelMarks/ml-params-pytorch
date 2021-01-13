@@ -3,7 +3,13 @@
 from importlib import import_module
 from os import environ, path
 from pkgutil import find_loader
-from typing import Literal, Optional, Tuple
+from sys import version_info
+from typing import Optional, Tuple
+
+if version_info[:2] < (3, 8):
+    from typing_extensions import Literal
+else:
+    from typing import Literal
 
 from ml_params.datasets import load_data_from_ml_prepare
 from torchvision import datasets, transforms

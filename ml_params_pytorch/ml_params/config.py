@@ -1,5 +1,5 @@
 """ Generated Config parsers """
-
+from sys import version_info
 from typing import (
     Any,
     AnyStr,
@@ -7,16 +7,24 @@ from typing import (
     Dict,
     Iterable,
     Iterator,
-    Literal,
     Optional,
     Tuple,
     Union,
 )
 
+if version_info[:2] < (3, 8):
+    from typing_extensions import Literal
+else:
+    from typing import Literal
+
 try:
     import tensorflow as tf
 except ImportError:
-    tf = type("tf", tuple(), {"data": type("Dataset", tuple(), {"Dataset": None}), "RaggedTensor": None})
+    tf = type(
+        "tf",
+        tuple(),
+        {"data": type("Dataset", tuple(), {"Dataset": None}), "RaggedTensor": None},
+    )
 try:
     import numpy as np
 except ImportError:
