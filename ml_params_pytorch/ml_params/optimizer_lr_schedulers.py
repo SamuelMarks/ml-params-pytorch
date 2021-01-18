@@ -42,14 +42,10 @@ implements the cosine annealing part of SGDR, and not the restarts.
 .. _SGDR\\: Stochastic Gradient Descent with Warm Restarts:
     https://arxiv.org/abs/1608.03983"""
     argument_parser.add_argument(
-        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=0
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
-        "--T_max",
-        type=int,
-        help="Maximum number of iterations.",
-        required=True,
-        default=-1,
+        "--T_max", type=int, help="Maximum number of iterations.", required=True
     )
     argument_parser.add_argument(
         "--eta_min", type=int, help="Minimum learning rate.", required=True, default=0
@@ -64,8 +60,7 @@ implements the cosine annealing part of SGDR, and not the restarts.
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )
@@ -101,14 +96,13 @@ It has been proposed in
 .. _SGDR\\: Stochastic Gradient Descent with Warm Restarts:
     https://arxiv.org/abs/1608.03983"""
     argument_parser.add_argument(
-        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=1
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
         "--T_0",
         type=int,
         help="Number of iterations for the first restart.",
         required=True,
-        default=0,
     )
     argument_parser.add_argument(
         "--T_mult",
@@ -125,8 +119,7 @@ It has been proposed in
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )
@@ -271,64 +264,46 @@ Example:
 .. _Cyclical Learning Rates for Training Neural Networks: https://arxiv.org/abs/1506.01186
 .. _bckenstler/CLR: https://github.com/bckenstler/CLR"""
     argument_parser.add_argument(
-        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=2000
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
         "--base_lr",
-        type=str,
-        help="""Initial learning rate which is the
-        lower boundary in the cycle for each parameter group.""",
+        help="Initial learning rate which is the lower boundary in the cycle for each parameter group.",
+        required=True,
     )
     argument_parser.add_argument(
         "--max_lr",
-        type=str,
-        help="""Upper learning rate boundaries in the cycle
-        for each parameter group. Functionally,
-        it defines the cycle amplitude (max_lr - base_lr).
-        The lr at any cycle is the sum of base_lr
-        and some scaling of the amplitude; therefore
-        max_lr may not actually be reached depending on
-        scaling function.""",
+        help="Upper learning rate boundaries in the cycle for each parameter group. Functionally, it defines the cycle amplitude (max_lr - base_lr). The lr at any cycle is the sum of base_lr and some scaling of the amplitude; therefore max_lr may not actually be reached depending on scaling function.",
         required=True,
-        default="triangular",
     )
     argument_parser.add_argument(
         "--step_size_up",
         type=int,
-        help="""Number of training iterations in the
-        increasing half of a cycle.""",
+        help="Number of training iterations in the increasing half of a cycle.",
         required=True,
         default=2000,
     )
     argument_parser.add_argument(
         "--step_size_down",
-        type=str,
-        help="""Number of training iterations in the
-        decreasing half of a cycle. If step_size_down is None,
-        it is set to step_size_up.""",
+        type=int,
+        help="Number of training iterations in the decreasing half of a cycle. If step_size_down is None, it is set to step_size_up.",
     )
     argument_parser.add_argument(
         "--mode",
-        type=str,
-        help="""One of {triangular, triangular2, exp_range}.
-        Values correspond to policies detailed above.
-        If scale_fn is not None, this argument is ignored.
-       """,
+        help="One of {triangular, triangular2, exp_range}. Values correspond to policies detailed above. If scale_fn is not None, this argument is ignored.",
         required=True,
         default="triangular",
     )
-    argument_parser.add_argument("--verbose")
+    argument_parser.add_argument("--gamma")
+    argument_parser.add_argument("--cycle_momentum")
+    argument_parser.add_argument("--last_epoch", required=True, default="triangular")
+    argument_parser.add_argument("--scale_mode")
     argument_parser.add_argument("--max_momentum")
-    argument_parser.add_argument("--last_epoch")
     argument_parser.add_argument(
-        "--base_momentum", type=bool, required=True, default=False
+        "--base_momentum", type=int, required=True, default=2000
     )
-    argument_parser.add_argument("--gamma", type=bool, required=True, default=True)
-    argument_parser.add_argument("--scale_fn", type=float, required=True, default=0.8)
-    argument_parser.add_argument(
-        "--cycle_momentum", type=int, required=True, default=-1
-    )
-    argument_parser.add_argument("--scale_mode", type=float, required=True, default=0.9)
+    argument_parser.add_argument("--verbose", type=float, required=True, default=1.0)
+    argument_parser.add_argument("--scale_fn")
     return argument_parser
 
 
@@ -345,14 +320,13 @@ def ExponentialLRConfig(argument_parser):
     argument_parser.description = """Decays the learning rate of each parameter group by gamma every epoch.
 When last_epoch=-1, sets initial lr as lr."""
     argument_parser.add_argument(
-        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=-1
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
         "--gamma",
-        type=bool,
+        type=float,
         help="Multiplicative factor of learning rate decay.",
         required=True,
-        default=False,
     )
     argument_parser.add_argument(
         "--last_epoch",
@@ -364,8 +338,7 @@ When last_epoch=-1, sets initial lr as lr."""
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )
@@ -396,16 +369,12 @@ Example:
     >>>     validate(...)
     >>>     scheduler.step()"""
     argument_parser.add_argument(
-        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=-1
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
         "--lr_lambda",
-        type=bool,
-        help="""A function which computes a multiplicative
-        factor given an integer parameter epoch, or a list of such
-        functions, one for each group in optimizer.param_groups.""",
+        help="A function which computes a multiplicative factor given an integer parameter epoch, or a list of such functions, one for each group in optimizer.param_groups.",
         required=True,
-        default=False,
     )
     argument_parser.add_argument(
         "--last_epoch",
@@ -417,8 +386,7 @@ Example:
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )
@@ -452,20 +420,15 @@ Example:
     >>>     validate(...)
     >>>     scheduler.step()"""
     argument_parser.add_argument(
-        "--optimizer", type=float, help="Wrapped optimizer.", required=True, default=0.1
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
-        "--milestones",
-        type=int,
-        help="List of epoch indices. Must be increasing.",
-        required=True,
-        default=-1,
+        "--milestones", help="List of epoch indices. Must be increasing.", required=True
     )
     argument_parser.add_argument(
         "--gamma",
         type=float,
-        help="""Multiplicative factor of learning rate decay.
-       """,
+        help="Multiplicative factor of learning rate decay.",
         required=True,
         default=0.1,
     )
@@ -479,8 +442,7 @@ Example:
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )
@@ -509,16 +471,12 @@ Example:
     >>>     validate(...)
     >>>     scheduler.step()"""
     argument_parser.add_argument(
-        "--optimizer", type=int, help="Wrapped optimizer.", required=True, default=-1
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
         "--lr_lambda",
-        type=bool,
-        help="""A function which computes a multiplicative
-        factor given an integer parameter epoch, or a list of such
-        functions, one for each group in optimizer.param_groups.""",
+        help="A function which computes a multiplicative factor given an integer parameter epoch, or a list of such functions, one for each group in optimizer.param_groups.",
         required=True,
-        default=False,
     )
     argument_parser.add_argument(
         "--last_epoch",
@@ -530,8 +488,7 @@ Example:
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )
@@ -586,128 +543,89 @@ Example:
 
 .. _Super-Convergence\\: Very Fast Training of Neural Networks Using Large Learning Rates:
     https://arxiv.org/abs/1708.07120"""
-    argument_parser.add_argument("--optimizer", type=str, help="Wrapped optimizer.")
+    argument_parser.add_argument(
+        "--optimizer", help="Wrapped optimizer.", required=True
+    )
     argument_parser.add_argument(
         "--max_lr",
-        type=str,
-        help="""Upper learning rate boundaries in the cycle
-        for each parameter group.""",
+        help="Upper learning rate boundaries in the cycle for each parameter group.",
+        required=True,
     )
     argument_parser.add_argument(
         "--total_steps",
-        type=str,
-        help="""The total number of steps in the cycle. Note that
-        if a value is not provided here, then it must be inferred by providing
-        a value for epochs and steps_per_epoch.
-       """,
+        type=int,
+        help="The total number of steps in the cycle. Note that if a value is not provided here, then it must be inferred by providing a value for epochs and steps_per_epoch.",
     )
     argument_parser.add_argument(
         "--epochs",
-        type=float,
-        help="""The number of epochs to train for. This is used along
-        with steps_per_epoch in order to infer the total number of steps in the cycle
-        if a value for total_steps is not provided.
-       """,
-        required=True,
-        default=0.3,
+        type=int,
+        help="The number of epochs to train for. This is used along with steps_per_epoch in order to infer the total number of steps in the cycle if a value for total_steps is not provided.",
     )
     argument_parser.add_argument(
         "--steps_per_epoch",
-        type=str,
-        help="""The number of steps per epoch to train for. This is
-        used along with epochs in order to infer the total number of steps in the
-        cycle if a value for total_steps is not provided.
-       """,
-        required=True,
-        default="cos",
+        type=int,
+        help="The number of steps per epoch to train for. This is used along with epochs in order to infer the total number of steps in the cycle if a value for total_steps is not provided.",
     )
     argument_parser.add_argument(
         "--pct_start",
         type=float,
-        help="""The percentage of the cycle (in number of steps) spent
-        increasing the learning rate.
-       """,
+        help="The percentage of the cycle (in number of steps) spent increasing the learning rate.",
         required=True,
         default=0.3,
     )
     argument_parser.add_argument(
         "--anneal_strategy",
-        type=str,
-        help="""{'cos', 'linear'}
-        Specifies the annealing strategy: "cos" for cosine annealing, "linear" for
-        linear annealing.
-       """,
+        choices=("cos", "linear"),
+        help='Specifies the annealing strategy: "cos" for cosine annealing, "linear" for linear annealing.',
         required=True,
         default="cos",
     )
     argument_parser.add_argument(
         "--cycle_momentum",
         type=bool,
-        help="""If ``True``, momentum is cycled inversely
-        to learning rate between 'base_momentum' and 'max_momentum'.
-       """,
+        help="If ``True``, momentum is cycled inversely to learning rate between 'base_momentum' and 'max_momentum'.",
         required=True,
         default=True,
     )
     argument_parser.add_argument(
         "--base_momentum",
         type=float,
-        help="""Lower momentum boundaries in the cycle
-        for each parameter group. Note that momentum is cycled inversely
-        to learning rate; at the peak of a cycle, momentum is
-        'base_momentum' and learning rate is 'max_lr'.
-       """,
+        help="Lower momentum boundaries in the cycle for each parameter group. Note that momentum is cycled inversely to learning rate; at the peak of a cycle, momentum is 'base_momentum' and learning rate is 'max_lr'.",
         required=True,
         default=0.85,
     )
     argument_parser.add_argument(
         "--max_momentum",
         type=float,
-        help="""Upper momentum boundaries in the cycle
-        for each parameter group. Functionally,
-        it defines the cycle amplitude (max_momentum - base_momentum).
-        Note that momentum is cycled inversely
-        to learning rate; at the start of a cycle, momentum is 'max_momentum'
-        and learning rate is 'base_lr'
-       """,
+        help="Upper momentum boundaries in the cycle for each parameter group. Functionally, it defines the cycle amplitude (max_momentum - base_momentum). Note that momentum is cycled inversely to learning rate; at the start of a cycle, momentum is 'max_momentum' and learning rate is 'base_lr'",
         required=True,
         default=0.95,
     )
     argument_parser.add_argument(
         "--div_factor",
         type=float,
-        help="""Determines the initial learning rate via
-        initial_lr = max_lr/div_factor
-       """,
+        help="Determines the initial learning rate via initial_lr = max_lr/div_factor",
         required=True,
         default=25.0,
     )
     argument_parser.add_argument(
         "--final_div_factor",
         type=float,
-        help="""Determines the minimum learning rate via
-        min_lr = initial_lr/final_div_factor
-       """,
+        help="Determines the minimum learning rate via min_lr = initial_lr/final_div_factor",
         required=True,
         default=10000.0,
     )
     argument_parser.add_argument(
         "--last_epoch",
         type=int,
-        help="""The index of the last batch. This parameter is used when
-        resuming a training job. Since `step()` should be invoked after each
-        batch instead of after each epoch, this number represents the total
-        number of *batches* computed, not the total number of epochs computed.
-        When last_epoch=-1, the schedule is started from the beginning.
-       """,
+        help="The index of the last batch. This parameter is used when resuming a training job. Since `step()` should be invoked after each batch instead of after each epoch, this number represents the total number of *batches* computed, not the total number of epochs computed. When last_epoch=-1, the schedule is started from the beginning.",
         required=True,
         default=-1,
     )
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )
@@ -740,88 +658,66 @@ Example:
     >>>     # Note that step should be called after validate()
     >>>     scheduler.step(val_loss)"""
     argument_parser.add_argument(
-        "--optimizer", type=str, help="Wrapped optimizer.", required=True, default="min"
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
         "--mode",
-        type=str,
-        help="""One of `min`, `max`. In `min` mode, lr will
-        be reduced when the quantity monitored has stopped
-        decreasing; in `max` mode it will be reduced when the
-        quantity monitored has stopped increasing.""",
+        help="One of `min`, `max`. In `min` mode, lr will be reduced when the quantity monitored has stopped decreasing; in `max` mode it will be reduced when the quantity monitored has stopped increasing.",
         required=True,
         default="min",
     )
     argument_parser.add_argument(
         "--factor",
         type=float,
-        help="""Factor by which the learning rate will be
-        reduced. new_lr = lr * factor.""",
+        help="Factor by which the learning rate will be reduced. new_lr = lr * factor.",
         required=True,
         default=0.1,
     )
     argument_parser.add_argument(
         "--patience",
         type=int,
-        help="""Number of epochs with no improvement after
-        which learning rate will be reduced. For example, if
-        `patience = 2`, then we will ignore the first 2 epochs
-        with no improvement, and will only decrease the LR after the
-        3rd epoch if the loss still hasn't improved then.
-       """,
+        help="Number of epochs with no improvement after which learning rate will be reduced. For example, if `patience = 2`, then we will ignore the first 2 epochs with no improvement, and will only decrease the LR after the 3rd epoch if the loss still hasn't improved then.",
         required=True,
         default=10,
     )
     argument_parser.add_argument(
         "--threshold",
         type=float,
-        help="""Threshold for measuring the new optimum,
-        to only focus on significant changes.""",
+        help="Threshold for measuring the new optimum, to only focus on significant changes.",
         required=True,
         default=0.0001,
     )
     argument_parser.add_argument(
         "--threshold_mode",
-        type=str,
-        help="""One of `rel`, `abs`. In `rel` mode,
-        dynamic_threshold = best * ( 1 + threshold ) in 'max'
-        mode or best * ( 1 - threshold ) in `min` mode.
-        In `abs` mode, dynamic_threshold = best + threshold in
-        `max` mode or best - threshold in `min` mode.""",
+        help="One of `rel`, `abs`. In `rel` mode, dynamic_threshold = best * ( 1 + threshold ) in 'max' mode or best * ( 1 - threshold ) in `min` mode. In `abs` mode, dynamic_threshold = best + threshold in `max` mode or best - threshold in `min` mode.",
         required=True,
         default="rel",
     )
     argument_parser.add_argument(
         "--cooldown",
         type=int,
-        help="""Number of epochs to wait before resuming
-        normal operation after lr has been reduced.""",
+        help="Number of epochs to wait before resuming normal operation after lr has been reduced.",
         required=True,
         default=0,
     )
     argument_parser.add_argument(
         "--min_lr",
         type=int,
-        help="""A scalar or a list of scalars. A
-        lower bound on the learning rate of all param groups
-        or each group respectively.""",
+        help="A scalar or a list of scalars. A lower bound on the learning rate of all param groups or each group respectively.",
         required=True,
         default=0,
     )
     argument_parser.add_argument(
         "--eps",
         type=float,
-        help="""Minimal decay applied to lr. If the difference
-        between new and old lr is smaller than eps, the update is
-        ignored.""",
+        help="Minimal decay applied to lr. If the difference between new and old lr is smaller than eps, the update is ignored.",
         required=True,
         default=1e-08,
     )
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )
@@ -856,20 +752,15 @@ Example:
     >>>     validate(...)
     >>>     scheduler.step()"""
     argument_parser.add_argument(
-        "--optimizer", type=float, help="Wrapped optimizer.", required=True, default=0.1
+        "--optimizer", help="Wrapped optimizer.", required=True
     )
     argument_parser.add_argument(
-        "--step_size",
-        type=int,
-        help="Period of learning rate decay.",
-        required=True,
-        default=-1,
+        "--step_size", type=int, help="Period of learning rate decay.", required=True
     )
     argument_parser.add_argument(
         "--gamma",
         type=float,
-        help="""Multiplicative factor of learning rate decay.
-       """,
+        help="Multiplicative factor of learning rate decay.",
         required=True,
         default=0.1,
     )
@@ -883,8 +774,7 @@ Example:
     argument_parser.add_argument(
         "--verbose",
         type=bool,
-        help="""If ``True``, prints a message to stdout for
-        each update.""",
+        help="If ``True``, prints a message to stdout for each update.",
         required=True,
         default=False,
     )

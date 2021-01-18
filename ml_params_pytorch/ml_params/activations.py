@@ -504,7 +504,7 @@ Examples::
     >>> input = torch.randn(2, 3)
     >>> output = m(input)"""
     argument_parser.add_argument(
-        "--dim", type=str, help="A dimension along which LogSoftmax will be computed."
+        "--dim", help="A dimension along which LogSoftmax will be computed."
     )
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
@@ -539,18 +539,10 @@ Examples::
     >>> multihead_attn = nn.MultiheadAttention(embed_dim, num_heads)
     >>> attn_output, attn_output_weights = multihead_attn(query, key, value)"""
     argument_parser.add_argument(
-        "--embed_dim",
-        type=float,
-        help="total dimension of the model.",
-        required=True,
-        default=0.0,
+        "--embed_dim", help="total dimension of the model.", required=True
     )
     argument_parser.add_argument(
-        "--num_heads",
-        type=bool,
-        help="parallel attention heads.",
-        required=True,
-        default=True,
+        "--num_heads", help="parallel attention heads.", required=True
     )
     argument_parser.add_argument(
         "--dropout",
@@ -576,17 +568,12 @@ Examples::
     argument_parser.add_argument(
         "--add_zero_attn",
         type=bool,
-        help="""add a new batch of zeros to the key and
-                   value sequences at dim=1.""",
+        help="add a new batch of zeros to the key and value sequences at dim=1.",
         required=True,
         default=False,
     )
-    argument_parser.add_argument(
-        "--kdim", type=str, help="total number of features in key."
-    )
-    argument_parser.add_argument(
-        "--vdim", type=str, help="total number of features in value."
-    )
+    argument_parser.add_argument("--kdim", help="total number of features in key.")
+    argument_parser.add_argument("--vdim", help="total number of features in value.")
     return argument_parser
 
 
@@ -645,9 +632,7 @@ Examples::
     argument_parser.add_argument(
         "--num_parameters",
         type=int,
-        help="""number of :math:`a` to learn.
-        Although it takes an int as input, there is only two values are legitimate:
-        1, or the number of channels at input.""",
+        help="number of :math:`a` to learn. Although it takes an int as input, there is only two values are legitimate: 1, or the number of channels at input.",
         required=True,
         default=1,
     )
@@ -989,9 +974,7 @@ Examples::
     >>> output = m(input)"""
     argument_parser.add_argument(
         "--dim",
-        type=str,
-        help="""A dimension along which Softmax will be computed (so every slice
-        along dim will sum to 1).""",
+        help="A dimension along which Softmax will be computed (so every slice along dim will sum to 1).",
     )
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
@@ -1006,7 +989,7 @@ def Softmax2dConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser,     a Tensor of the same dimension and shape as the input with
+    :return: argument_parser, a Tensor of the same dimension and shape as the input with
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies SoftMax over features to each spatial location.
@@ -1061,9 +1044,7 @@ Examples::
     >>> output = m(input)"""
     argument_parser.add_argument(
         "--dim",
-        type=str,
-        help="""A dimension along which Softmin will be computed (so every slice
-        along dim will sum to 1).""",
+        help="A dimension along which Softmin will be computed (so every slice along dim will sum to 1).",
     )
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
@@ -1294,11 +1275,7 @@ Examples::
     >>> input = torch.randn(2)
     >>> output = m(input)"""
     argument_parser.add_argument(
-        "--threshold",
-        type=bool,
-        help="The value to threshold at",
-        required=True,
-        default=False,
+        "--threshold", type=float, help="The value to threshold at"
     )
     argument_parser.add_argument(
         "--value", type=float, help="The value to replace with"

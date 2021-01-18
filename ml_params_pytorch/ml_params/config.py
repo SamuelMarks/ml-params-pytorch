@@ -1,4 +1,6 @@
-""" Generated Config parsers """
+"""
+Generated Config parsers
+"""
 from sys import version_info
 from typing import (
     Any,
@@ -16,7 +18,6 @@ if version_info[:2] < (3, 8):
     from typing_extensions import Literal
 else:
     from typing import Literal
-
 try:
     import tensorflow as tf
 except ImportError:
@@ -39,8 +40,7 @@ class TrainConfig(object):
     :cvar epochs: number of epochs (must be greater than 0)
     :cvar optimizer: Optimizer, can be a string (depending on the framework) or an instance of a class
     :cvar loss: Loss function, can be a string (depending on the framework) or an instance of a class
-    :cvar lr_scheduler: Learning rate scheduler.
-    E.g., `StepLR` will decay the lr of each param group by gamma every step_size epochs.
+    :cvar lr_scheduler: Learning rate scheduler. E.g., `StepLR` will decay the lr of each param group by gamma every step_size epochs.
     :cvar activation: Activation function
     :cvar metric_emit_freq: `None` for every epoch. E.g., `eq(mod(epochs, 10), 0)` for every 10.
     :cvar output_type: `if save_directory is not None` then save in this format, e.g., 'h5'.
@@ -187,7 +187,7 @@ class LoadDataConfig(object):
         "USPS",
         "VOCDetection",
         "VOCSegmentation",
-    ] = "load_data_from_torchvision_or_ml_prepare"
+    ] = None
     data_loader: Optional[
         Callable[
             [AnyStr, Literal["np", "tf"], bool, Dict],
@@ -257,8 +257,8 @@ class LoadDataConfig(object):
                 Dict,
             ],
         ]
-    ] = "infer"
-    data_type: str = "numpy"
+    ] = None
+    data_type: Any = None
     output_type: Optional[Literal["numpy"]] = None
     K: Literal["np", "tf"] = None
     data_loader_kwargs: Optional[dict] = None
