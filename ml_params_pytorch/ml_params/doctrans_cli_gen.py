@@ -51,18 +51,21 @@ def main(argv: Optional[List[str]] = None):
             "{tab}--{opt} '{val!s}'".format(tab=tab, opt=opt.replace("_", "-"), val=val)
             for opt, val in dict(
                 name_tpl="{name}Config",
-                input_mapping="ml_params_pytorch.ml_params.type_generators.exposed_{mod_pl}".format(
-                    mod_pl=mod_pl
+                input_mapping=(
+                    "ml_params_pytorch.ml_params.type_generators.exposed_{mod_pl}"
+                    .format(mod_pl=mod_pl)
                 ),
-                prepend='""" Generated {mod_cap} CLI parsers """\\n'
-                "from typing import Optional, Union\\n"
-                "from {typing} import Literal\\n\\n"
-                "from dataclasses import dataclass\\n\\n"
-                "from yaml import safe_load as loads\\n\\n".format(
-                    mod_cap=mod_cap,
-                    typing="typing"
-                    if sys.version_info[:2] < (3, 8)
-                    else "typing_extensions",
+                prepend=(
+                    '""" Generated {mod_cap} CLI parsers """\\n'
+                    "from typing import Optional, Union\\n"
+                    "from {typing} import Literal\\n\\n"
+                    "from dataclasses import dataclass\\n\\n"
+                    "from yaml import safe_load as loads\\n\\n".format(
+                        mod_cap=mod_cap,
+                        typing="typing"
+                        if sys.version_info[:2] < (3, 8)
+                        else "typing_extensions",
+                    )
                 ),
                 # imports_from_file=None,
                 type="argparse",

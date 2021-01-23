@@ -12,8 +12,7 @@ def train(model, device, train_loader, optimizer, epoch, metric_emit_freq, loss_
         optimizer.step()
         if metric_emit_freq(batch_idx):
             print(
-                "Train Epoch: {} [{}/{} ({:.0f}%)]\t"
-                "Loss: {:.6f}".format(
+                "Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}".format(
                     epoch,
                     batch_idx * len(data),
                     len(train_loader.dataset),

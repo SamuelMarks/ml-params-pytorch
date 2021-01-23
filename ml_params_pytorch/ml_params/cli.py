@@ -34,7 +34,10 @@ def train_parser(argument_parser):
             "SGD",
             "SparseAdam",
         ),
-        help="Optimizer, can be a string (depending on the framework) or an instance of a class",
+        help=(
+            "Optimizer, can be a string (depending on the framework) or an instance of"
+            " a class"
+        ),
         required=True,
     )
     argument_parser.add_argument(
@@ -52,7 +55,10 @@ def train_parser(argument_parser):
             "ReduceLROnPlateau",
             "StepLR",
         ),
-        help="Loss function, can be a string (depending on the framework) or an instance of a class",
+        help=(
+            "Loss function, can be a string (depending on the framework) or an instance"
+            " of a class"
+        ),
         required=True,
     )
     argument_parser.add_argument(
@@ -136,7 +142,10 @@ def train_parser(argument_parser):
     argument_parser.add_argument(
         "--validation_split",
         type=float,
-        help="Optional float between 0 and 1, fraction of data to reserve for validation.",
+        help=(
+            "Optional float between 0 and 1, fraction of data to reserve for"
+            " validation."
+        ),
         default=0.1,
     )
     argument_parser.add_argument(
@@ -217,7 +226,10 @@ def load_data_parser(argument_parser):
         "--data_loader",
         type=str,
         choices=("np", "tf"),
-        help="function returning the expected data type. PyTorch Datasets & ml_prepare combined if unset.",
+        help=(
+            "function returning the expected data type. PyTorch Datasets & ml_prepare"
+            " combined if unset."
+        ),
         default="infer",
     )
     argument_parser.add_argument(
@@ -260,7 +272,9 @@ def load_model_parser(argument_parser):
 Takes a model object, or a pipeline that downloads & configures before returning a model object."""
     argument_parser.add_argument(
         "--model",
-        help="model object, e.g., a tf.keras.Sequential, tl.Serial,  nn.Module instance",
+        help=(
+            "model object, e.g., a tf.keras.Sequential, tl.Serial,  nn.Module instance"
+        ),
         required=True,
     )
     argument_parser.add_argument(

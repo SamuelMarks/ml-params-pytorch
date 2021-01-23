@@ -379,8 +379,8 @@ Examples::
         required=True,
         default='["min_val", "max_val", "inplace"]',
     )
-    argument_parser.add_argument("--min_value", type=float)
     argument_parser.add_argument("--max_value", type=float)
+    argument_parser.add_argument("--min_value", type=float)
     return argument_parser
 
 
@@ -574,6 +574,8 @@ Examples::
     )
     argument_parser.add_argument("--kdim", help="total number of features in key.")
     argument_parser.add_argument("--vdim", help="total number of features in value.")
+    argument_parser.add_argument("--bias_v")
+    argument_parser.add_argument("--bias_k")
     return argument_parser
 
 
@@ -632,7 +634,9 @@ Examples::
     argument_parser.add_argument(
         "--num_parameters",
         type=int,
-        help="number of :math:`a` to learn. Although it takes an int as input, there is only two values are legitimate: 1, or the number of channels at input.",
+        help="""number of :math:`a` to learn. Although it takes an int as input, there
+is only two values are legitimate: 1, or the number of channels at
+input.""",
         required=True,
         default=1,
     )
@@ -974,7 +978,8 @@ Examples::
     >>> output = m(input)"""
     argument_parser.add_argument(
         "--dim",
-        help="A dimension along which Softmax will be computed (so every slice along dim will sum to 1).",
+        help="""A dimension along which Softmax will be computed (so every slice along
+dim will sum to 1).""",
     )
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
@@ -1044,7 +1049,8 @@ Examples::
     >>> output = m(input)"""
     argument_parser.add_argument(
         "--dim",
-        help="A dimension along which Softmin will be computed (so every slice along dim will sum to 1).",
+        help="""A dimension along which Softmin will be computed (so every slice along
+dim will sum to 1).""",
     )
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
@@ -1142,7 +1148,8 @@ Examples::
     argument_parser.add_argument(
         "--lambd",
         type=float,
-        help="the :math:`\\lambda` (must be no less than zero) value for the Softshrink formulation.",
+        help="""the :math:`\\lambda` (must be no less than zero) value for the
+Softshrink formulation.""",
         required=True,
         default=0.5,
     )

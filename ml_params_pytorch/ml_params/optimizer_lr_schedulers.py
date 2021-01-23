@@ -268,12 +268,17 @@ Example:
     )
     argument_parser.add_argument(
         "--base_lr",
-        help="Initial learning rate which is the lower boundary in the cycle for each parameter group.",
+        help="""Initial learning rate which is the lower boundary in the cycle for
+each parameter group.""",
         required=True,
     )
     argument_parser.add_argument(
         "--max_lr",
-        help="Upper learning rate boundaries in the cycle for each parameter group. Functionally, it defines the cycle amplitude (max_lr - base_lr). The lr at any cycle is the sum of base_lr and some scaling of the amplitude; therefore max_lr may not actually be reached depending on scaling function.",
+        help="""Upper learning rate boundaries in the cycle for each parameter group.
+Functionally, it defines the cycle amplitude (max_lr - base_lr). The
+lr at any cycle is the sum of base_lr and some scaling of the
+amplitude; therefore max_lr may not actually be reached depending on
+scaling function.""",
         required=True,
     )
     argument_parser.add_argument(
@@ -286,23 +291,26 @@ Example:
     argument_parser.add_argument(
         "--step_size_down",
         type=int,
-        help="Number of training iterations in the decreasing half of a cycle. If step_size_down is None, it is set to step_size_up.",
+        help="""Number of training iterations in the decreasing half of a cycle. If
+step_size_down is None, it is set to step_size_up.""",
     )
     argument_parser.add_argument(
         "--mode",
-        help="One of {triangular, triangular2, exp_range}. Values correspond to policies detailed above. If scale_fn is not None, this argument is ignored.",
+        help="""One of {triangular, triangular2, exp_range}. Values correspond to
+policies detailed above. If scale_fn is not None, this argument is
+ignored.""",
         required=True,
         default="triangular",
     )
-    argument_parser.add_argument("--gamma")
-    argument_parser.add_argument("--cycle_momentum")
-    argument_parser.add_argument("--last_epoch", required=True, default="triangular")
-    argument_parser.add_argument("--scale_mode")
     argument_parser.add_argument("--max_momentum")
+    argument_parser.add_argument("--scale_mode")
     argument_parser.add_argument(
         "--base_momentum", type=int, required=True, default=2000
     )
     argument_parser.add_argument("--verbose", type=float, required=True, default=1.0)
+    argument_parser.add_argument("--gamma")
+    argument_parser.add_argument("--cycle_momentum")
+    argument_parser.add_argument("--last_epoch", required=True, default="triangular")
     argument_parser.add_argument("--scale_fn")
     return argument_parser
 
@@ -373,7 +381,9 @@ Example:
     )
     argument_parser.add_argument(
         "--lr_lambda",
-        help="A function which computes a multiplicative factor given an integer parameter epoch, or a list of such functions, one for each group in optimizer.param_groups.",
+        help="""A function which computes a multiplicative factor given an integer
+parameter epoch, or a list of such functions, one for each group in
+optimizer.param_groups.""",
         required=True,
     )
     argument_parser.add_argument(
@@ -475,7 +485,9 @@ Example:
     )
     argument_parser.add_argument(
         "--lr_lambda",
-        help="A function which computes a multiplicative factor given an integer parameter epoch, or a list of such functions, one for each group in optimizer.param_groups.",
+        help="""A function which computes a multiplicative factor given an integer
+parameter epoch, or a list of such functions, one for each group in
+optimizer.param_groups.""",
         required=True,
     )
     argument_parser.add_argument(
@@ -554,71 +566,92 @@ Example:
     argument_parser.add_argument(
         "--total_steps",
         type=int,
-        help="The total number of steps in the cycle. Note that if a value is not provided here, then it must be inferred by providing a value for epochs and steps_per_epoch.",
+        help="""The total number of steps in the cycle. Note that if a value is not
+provided here, then it must be inferred by providing a value for
+epochs and steps_per_epoch.""",
     )
     argument_parser.add_argument(
         "--epochs",
         type=int,
-        help="The number of epochs to train for. This is used along with steps_per_epoch in order to infer the total number of steps in the cycle if a value for total_steps is not provided.",
+        help="""The number of epochs to train for. This is used along with
+steps_per_epoch in order to infer the total number of steps in the
+cycle if a value for total_steps is not provided.""",
     )
     argument_parser.add_argument(
         "--steps_per_epoch",
         type=int,
-        help="The number of steps per epoch to train for. This is used along with epochs in order to infer the total number of steps in the cycle if a value for total_steps is not provided.",
+        help="""The number of steps per epoch to train for. This is used along with
+epochs in order to infer the total number of steps in the cycle if a
+value for total_steps is not provided.""",
     )
     argument_parser.add_argument(
         "--pct_start",
         type=float,
-        help="The percentage of the cycle (in number of steps) spent increasing the learning rate.",
+        help="""The percentage of the cycle (in number of steps) spent increasing the
+learning rate.""",
         required=True,
         default=0.3,
     )
     argument_parser.add_argument(
         "--anneal_strategy",
         choices=("cos", "linear"),
-        help='Specifies the annealing strategy: "cos" for cosine annealing, "linear" for linear annealing.',
+        help="""Specifies the annealing strategy: "cos" for cosine annealing, "linear"
+for linear annealing.""",
         required=True,
         default="cos",
     )
     argument_parser.add_argument(
         "--cycle_momentum",
         type=bool,
-        help="If ``True``, momentum is cycled inversely to learning rate between 'base_momentum' and 'max_momentum'.",
+        help="""If ``True``, momentum is cycled inversely to learning rate between
+'base_momentum' and 'max_momentum'.""",
         required=True,
         default=True,
     )
     argument_parser.add_argument(
         "--base_momentum",
         type=float,
-        help="Lower momentum boundaries in the cycle for each parameter group. Note that momentum is cycled inversely to learning rate; at the peak of a cycle, momentum is 'base_momentum' and learning rate is 'max_lr'.",
+        help="""Lower momentum boundaries in the cycle for each parameter group. Note
+that momentum is cycled inversely to learning rate; at the peak of a
+cycle, momentum is 'base_momentum' and learning rate is 'max_lr'.""",
         required=True,
         default=0.85,
     )
     argument_parser.add_argument(
         "--max_momentum",
         type=float,
-        help="Upper momentum boundaries in the cycle for each parameter group. Functionally, it defines the cycle amplitude (max_momentum - base_momentum). Note that momentum is cycled inversely to learning rate; at the start of a cycle, momentum is 'max_momentum' and learning rate is 'base_lr'",
+        help="""Upper momentum boundaries in the cycle for each parameter group.
+Functionally, it defines the cycle amplitude (max_momentum -
+base_momentum). Note that momentum is cycled inversely to learning
+rate; at the start of a cycle, momentum is 'max_momentum' and learning
+rate is 'base_lr'""",
         required=True,
         default=0.95,
     )
     argument_parser.add_argument(
         "--div_factor",
         type=float,
-        help="Determines the initial learning rate via initial_lr = max_lr/div_factor",
+        help="""Determines the initial learning rate via initial_lr =
+max_lr/div_factor""",
         required=True,
         default=25.0,
     )
     argument_parser.add_argument(
         "--final_div_factor",
         type=float,
-        help="Determines the minimum learning rate via min_lr = initial_lr/final_div_factor",
+        help="""Determines the minimum learning rate via min_lr =
+initial_lr/final_div_factor""",
         required=True,
         default=10000.0,
     )
     argument_parser.add_argument(
         "--last_epoch",
         type=int,
-        help="The index of the last batch. This parameter is used when resuming a training job. Since `step()` should be invoked after each batch instead of after each epoch, this number represents the total number of *batches* computed, not the total number of epochs computed. When last_epoch=-1, the schedule is started from the beginning.",
+        help="""The index of the last batch. This parameter is used when resuming a
+training job. Since `step()` should be invoked after each batch
+instead of after each epoch, this number represents the total number
+of *batches* computed, not the total number of epochs computed. When
+last_epoch=-1, the schedule is started from the beginning.""",
         required=True,
         default=-1,
     )
@@ -662,55 +695,68 @@ Example:
     )
     argument_parser.add_argument(
         "--mode",
-        help="One of `min`, `max`. In `min` mode, lr will be reduced when the quantity monitored has stopped decreasing; in `max` mode it will be reduced when the quantity monitored has stopped increasing.",
+        help="""One of `min`, `max`. In `min` mode, lr will be reduced when the
+quantity monitored has stopped decreasing; in `max` mode it will be
+reduced when the quantity monitored has stopped increasing.""",
         required=True,
         default="min",
     )
     argument_parser.add_argument(
         "--factor",
         type=float,
-        help="Factor by which the learning rate will be reduced. new_lr = lr * factor.",
+        help="""Factor by which the learning rate will be reduced. new_lr = lr *
+factor.""",
         required=True,
         default=0.1,
     )
     argument_parser.add_argument(
         "--patience",
         type=int,
-        help="Number of epochs with no improvement after which learning rate will be reduced. For example, if `patience = 2`, then we will ignore the first 2 epochs with no improvement, and will only decrease the LR after the 3rd epoch if the loss still hasn't improved then.",
+        help="""Number of epochs with no improvement after which learning rate will be
+reduced. For example, if `patience = 2`, then we will ignore the first
+2 epochs with no improvement, and will only decrease the LR after the
+3rd epoch if the loss still hasn't improved then.""",
         required=True,
         default=10,
     )
     argument_parser.add_argument(
         "--threshold",
         type=float,
-        help="Threshold for measuring the new optimum, to only focus on significant changes.",
+        help="""Threshold for measuring the new optimum, to only focus on significant
+changes.""",
         required=True,
         default=0.0001,
     )
     argument_parser.add_argument(
         "--threshold_mode",
-        help="One of `rel`, `abs`. In `rel` mode, dynamic_threshold = best * ( 1 + threshold ) in 'max' mode or best * ( 1 - threshold ) in `min` mode. In `abs` mode, dynamic_threshold = best + threshold in `max` mode or best - threshold in `min` mode.",
+        help="""One of `rel`, `abs`. In `rel` mode, dynamic_threshold = best * ( 1 +
+threshold ) in 'max' mode or best * ( 1 - threshold ) in `min` mode.
+In `abs` mode, dynamic_threshold = best + threshold in `max` mode or
+best - threshold in `min` mode.""",
         required=True,
         default="rel",
     )
     argument_parser.add_argument(
         "--cooldown",
         type=int,
-        help="Number of epochs to wait before resuming normal operation after lr has been reduced.",
+        help="""Number of epochs to wait before resuming normal operation after lr has
+been reduced.""",
         required=True,
         default=0,
     )
     argument_parser.add_argument(
         "--min_lr",
         type=int,
-        help="A scalar or a list of scalars. A lower bound on the learning rate of all param groups or each group respectively.",
+        help="""A scalar or a list of scalars. A lower bound on the learning rate of
+all param groups or each group respectively.""",
         required=True,
         default=0,
     )
     argument_parser.add_argument(
         "--eps",
         type=float,
-        help="Minimal decay applied to lr. If the difference between new and old lr is smaller than eps, the update is ignored.",
+        help="""Minimal decay applied to lr. If the difference between new and old lr
+is smaller than eps, the update is ignored.""",
         required=True,
         default=1e-08,
     )

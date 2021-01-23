@@ -142,13 +142,22 @@ def CIFAR10Config(argument_parser):
         "--train_list",
         type=loads,
         required=True,
-        default='[["data_batch_1", "c99cafc152244af753f735de768cd75f"], ["data_batch_2", "d4bba439e000b95fd0a9bffe97cbabec"], ["data_batch_3", "54ebc095f3ab1f0389bbae665268c751"], ["data_batch_4", "634d18415352ddfa80567beed471001a"], ["data_batch_5", "482c414d41f54cd18b22e5b47cb7c3cb"]]',
+        default=(
+            '[["data_batch_1", "c99cafc152244af753f735de768cd75f"], ["data_batch_2",'
+            ' "d4bba439e000b95fd0a9bffe97cbabec"], ["data_batch_3",'
+            ' "54ebc095f3ab1f0389bbae665268c751"], ["data_batch_4",'
+            ' "634d18415352ddfa80567beed471001a"], ["data_batch_5",'
+            ' "482c414d41f54cd18b22e5b47cb7c3cb"]]'
+        ),
     )
     argument_parser.add_argument(
         "--meta",
         type=loads,
         required=True,
-        default='{"filename": "batches.meta", "key": "label_names", "md5": "5ff9c542aee3614f3951f8cda6e48888"}',
+        default=(
+            '{"filename": "batches.meta", "key": "label_names", "md5":'
+            ' "5ff9c542aee3614f3951f8cda6e48888"}'
+        ),
     )
     argument_parser.add_argument(
         "--url",
@@ -211,7 +220,10 @@ This is a subclass of the `CIFAR10` Dataset."""
         "--meta",
         type=loads,
         required=True,
-        default='{"filename": "meta", "key": "fine_label_names", "md5": "7973b15100ade9c7d40fb424638fde48"}',
+        default=(
+            '{"filename": "meta", "key": "fine_label_names", "md5":'
+            ' "7973b15100ade9c7d40fb424638fde48"}'
+        ),
     )
     return argument_parser
 
@@ -258,7 +270,10 @@ def Caltech256Config(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "`Caltech 256 <http://www.vision.caltech.edu/Image_Datasets/Caltech256/>`_ Dataset."
+    argument_parser.description = (
+        "`Caltech 256 <http://www.vision.caltech.edu/Image_Datasets/Caltech256/>`_"
+        " Dataset."
+    )
     argument_parser.add_argument(
         "--root",
         type=str,
@@ -297,7 +312,10 @@ def CelebAConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "`Large-scale CelebFaces Attributes (CelebA) Dataset <http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html>`_ Dataset."
+    argument_parser.description = (
+        "`Large-scale CelebFaces Attributes (CelebA) Dataset"
+        " <http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html>`_ Dataset."
+    )
     argument_parser.add_argument(
         "--root",
         type=str,
@@ -354,7 +372,17 @@ def CelebAConfig(argument_parser):
         "--file_list",
         type=loads,
         required=True,
-        default='[["0B7EVK8r0v71pZjFTYXZWM3FlRnM", "00d2c5bc6d35e252742224ab0c1e8fcb", "img_align_celeba.zip"], ["0B7EVK8r0v71pblRyaVFSWGxPY0U", "75e246fa4810816ffd6ee81facbd244c", "list_attr_celeba.txt"], ["1_ee_0u7vcNLOfNLegJRHmolfH5ICW-XS", "32bd1bd63d3c78cd57e08160ec5ed1e2", "identity_CelebA.txt"], ["0B7EVK8r0v71pbThiMVRxWXZ4dU0", "00566efa6fedff7a56946cd1c10f1c16", "list_bbox_celeba.txt"], ["0B7EVK8r0v71pd0FJY3Blby1HUTQ", "cc24ecafdb5b50baae59b03474781f8c", "list_landmarks_align_celeba.txt"], ["0B7EVK8r0v71pY0NSMzRuSXJEVkk", "d32c9cbf5e040fd4025c592c306e6668", "list_eval_partition.txt"]]',
+        default=(
+            '[["0B7EVK8r0v71pZjFTYXZWM3FlRnM", "00d2c5bc6d35e252742224ab0c1e8fcb",'
+            ' "img_align_celeba.zip"], ["0B7EVK8r0v71pblRyaVFSWGxPY0U",'
+            ' "75e246fa4810816ffd6ee81facbd244c", "list_attr_celeba.txt"],'
+            ' ["1_ee_0u7vcNLOfNLegJRHmolfH5ICW-XS", "32bd1bd63d3c78cd57e08160ec5ed1e2",'
+            ' "identity_CelebA.txt"], ["0B7EVK8r0v71pbThiMVRxWXZ4dU0",'
+            ' "00566efa6fedff7a56946cd1c10f1c16", "list_bbox_celeba.txt"],'
+            ' ["0B7EVK8r0v71pd0FJY3Blby1HUTQ", "cc24ecafdb5b50baae59b03474781f8c",'
+            ' "list_landmarks_align_celeba.txt"], ["0B7EVK8r0v71pY0NSMzRuSXJEVkk",'
+            ' "d32c9cbf5e040fd4025c592c306e6668", "list_eval_partition.txt"]]'
+        ),
     )
     return argument_parser
 
@@ -666,7 +694,11 @@ def EMNISTConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "`EMNIST <https://www.westernsydney.edu.au/bens/home/reproducible_research/emnist>`_ Dataset."
+    argument_parser.description = (
+        "`EMNIST"
+        " <https://www.westernsydney.edu.au/bens/home/reproducible_research/emnist>`_"
+        " Dataset."
+    )
     argument_parser.add_argument(
         "--root",
         help="""Root directory of dataset where ``EMNIST/processed/training.pt``
@@ -749,7 +781,10 @@ def FakeDataConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "A fake dataset that returns randomly generated images and returns them as PIL images"
+    argument_parser.description = (
+        "A fake dataset that returns randomly generated images and returns them as PIL"
+        " images"
+    )
     argument_parser.add_argument(
         "--size", type=str, help="Size of the dataset.", default="1000 images"
     )
@@ -829,13 +864,25 @@ def FashionMNISTConfig(argument_parser):
         "--classes",
         type=loads,
         required=True,
-        default='["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]',
+        default=(
+            '["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt",'
+            ' "Sneaker", "Bag", "Ankle boot"]'
+        ),
     )
     argument_parser.add_argument(
         "--resources",
         type=loads,
         required=True,
-        default='[["http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz", "8d4fb7e6c68d591d4c3dfef9ec88bf0d"], ["http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz", "25c81989df183df01b3e8a0aad5dffbe"], ["http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz", "bef4ecab320f06d8554ea6380940ec79"], ["http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz", "bb300cfdad3c16e7a12a480ee83cd310"]]',
+        default=(
+            '[["http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz",'
+            ' "8d4fb7e6c68d591d4c3dfef9ec88bf0d"],'
+            ' ["http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz",'
+            ' "25c81989df183df01b3e8a0aad5dffbe"],'
+            ' ["http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz",'
+            ' "bef4ecab320f06d8554ea6380940ec79"],'
+            ' ["http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz",'
+            ' "bb300cfdad3c16e7a12a480ee83cd310"]]'
+        ),
     )
     return argument_parser
 
@@ -850,7 +897,10 @@ def Flickr30kConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "`Flickr30k Entities <http://web.engr.illinois.edu/~bplumme2/Flickr30kEntities/>`_ Dataset."
+    argument_parser.description = (
+        "`Flickr30k Entities"
+        " <http://web.engr.illinois.edu/~bplumme2/Flickr30kEntities/>`_ Dataset."
+    )
     argument_parser.add_argument(
         "--root", type=str, help="Root directory where images are downloaded to."
     )
@@ -880,7 +930,10 @@ def Flickr8kConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "`Flickr8k Entities <http://hockenmaier.cs.illinois.edu/8k-pictures.html>`_ Dataset."
+    argument_parser.description = (
+        "`Flickr8k Entities <http://hockenmaier.cs.illinois.edu/8k-pictures.html>`_"
+        " Dataset."
+    )
     argument_parser.add_argument(
         "--root", type=str, help="Root directory where images are downloaded to."
     )
@@ -972,14 +1025,20 @@ Internally, it uses a VideoClips object to handle clip creation."""
         "--splits",
         type=loads,
         required=True,
-        default='{"url": "http://serre-lab.clps.brown.edu/wp-content/uploads/2013/10/test_train_splits.rar", "md5": "15e67781e70dcfbdce2d7dbb9b3344b5"}',
+        default=(
+            '{"url":'
+            ' "http://serre-lab.clps.brown.edu/wp-content/uploads/2013/10/test_train_splits.rar",'
+            ' "md5": "15e67781e70dcfbdce2d7dbb9b3344b5"}'
+        ),
     )
     argument_parser.add_argument("--TRAIN_TAG", type=int, required=True, default=1)
     argument_parser.add_argument(
         "--data_url",
         type=str,
         required=True,
-        default="http://serre-lab.clps.brown.edu/wp-content/uploads/2013/10/hmdb51_org.rar",
+        default=(
+            "http://serre-lab.clps.brown.edu/wp-content/uploads/2013/10/hmdb51_org.rar"
+        ),
     )
     argument_parser.add_argument("--TEST_TAG", type=int, required=True, default=2)
     argument_parser.add_argument(
@@ -1141,7 +1200,16 @@ def KMNISTConfig(argument_parser):
         "--resources",
         type=loads,
         required=True,
-        default='[["http://codh.rois.ac.jp/kmnist/dataset/kmnist/train-images-idx3-ubyte.gz", "bdb82020997e1d708af4cf47b453dcf7"], ["http://codh.rois.ac.jp/kmnist/dataset/kmnist/train-labels-idx1-ubyte.gz", "e144d726b3acfaa3e44228e80efcd344"], ["http://codh.rois.ac.jp/kmnist/dataset/kmnist/t10k-images-idx3-ubyte.gz", "5c965bf0a639b31b8f53240b1b52f4d7"], ["http://codh.rois.ac.jp/kmnist/dataset/kmnist/t10k-labels-idx1-ubyte.gz", "7320c461ea6c1c855c0b718fb2a4b134"]]',
+        default=(
+            '[["http://codh.rois.ac.jp/kmnist/dataset/kmnist/train-images-idx3-ubyte.gz",'
+            ' "bdb82020997e1d708af4cf47b453dcf7"],'
+            ' ["http://codh.rois.ac.jp/kmnist/dataset/kmnist/train-labels-idx1-ubyte.gz",'
+            ' "e144d726b3acfaa3e44228e80efcd344"],'
+            ' ["http://codh.rois.ac.jp/kmnist/dataset/kmnist/t10k-images-idx3-ubyte.gz",'
+            ' "5c965bf0a639b31b8f53240b1b52f4d7"],'
+            ' ["http://codh.rois.ac.jp/kmnist/dataset/kmnist/t10k-labels-idx1-ubyte.gz",'
+            ' "7320c461ea6c1c855c0b718fb2a4b134"]]'
+        ),
     )
     return argument_parser
 
@@ -1329,7 +1397,10 @@ def MNISTConfig(argument_parser):
         "--classes",
         type=loads,
         required=True,
-        default='["0 - zero", "1 - one", "2 - two", "3 - three", "4 - four", "5 - five", "6 - six", "7 - seven", "8 - eight", "9 - nine"]',
+        default=(
+            '["0 - zero", "1 - one", "2 - two", "3 - three", "4 - four", "5 - five", "6'
+            ' - six", "7 - seven", "8 - eight", "9 - nine"]'
+        ),
     )
     argument_parser.add_argument(
         "--test_file", type=str, required=True, default="test.pt"
@@ -1341,7 +1412,16 @@ def MNISTConfig(argument_parser):
         "--resources",
         type=loads,
         required=True,
-        default='[["http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz", "f68b3c2dcbeaaa9fbdd348bbdeb94873"], ["http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz", "d53e105ee54ea40749a09fcbcd1e9432"], ["http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz", "9fb629c4189551a2d022fa330f9573f3"], ["http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz", "ec29112dd5afa0611ce80d1b7f02629c"]]',
+        default=(
+            '[["http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz",'
+            ' "f68b3c2dcbeaaa9fbdd348bbdeb94873"],'
+            ' ["http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz",'
+            ' "d53e105ee54ea40749a09fcbcd1e9432"],'
+            ' ["http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz",'
+            ' "9fb629c4189551a2d022fa330f9573f3"],'
+            ' ["http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz",'
+            ' "ec29112dd5afa0611ce80d1b7f02629c"]]'
+        ),
     )
     return argument_parser
 
@@ -1405,7 +1485,10 @@ def OmniglotConfig(argument_parser):
         "--zips_md5",
         type=loads,
         required=True,
-        default='{"images_background": "68d2efa1b9178cc56df9314c21c6e718", "images_evaluation": "6b91aef0f799c5bb55b94e3f2daec811"}',
+        default=(
+            '{"images_background": "68d2efa1b9178cc56df9314c21c6e718",'
+            ' "images_evaluation": "6b91aef0f799c5bb55b94e3f2daec811"}'
+        ),
     )
     return argument_parser
 
@@ -1420,7 +1503,10 @@ def PhotoTourConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "`Learning Local Image Descriptors Data <http://phototour.cs.washington.edu/patches/default.htm>`_ Dataset."
+    argument_parser.description = (
+        "`Learning Local Image Descriptors Data"
+        " <http://phototour.cs.washington.edu/patches/default.htm>`_ Dataset."
+    )
     argument_parser.add_argument(
         "--root",
         type=bool,
@@ -1446,14 +1532,22 @@ def PhotoTourConfig(argument_parser):
         "--stds",
         type=loads,
         required=True,
-        default='{"notredame": 0.1864, "yosemite": 0.1818, "liberty": 0.2019, "notredame_harris": 0.1864, "yosemite_harris": 0.1818, "liberty_harris": 0.2019}',
+        default=(
+            '{"notredame": 0.1864, "yosemite": 0.1818, "liberty": 0.2019,'
+            ' "notredame_harris": 0.1864, "yosemite_harris": 0.1818, "liberty_harris":'
+            " 0.2019}"
+        ),
     )
     argument_parser.add_argument("--image_ext", type=str, required=True, default="bmp")
     argument_parser.add_argument(
         "--means",
         type=loads,
         required=True,
-        default='{"notredame": 0.4854, "yosemite": 0.4844, "liberty": 0.4437, "notredame_harris": 0.4854, "yosemite_harris": 0.4844, "liberty_harris": 0.4437}',
+        default=(
+            '{"notredame": 0.4854, "yosemite": 0.4844, "liberty": 0.4437,'
+            ' "notredame_harris": 0.4854, "yosemite_harris": 0.4844, "liberty_harris":'
+            " 0.4437}"
+        ),
     )
     argument_parser.add_argument(
         "--info_file", type=str, required=True, default="info.txt"
@@ -1462,7 +1556,23 @@ def PhotoTourConfig(argument_parser):
         "--urls",
         type=loads,
         required=True,
-        default='{"notredame_harris": ["http://matthewalunbrown.com/patchdata/notredame_harris.zip", "notredame_harris.zip", "69f8c90f78e171349abdf0307afefe4d"], "yosemite_harris": ["http://matthewalunbrown.com/patchdata/yosemite_harris.zip", "yosemite_harris.zip", "a73253d1c6fbd3ba2613c45065c00d46"], "liberty_harris": ["http://matthewalunbrown.com/patchdata/liberty_harris.zip", "liberty_harris.zip", "c731fcfb3abb4091110d0ae8c7ba182c"], "notredame": ["http://icvl.ee.ic.ac.uk/vbalnt/notredame.zip", "notredame.zip", "509eda8535847b8c0a90bbb210c83484"], "yosemite": ["http://icvl.ee.ic.ac.uk/vbalnt/yosemite.zip", "yosemite.zip", "533b2e8eb7ede31be40abc317b2fd4f0"], "liberty": ["http://icvl.ee.ic.ac.uk/vbalnt/liberty.zip", "liberty.zip", "fdd9152f138ea5ef2091746689176414"]}',
+        default=(
+            '{"notredame_harris":'
+            ' ["http://matthewalunbrown.com/patchdata/notredame_harris.zip",'
+            ' "notredame_harris.zip", "69f8c90f78e171349abdf0307afefe4d"],'
+            ' "yosemite_harris":'
+            ' ["http://matthewalunbrown.com/patchdata/yosemite_harris.zip",'
+            ' "yosemite_harris.zip", "a73253d1c6fbd3ba2613c45065c00d46"],'
+            ' "liberty_harris":'
+            ' ["http://matthewalunbrown.com/patchdata/liberty_harris.zip",'
+            ' "liberty_harris.zip", "c731fcfb3abb4091110d0ae8c7ba182c"], "notredame":'
+            ' ["http://icvl.ee.ic.ac.uk/vbalnt/notredame.zip", "notredame.zip",'
+            ' "509eda8535847b8c0a90bbb210c83484"], "yosemite":'
+            ' ["http://icvl.ee.ic.ac.uk/vbalnt/yosemite.zip", "yosemite.zip",'
+            ' "533b2e8eb7ede31be40abc317b2fd4f0"], "liberty":'
+            ' ["http://icvl.ee.ic.ac.uk/vbalnt/liberty.zip", "liberty.zip",'
+            ' "fdd9152f138ea5ef2091746689176414"]}'
+        ),
     )
     argument_parser.add_argument(
         "--matches_files", type=str, required=True, default="m50_100000_100000_0.txt"
@@ -1471,7 +1581,11 @@ def PhotoTourConfig(argument_parser):
         "--lens",
         type=loads,
         required=True,
-        default='{"notredame": 468159, "yosemite": 633587, "liberty": 450092, "liberty_harris": 379587, "yosemite_harris": 450912, "notredame_harris": 325295}',
+        default=(
+            '{"notredame": 468159, "yosemite": 633587, "liberty": 450092,'
+            ' "liberty_harris": 379587, "yosemite_harris": 450912, "notredame_harris":'
+            " 325295}"
+        ),
     )
     argument_parser.add_argument("--train", type=bool, required=True, default=False)
     return argument_parser
@@ -1558,7 +1672,11 @@ Raises:
         "--_DEVKIT_META",
         type=loads,
         required=True,
-        default='{"standard": ["filelist_places365-standard.tar", "35a0585fee1fa656440f3ab298f8479c"], "challenge": ["filelist_places365-challenge.tar", "70a8307e459c3de41690a7c76c931734"]}',
+        default=(
+            '{"standard": ["filelist_places365-standard.tar",'
+            ' "35a0585fee1fa656440f3ab298f8479c"], "challenge":'
+            ' ["filelist_places365-challenge.tar", "70a8307e459c3de41690a7c76c931734"]}'
+        ),
     )
     argument_parser.add_argument(
         "--_CATEGORIES_META",
@@ -1570,7 +1688,12 @@ Raises:
         "--_FILE_LIST_META",
         type=loads,
         required=True,
-        default='{"train-standard": ["places365_train_standard.txt", "30f37515461640559006b8329efbed1a"], "train-challenge": ["places365_train_challenge.txt", "b2931dc997b8c33c27e7329c073a6b57"], "val": ["places365_val.txt", "e9f2fd57bfd9d07630173f4e8708e4b1"]}',
+        default=(
+            '{"train-standard": ["places365_train_standard.txt",'
+            ' "30f37515461640559006b8329efbed1a"], "train-challenge":'
+            ' ["places365_train_challenge.txt", "b2931dc997b8c33c27e7329c073a6b57"],'
+            ' "val": ["places365_val.txt", "e9f2fd57bfd9d07630173f4e8708e4b1"]}'
+        ),
     )
     argument_parser.add_argument(
         "--_IMAGES_META",
@@ -1670,13 +1793,19 @@ def QMNISTConfig(argument_parser):
         "--classes",
         type=loads,
         required=True,
-        default='["0 - zero", "1 - one", "2 - two", "3 - three", "4 - four", "5 - five", "6 - six", "7 - seven", "8 - eight", "9 - nine"]',
+        default=(
+            '["0 - zero", "1 - one", "2 - two", "3 - three", "4 - four", "5 - five", "6'
+            ' - six", "7 - seven", "8 - eight", "9 - nine"]'
+        ),
     )
     argument_parser.add_argument(
         "--subsets",
         type=loads,
         required=True,
-        default='{"train": "train", "test": "test", "test10k": "test", "test50k": "test", "nist": "nist"}',
+        default=(
+            '{"train": "train", "test": "test", "test10k": "test", "test50k": "test",'
+            ' "nist": "nist"}'
+        ),
     )
     return argument_parser
 
@@ -1781,7 +1910,10 @@ def SBUConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "`SBU Captioned Photo <http://www.cs.virginia.edu/~vicente/sbucaptions/>`_ Dataset."
+    argument_parser.description = (
+        "`SBU Captioned Photo <http://www.cs.virginia.edu/~vicente/sbucaptions/>`_"
+        " Dataset."
+    )
     argument_parser.add_argument(
         "--root",
         type=str,
@@ -1835,7 +1967,10 @@ def SEMEIONConfig(argument_parser):
     :return: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = "`SEMEION <http://archive.ics.uci.edu/ml/datasets/semeion+handwritten+digit>`_ Dataset."
+    argument_parser.description = (
+        "`SEMEION <http://archive.ics.uci.edu/ml/datasets/semeion+handwritten+digit>`_"
+        " Dataset."
+    )
     argument_parser.add_argument(
         "--root",
         type=str,
@@ -1942,7 +2077,10 @@ def STL10Config(argument_parser):
         "--test_list",
         type=loads,
         required=True,
-        default='[["test_X.bin", "7f263ba9f9e0b06b93213547f721ac82"], ["test_y.bin", "36f9794fa4beb8a2c72628de14fa638e"]]',
+        default=(
+            '[["test_X.bin", "7f263ba9f9e0b06b93213547f721ac82"], ["test_y.bin",'
+            ' "36f9794fa4beb8a2c72628de14fa638e"]]'
+        ),
     )
     argument_parser.add_argument(
         "--splits",
@@ -1954,7 +2092,11 @@ def STL10Config(argument_parser):
         "--train_list",
         type=loads,
         required=True,
-        default='[["train_X.bin", "918c2871b30a85fa023e0c44e0bee87f"], ["train_y.bin", "5a34089d4802c674881badbb80307741"], ["unlabeled_X.bin", "5242ba1fed5e4be9e1e742405eb56ca4"]]',
+        default=(
+            '[["train_X.bin", "918c2871b30a85fa023e0c44e0bee87f"], ["train_y.bin",'
+            ' "5a34089d4802c674881badbb80307741"], ["unlabeled_X.bin",'
+            ' "5242ba1fed5e4be9e1e742405eb56ca4"]]'
+        ),
     )
     argument_parser.add_argument(
         "--url",
@@ -2029,7 +2171,14 @@ expect the class labels to be in the range `[0, C-1]`
         "--split_list",
         type=loads,
         required=True,
-        default='{"train": ["http://ufldl.stanford.edu/housenumbers/train_32x32.mat", "train_32x32.mat", "e26dedcc434d2e4c54c9b2d4a06d8373"], "test": ["http://ufldl.stanford.edu/housenumbers/test_32x32.mat", "test_32x32.mat", "eb5a983be6a315427106f1b164d9cef3"], "extra": ["http://ufldl.stanford.edu/housenumbers/extra_32x32.mat", "extra_32x32.mat", "a93ce644f1a588dc4d68dda5feec44a7"]}',
+        default=(
+            '{"train": ["http://ufldl.stanford.edu/housenumbers/train_32x32.mat",'
+            ' "train_32x32.mat", "e26dedcc434d2e4c54c9b2d4a06d8373"], "test":'
+            ' ["http://ufldl.stanford.edu/housenumbers/test_32x32.mat",'
+            ' "test_32x32.mat", "eb5a983be6a315427106f1b164d9cef3"], "extra":'
+            ' ["http://ufldl.stanford.edu/housenumbers/extra_32x32.mat",'
+            ' "extra_32x32.mat", "a93ce644f1a588dc4d68dda5feec44a7"]}'
+        ),
     )
     return argument_parser
 
@@ -2162,7 +2311,13 @@ and make pixel values in ``[0, 255]``."""
         "--split_list",
         type=loads,
         required=True,
-        default='{"train": ["https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.bz2", "usps.bz2", "ec16c51db3855ca6c91edd34d0e9b197"], "test": ["https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.t.bz2", "usps.t.bz2", "8ea070ee2aca1ac39742fdd1ef5ed118"]}',
+        default=(
+            '{"train":'
+            ' ["https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.bz2",'
+            ' "usps.bz2", "ec16c51db3855ca6c91edd34d0e9b197"], "test":'
+            ' ["https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.t.bz2",'
+            ' "usps.t.bz2", "8ea070ee2aca1ac39742fdd1ef5ed118"]}'
+        ),
     )
     return argument_parser
 
