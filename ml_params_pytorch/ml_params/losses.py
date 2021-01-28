@@ -9,7 +9,7 @@ def BCELossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that measures the Binary Cross Entropy
@@ -76,26 +76,24 @@ Examples::
     >>> output.backward()"""
     argument_parser.add_argument(
         "--weight",
-        help="""a manual rescaling weight given to the loss of each batch element. If
-given, has to be a Tensor of size `nbatch`.""",
+        help="""a manual rescaling weight given to the loss of each batch element. If given, has to be a Tensor of
+size `nbatch`.""",
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -112,7 +110,7 @@ def BCEWithLogitsLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """This loss combines a `Sigmoid` layer and the `BCELoss` in one single
@@ -194,30 +192,28 @@ Shape:
     >>> output.backward()"""
     argument_parser.add_argument(
         "--weight",
-        help="""a manual rescaling weight given to the loss of each batch element. If
-given, has to be a Tensor of size `nbatch`.""",
+        help="""a manual rescaling weight given to the loss of each batch element. If given, has to be a Tensor of
+size `nbatch`.""",
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     argument_parser.add_argument("--pos_weight")
+    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -228,7 +224,7 @@ def CTCLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """The Connectionist Temporal Classification loss.
@@ -368,7 +364,7 @@ def CosineEmbeddingLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that measures the loss given input tensors
@@ -396,28 +392,26 @@ The loss function for each sample is:
     argument_parser.add_argument(
         "--margin",
         type=float,
-        help="""Should be a number from :math:`-1` to :math:`1`, :math:`0` to
-:math:`0.5` is suggested. If :attr:`margin` is missing, the""",
+        help="""Should be a number from :math:`-1` to :math:`1`, :math:`0` to :math:`0.5` is suggested. If
+:attr:`margin` is missing, the""",
         required=True,
         default=0.0,
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -434,7 +428,7 @@ def CrossEntropyLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """This criterion combines :func:`nn.LogSoftmax` and :func:`nn.NLLLoss` in one single class.
@@ -509,35 +503,31 @@ Examples::
     >>> output.backward()"""
     argument_parser.add_argument(
         "--weight",
-        help="""a manual rescaling weight given to each class. If given, has to be a
-Tensor of size `C`""",
+        help="a manual rescaling weight given to each class. If given, has to be a Tensor of size `C`",
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--ignore_index",
         type=int,
-        help="""Specifies a target value that is ignored and does not contribute to
-the input gradient. When :attr:`size_average` is ``True``, the loss is
-averaged over non-ignored targets.""",
+        help="""Specifies a target value that is ignored and does not contribute to the input gradient. When
+:attr:`size_average` is ``True``, the loss is averaged over non-ignored targets.""",
         required=True,
         default=-100,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -557,7 +547,7 @@ def HingeEmbeddingLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Measures the loss given an input tensor :math:`x` and a labels tensor :math:`y`
@@ -608,20 +598,18 @@ Shape:
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -638,7 +626,7 @@ def KLDivLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """The Kullback-Leibler divergence loss measure
@@ -707,20 +695,18 @@ Shape:
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -740,7 +726,7 @@ def L1LossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that measures the mean absolute error (MAE) between each element in
@@ -795,20 +781,18 @@ Examples::
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -825,7 +809,7 @@ def MSELossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that measures the mean squared error (squared L2 norm) between
@@ -878,20 +862,18 @@ Examples::
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -908,7 +890,7 @@ def MarginRankingLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that measures the loss given
@@ -956,20 +938,18 @@ Examples::
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -986,7 +966,7 @@ def MultiLabelMarginLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that optimizes a multi-class multi-classification
@@ -1036,20 +1016,18 @@ Examples::
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1066,7 +1044,7 @@ def MultiLabelSoftMarginLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that optimizes a multi-label one-versus-all
@@ -1096,26 +1074,24 @@ Shape:
     - Output: scalar. If :attr:`reduction` is ``'none'``, then :math:`(N)`."""
     argument_parser.add_argument(
         "--weight",
-        help="""a manual rescaling weight given to each class. If given, it has to be
-a Tensor of size `C`. Otherwise, it is treated as if having all ones.""",
+        help="""a manual rescaling weight given to each class. If given, it has to be a Tensor of size `C`.
+Otherwise, it is treated as if having all ones.""",
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1132,7 +1108,7 @@ def MultiMarginLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that optimizes a multi-class classification hinge
@@ -1167,8 +1143,7 @@ The loss function then becomes:
     argument_parser.add_argument(
         "--p",
         type=int,
-        help="""Has a default value of :math:`1`. :math:`1` and :math:`2` are the only
-supported values.""",
+        help="Has a default value of :math:`1`. :math:`1` and :math:`2` are the only supported values.",
         required=True,
         default=1,
     )
@@ -1181,26 +1156,24 @@ supported values.""",
     )
     argument_parser.add_argument(
         "--weight",
-        help="""a manual rescaling weight given to each class. If given, it has to be
-a Tensor of size `C`. Otherwise, it is treated as if having all ones.""",
+        help="""a manual rescaling weight given to each class. If given, it has to be a Tensor of size `C`.
+Otherwise, it is treated as if having all ones.""",
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1220,7 +1193,7 @@ def NLLLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """The negative log likelihood loss. It is useful to train a classification
@@ -1315,35 +1288,32 @@ Examples::
     >>> output.backward()"""
     argument_parser.add_argument(
         "--weight",
-        help="""a manual rescaling weight given to each class. If given, it has to be
-a Tensor of size `C`. Otherwise, it is treated as if having all ones.""",
+        help="""a manual rescaling weight given to each class. If given, it has to be a Tensor of size `C`.
+Otherwise, it is treated as if having all ones.""",
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--ignore_index",
         type=int,
-        help="""Specifies a target value that is ignored and does not contribute to
-the input gradient. When :attr:`size_average` is ``True``, the loss is
-averaged over non-ignored targets.""",
+        help="""Specifies a target value that is ignored and does not contribute to the input gradient. When
+:attr:`size_average` is ``True``, the loss is averaged over non-ignored targets.""",
         required=True,
         default=-100,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1363,7 +1333,7 @@ def NLLLoss2dConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """The negative log likelihood loss. It is useful to train a classification
@@ -1458,34 +1428,31 @@ Examples::
     >>> output.backward()"""
     argument_parser.add_argument(
         "--weight",
-        help="""a manual rescaling weight given to each class. If given, it has to be
-a Tensor of size `C`. Otherwise, it is treated as if having all ones.""",
+        help="""a manual rescaling weight given to each class. If given, it has to be a Tensor of size `C`.
+Otherwise, it is treated as if having all ones.""",
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
     )
     argument_parser.add_argument(
         "--ignore_index",
         type=int,
-        help="""Specifies a target value that is ignored and does not contribute to
-the input gradient. When :attr:`size_average` is ``True``, the loss is
-averaged over non-ignored targets.""",
+        help="""Specifies a target value that is ignored and does not contribute to the input gradient. When
+:attr:`size_average` is ``True``, the loss is averaged over non-ignored targets.""",
         required=True,
         default=-100,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
     )
     argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
@@ -1498,7 +1465,7 @@ def PairwiseDistanceConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Computes the batchwise pairwise distance between vectors :math:`v_1`, :math:`v_2` using the p-norm:
@@ -1532,13 +1499,13 @@ Examples::
         required=True,
         default=False,
     )
+    argument_parser.add_argument("--norm", type=float)
     argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
         default='["norm", "eps", "keepdim"]',
     )
-    argument_parser.add_argument("--norm", type=float)
     return argument_parser
 
 
@@ -1549,7 +1516,7 @@ def PoissonNLLLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Negative log likelihood loss with Poisson distribution of target.
@@ -1604,17 +1571,15 @@ Shape:
     argument_parser.add_argument(
         "--log_input",
         type=bool,
-        help="""if ``True`` the loss is computed as :math:`\\exp(\\text{input}) -
-\\text{target}*\\text{input}`, if ``False`` the loss is
-:math:`\\text{input} - \\text{target}*\\log(\\text{input}+\\text{eps})`.""",
+        help="""if ``True`` the loss is computed as :math:`\\exp(\\text{input}) - \\text{target}*\\text{input}`, if
+``False`` the loss is :math:`\\text{input} - \\text{target}*\\log(\\text{input}+\\text{eps})`.""",
         required=True,
         default=True,
     )
     argument_parser.add_argument(
         "--full",
         type=bool,
-        help="""whether to compute full loss, i. e. to add the Stirling approximation
-term""",
+        help="whether to compute full loss, i. e. to add the Stirling approximation term",
         required=True,
         default=False,
     )
@@ -1625,9 +1590,9 @@ term""",
         default='["log_input", "full", "eps", "reduction"]',
     )
     argument_parser.add_argument("--eps", type=float, required=True, default=1e-08)
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     argument_parser.add_argument("--size_average")
     argument_parser.add_argument("--reduce")
+    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1638,7 +1603,7 @@ def SmoothL1LossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that uses a squared term if the absolute
@@ -1689,27 +1654,25 @@ Shape:
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     argument_parser.add_argument("--beta", type=float, required=True, default=1.0)
+    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1720,7 +1683,7 @@ def SoftMarginLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that optimizes a two-class classification
@@ -1747,20 +1710,18 @@ Shape:
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1777,7 +1738,7 @@ def TripletMarginLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that measures the triplet loss given an input
@@ -1841,29 +1802,26 @@ Shape:
     argument_parser.add_argument(
         "--swap",
         type=bool,
-        help="""The distance swap is described in detail in the paper `Learning
-shallow convolutional feature descriptors with triplet losses` by V.
-Balntas, E. Riba et al.""",
+        help="""The distance swap is described in detail in the paper `Learning shallow convolutional feature
+descriptors with triplet losses` by V. Balntas, E. Riba et al.""",
         required=True,
         default=False,
     )
     argument_parser.add_argument(
         "--size_average",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged over each loss element in the batch. Note that for some
-losses, there are multiple elements per sample. If the field
-:attr:`size_average` is set to ``False``, the losses are instead
-summed for each minibatch. Ignored when reduce is ``False``.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
+the batch. Note that for some losses, there are multiple elements per sample. If the field
+:attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
+when reduce is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
         "--reduce",
         type=bool,
-        help="""Deprecated (see :attr:`reduction`). By default, the losses are
-averaged or summed over observations for each minibatch depending on
-:attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss
-per batch element instead and ignores :attr:`size_average`.""",
+        help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged or summed over observations
+for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
+loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1884,7 +1842,7 @@ def TripletMarginWithDistanceLossConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Creates a criterion that measures the triplet loss given input
@@ -1973,27 +1931,25 @@ Reference:
     http://www.bmva.org/bmvc/2016/papers/paper119/index.html"""
     argument_parser.add_argument(
         "--distance_function",
-        help="""A nonnegative, real-valued function that quantifies the closeness of
-two tensors. If not specified, `nn.PairwiseDistance` will be used.""",
+        help="""A nonnegative, real-valued function that quantifies the closeness of two tensors. If not specified,
+`nn.PairwiseDistance` will be used.""",
     )
     argument_parser.add_argument(
         "--margin",
         type=float,
-        help="""A non-negative margin representing the minimum difference between the
-positive and negative distances required for the loss to be 0. Larger
-margins penalize cases where the negative examples are not distant
-enough from the anchors, relative to the positives.""",
+        help="""A non-negative margin representing the minimum difference between the positive and negative
+distances required for the loss to be 0. Larger margins penalize cases where the negative examples
+are not distant enough from the anchors, relative to the positives.""",
         required=True,
         default=1.0,
     )
     argument_parser.add_argument(
         "--swap",
         type=bool,
-        help="""Whether to use the distance swap described in the paper `Learning
-shallow convolutional feature descriptors with triplet losses` by V.
-Balntas, E. Riba et al. If True, and if the positive example is closer
-to the negative example than the anchor is, swaps the positive example
-and the anchor in the loss computation.""",
+        help="""Whether to use the distance swap described in the paper `Learning shallow convolutional feature
+descriptors with triplet losses` by V. Balntas, E. Riba et al. If True, and if the positive example
+is closer to the negative example than the anchor is, swaps the positive example and the anchor in
+the loss computation.""",
         required=True,
         default=False,
     )

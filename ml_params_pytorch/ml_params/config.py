@@ -38,22 +38,16 @@ class TrainConfig(object):
     Run the training loop for your ML pipeline.
 
     :cvar epochs: number of epochs (must be greater than 0)
-    :cvar optimizer: Optimizer, can be a string (depending on the
-        framework) or an instance of a class
-    :cvar loss: Loss function, can be a string (depending on the
-        framework) or an instance of a class
-    :cvar lr_scheduler: Learning rate scheduler. E.g., `StepLR` will
-        decay the lr of each param group by gamma every step_size epochs.
+    :cvar optimizer: Optimizer, can be a string (depending on the framework) or an instance of a class
+    :cvar loss: Loss function, can be a string (depending on the framework) or an instance of a class
+    :cvar lr_scheduler: Learning rate scheduler. E.g., `StepLR` will decay the lr of each param group
+    by gamma every step_size epochs.
     :cvar activation: Activation function
-    :cvar metric_emit_freq: `None` for every epoch. E.g., `eq(mod(epochs,
-        10), 0)` for every 10.
-    :cvar output_type: `if save_directory is not None` then save in this
-        format, e.g., 'h5'.
-    :cvar validation_split: Optional float between 0 and 1, fraction of
-        data to reserve for validation.
+    :cvar metric_emit_freq: `None` for every epoch. E.g., `eq(mod(epochs, 10), 0)` for every 10.
+    :cvar output_type: `if save_directory is not None` then save in this format, e.g., 'h5'.
+    :cvar validation_split: Optional float between 0 and 1, fraction of data to reserve for validation.
     :cvar batch_size: batch size at each iteration.
-    :cvar tpu_address: Address of TPU cluster. If None, don't connect &
-        run within TPU context.
+    :cvar tpu_address: Address of TPU cluster. If None, don't connect & run within TPU context.
     :cvar kwargs: additional keyword arguments
     :cvar return_type: the model"""
 
@@ -151,14 +145,12 @@ class LoadDataConfig(object):
     Load the data for your ML pipeline. Will be fed into `train`.
 
     :cvar dataset_name: name of dataset
-    :cvar data_loader: function returning the expected data type. PyTorch
-        Datasets & ml_prepare combined if unset.
+    :cvar data_loader: function returning the expected data type. PyTorch Datasets & ml_prepare
+    combined if unset.
     :cvar data_type: incoming data type
-    :cvar output_type: outgoing data_type, when unset, there is no
-        conversion
+    :cvar output_type: outgoing data_type, when unset, there is no conversion
     :cvar K: backend engine, e.g., `np` or `tf`
-    :cvar data_loader_kwargs: pass this as arguments to data_loader
-        function
+    :cvar data_loader_kwargs: pass this as arguments to data_loader function
     :cvar return_type: Dataset splits (setup to give your train and test)"""
 
     dataset_name: Literal[
@@ -279,17 +271,13 @@ class LoadDataConfig(object):
 
 class LoadModelConfig(object):
     """
-    Load the model. Takes a model object, or a pipeline that downloads &
-            configures before returning a model object.
+    Load the model.
+    Takes a model object, or a pipeline that downloads & configures before returning a model object.
 
-    :cvar model: model object, e.g., a tf.keras.Sequential, tl.Serial,
-        nn.Module instance
-    :cvar call: whether to call `model()` even if `len(model_kwargs) ==
-        0`
-    :cvar model_kwargs: to be passed into the model. If empty, doesn't
-        call, unless call=True.
-    :cvar return_type: self.model, e.g., the result of applying
-        `model_kwargs` on model"""
+    :cvar model: model object, e.g., a tf.keras.Sequential, tl.Serial,  nn.Module instance
+    :cvar call: whether to call `model()` even if `len(model_kwargs) == 0`
+    :cvar model_kwargs: to be passed into the model. If empty, doesn't call, unless call=True.
+    :cvar return_type: self.model, e.g., the result of applying `model_kwargs` on model"""
 
     model: Any = None
     call: bool = False

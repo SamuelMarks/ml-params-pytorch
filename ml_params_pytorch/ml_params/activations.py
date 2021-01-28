@@ -9,7 +9,7 @@ def CELUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -62,7 +62,7 @@ def ELUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -113,7 +113,7 @@ def GELUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the Gaussian Error Linear Units function:
@@ -144,7 +144,7 @@ def GLUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the gated linear unit function
@@ -182,7 +182,7 @@ def HardshrinkConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the hard shrinkage function element-wise:
@@ -228,7 +228,7 @@ def HardsigmoidConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -271,7 +271,7 @@ def HardswishConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the hardswish function, element-wise, as described in the paper:
@@ -319,7 +319,7 @@ def HardtanhConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the HardTanh function element-wise
@@ -379,8 +379,8 @@ Examples::
         required=True,
         default='["min_val", "max_val", "inplace"]',
     )
-    argument_parser.add_argument("--max_value", type=float)
     argument_parser.add_argument("--min_value", type=float)
+    argument_parser.add_argument("--max_value", type=float)
     return argument_parser
 
 
@@ -391,7 +391,7 @@ def LeakyReLUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -452,7 +452,7 @@ def LogSigmoidConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -482,7 +482,7 @@ def LogSoftmaxConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser, values in the range [-inf, 0)
+    :returns: argument_parser, values in the range [-inf, 0)
     :rtype: ```Tuple[ArgumentParser, a Tensor of the same dimension and shape as the input wit]```
     """
     argument_parser.description = """Applies the :math:`\\log(\\text{Softmax}(x))` function to an n-dimensional
@@ -519,7 +519,7 @@ def MultiheadAttentionConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Allows the model to jointly attend to information
@@ -574,8 +574,8 @@ Examples::
     )
     argument_parser.add_argument("--kdim", help="total number of features in key.")
     argument_parser.add_argument("--vdim", help="total number of features in value.")
-    argument_parser.add_argument("--bias_v")
     argument_parser.add_argument("--bias_k")
+    argument_parser.add_argument("--bias_v")
     return argument_parser
 
 
@@ -586,7 +586,7 @@ def PReLUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -634,9 +634,8 @@ Examples::
     argument_parser.add_argument(
         "--num_parameters",
         type=int,
-        help="""number of :math:`a` to learn. Although it takes an int as input, there
-is only two values are legitimate: 1, or the number of channels at
-input.""",
+        help="""number of :math:`a` to learn. Although it takes an int as input, there is only two values are
+legitimate: 1, or the number of channels at input.""",
         required=True,
         default=1,
     )
@@ -664,7 +663,7 @@ def RReLUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the randomized leaky rectified liner unit function, element-wise,
@@ -737,7 +736,7 @@ def ReLUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the rectified linear unit function element-wise:
@@ -784,7 +783,7 @@ def ReLU6Config(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -822,7 +821,7 @@ def SELUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applied element-wise, as:
@@ -870,7 +869,7 @@ def SiLUConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the silu function, element-wise.
@@ -910,7 +909,7 @@ def SigmoidConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -941,7 +940,7 @@ def SoftmaxConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the Softmax function to an n-dimensional input Tensor
@@ -978,8 +977,7 @@ Examples::
     >>> output = m(input)"""
     argument_parser.add_argument(
         "--dim",
-        help="""A dimension along which Softmax will be computed (so every slice along
-dim will sum to 1).""",
+        help="A dimension along which Softmax will be computed (so every slice along dim will sum to 1).",
     )
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
@@ -994,7 +992,7 @@ def Softmax2dConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser, a Tensor of the same dimension and shape as the input with
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies SoftMax over features to each spatial location.
@@ -1023,7 +1021,7 @@ def SoftminConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser, values in the range [0, 1]
+    :returns: argument_parser, values in the range [0, 1]
     :rtype: ```Tuple[ArgumentParser, a Tensor of the same dimension and shape as the input, wit]```
     """
     argument_parser.description = """Applies the Softmin function to an n-dimensional input Tensor
@@ -1049,8 +1047,7 @@ Examples::
     >>> output = m(input)"""
     argument_parser.add_argument(
         "--dim",
-        help="""A dimension along which Softmin will be computed (so every slice along
-dim will sum to 1).""",
+        help="A dimension along which Softmin will be computed (so every slice along dim will sum to 1).",
     )
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="dim"
@@ -1065,7 +1062,7 @@ def SoftplusConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -1119,7 +1116,7 @@ def SoftshrinkConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the soft shrinkage function elementwise:
@@ -1148,8 +1145,7 @@ Examples::
     argument_parser.add_argument(
         "--lambd",
         type=float,
-        help="""the :math:`\\lambda` (must be no less than zero) value for the
-Softshrink formulation.""",
+        help="the :math:`\\lambda` (must be no less than zero) value for the Softshrink formulation.",
         required=True,
         default=0.5,
     )
@@ -1166,7 +1162,7 @@ def SoftsignConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -1196,7 +1192,7 @@ def TanhConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -1226,7 +1222,7 @@ def TanhshrinkConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Applies the element-wise function:
@@ -1256,7 +1252,7 @@ def ThresholdConfig(argument_parser):
     :param argument_parser: argument parser
     :type argument_parser: ```ArgumentParser```
 
-    :return: argument_parser
+    :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
     argument_parser.description = """Thresholds each element of the input Tensor.
