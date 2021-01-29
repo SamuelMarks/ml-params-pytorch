@@ -298,16 +298,16 @@ scale_fn is not None, this argument is ignored.""",
         required=True,
         default="triangular",
     )
-    argument_parser.add_argument("--scale_fn")
-    argument_parser.add_argument("--verbose", type=float, required=True, default=1.0)
     argument_parser.add_argument("--gamma")
+    argument_parser.add_argument("--cycle_momentum")
+    argument_parser.add_argument("--scale_fn")
     argument_parser.add_argument("--scale_mode")
+    argument_parser.add_argument("--max_momentum")
+    argument_parser.add_argument("--last_epoch", required=True, default="triangular")
     argument_parser.add_argument(
         "--base_momentum", type=int, required=True, default=2000
     )
-    argument_parser.add_argument("--cycle_momentum")
-    argument_parser.add_argument("--max_momentum")
-    argument_parser.add_argument("--last_epoch", required=True, default="triangular")
+    argument_parser.add_argument("--verbose", type=float, required=True, default=1.0)
     return argument_parser
 
 
