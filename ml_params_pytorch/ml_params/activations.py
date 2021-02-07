@@ -379,8 +379,8 @@ Examples::
         required=True,
         default='["min_val", "max_val", "inplace"]',
     )
-    argument_parser.add_argument("--min_value", type=float)
     argument_parser.add_argument("--max_value", type=float)
+    argument_parser.add_argument("--min_value", type=float)
     return argument_parser
 
 
@@ -574,8 +574,8 @@ Examples::
     )
     argument_parser.add_argument("--kdim", help="total number of features in key.")
     argument_parser.add_argument("--vdim", help="total number of features in value.")
-    argument_parser.add_argument("--bias_k")
     argument_parser.add_argument("--bias_v")
+    argument_parser.add_argument("--bias_k")
     return argument_parser
 
 

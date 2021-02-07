@@ -69,6 +69,6 @@ for name in ${generate[*]}; do
     git add "$fname"
 done
 
-fd -HIepy -x bash -c 'autoflake --remove-all-unused-imports -i "$0" && isort --atomic "$0" && python -m black "$0"' {} \;
+fd -HIepy -x sh -c 'autoflake --remove-all-unused-imports -i "$0" && isort --atomic "$0" && python -m black "$0"' {} \;
 
 printf '\nFIN\n'
