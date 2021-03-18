@@ -19,7 +19,6 @@ def CELUConfig(argument_parser):
 
 More details can be found in the paper `Continuously Differentiable Exponential Linear Units`_ .
 
-
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
       dimensions
@@ -72,7 +71,6 @@ def ELUConfig(argument_parser):
     x, & \\text{ if } x > 0\\\\
     \\alpha * (\\exp(x) - 1), & \\text{ if } x \\leq 0
     \\end{cases}
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
@@ -151,7 +149,6 @@ def GLUConfig(argument_parser):
 :math:`{GLU}(a, b)= a \\otimes \\sigma(b)` where :math:`a` is the first half
 of the input matrices and :math:`b` is the second half.
 
-
 Shape:
     - Input: :math:`(\\ast_1, N, \\ast_2)` where `*` means, any number of additional
       dimensions
@@ -194,7 +191,6 @@ def HardshrinkConfig(argument_parser):
     x, & \\text{ if } x < -\\lambda \\\\
     0, & \\text{ otherwise }
     \\end{cases}
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
@@ -240,7 +236,6 @@ def HardsigmoidConfig(argument_parser):
         x / 6 + 1 / 2 & \\text{otherwise}
     \\end{cases}
 
-
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
       dimensions
@@ -284,7 +279,6 @@ def HardswishConfig(argument_parser):
         x & \\text{if~} x \\ge +3, \\\\
         x \\cdot (x + 3) /6 & \\text{otherwise}
     \\end{cases}
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
@@ -336,7 +330,6 @@ HardTanh is defined as:
 The range of the linear region :math:`[-1, 1]` can be adjusted using
 :attr:`min_val` and :attr:`max_val`.
 
-
 Keyword arguments :attr:`min_value` and :attr:`max_value`
 have been deprecated in favor of :attr:`min_val` and :attr:`max_val`.
 
@@ -379,8 +372,6 @@ Examples::
         required=True,
         default='["min_val", "max_val", "inplace"]',
     )
-    argument_parser.add_argument("--max_value", type=float)
-    argument_parser.add_argument("--min_value", type=float)
     return argument_parser
 
 
@@ -408,7 +399,6 @@ or
     x, & \\text{ if } x \\geq 0 \\\\
     \\text{negative\\_slope} \\times x, & \\text{ otherwise }
     \\end{cases}
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
@@ -497,7 +487,6 @@ Shape:
     - Output: :math:`(*)`, same shape as the input
 
 
-
 Examples::
 
     >>> m = nn.LogSoftmax()
@@ -524,15 +513,16 @@ def MultiheadAttentionConfig(argument_parser):
     """
     argument_parser.description = """Allows the model to jointly attend to information
 from different representation subspaces.
-See reference: Attention Is All You Need
+See `Attention Is All You Need <https://arxiv.org/abs/1706.03762>`_
 
 .. math::
     \\text{MultiHead}(Q, K, V) = \\text{Concat}(head_1,\\dots,head_h)W^O
-    \\text{where} head_i = \\text{Attention}(QW_i^Q, KW_i^K, VW_i^V)
 
+where :math:`head_i = \\text{Attention}(QW_i^Q, KW_i^K, VW_i^V)`.
 
-    Note: if kdim and vdim are None, they will be set to embed_dim such that
-    query, key, and value have the same number of features.
+Note that if :attr:`kdim` and :attr:`vdim` are None, they will be set
+to :attr:`embed_dim` such that query, key, and value have the same
+number of features.
 
 Examples::
 
@@ -574,8 +564,8 @@ Examples::
     )
     argument_parser.add_argument("--kdim", help="total number of features in key.")
     argument_parser.add_argument("--vdim", help="total number of features in value.")
-    argument_parser.add_argument("--bias_v")
     argument_parser.add_argument("--bias_k")
+    argument_parser.add_argument("--bias_v")
     return argument_parser
 
 
@@ -614,7 +604,6 @@ a separate :math:`a` is used for each input channel.
 .. note::
     Channel dim is the 2nd dim of input. When input has dims < 2, then there is
     no channel dim and the number of channels = 1.
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
@@ -685,7 +674,6 @@ where :math:`a` is randomly sampled from uniform distribution
 
  See: https://arxiv.org/pdf/1505.00853.pdf
 
-
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
       dimensions
@@ -743,7 +731,6 @@ def ReLUConfig(argument_parser):
 
 :math:`\\text{ReLU}(x) = (x)^+ = \\max(0, x)`
 
-
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
       dimensions
@@ -791,7 +778,6 @@ def ReLU6Config(argument_parser):
 .. math::
     \\text{ReLU6}(x) = \\min(\\max(0,x), 6)
 
-
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
       dimensions
@@ -833,7 +819,6 @@ with :math:`\\alpha = 1.6732632423543772848170429916717` and
 :math:`\\text{scale} = 1.0507009873554804934193349852946`.
 
 More details can be found in the paper `Self-Normalizing Neural Networks`_ .
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
@@ -878,11 +863,11 @@ def SiLUConfig(argument_parser):
     \\text{silu}(x) = x * \\sigma(x), \\text{where } \\sigma(x) \\text{ is the logistic sigmoid.}
 
 .. note::
-    See `Gaussian Error Linear Units (GELUs) <https://arxiv.org/abs/1606.08415>`_ 
-    where the SiLU (Sigmoid Linear Unit) was originally coined, and see 
-    `Sigmoid-Weighted Linear Units for Neural Network Function Approximation 
-    in Reinforcement Learning <https://arxiv.org/abs/1702.03118>`_ and `Swish: 
-    a Self-Gated Activation Function <https://arxiv.org/abs/1710.05941v1>`_ 
+    See `Gaussian Error Linear Units (GELUs) <https://arxiv.org/abs/1606.08415>`_
+    where the SiLU (Sigmoid Linear Unit) was originally coined, and see
+    `Sigmoid-Weighted Linear Units for Neural Network Function Approximation
+    in Reinforcement Learning <https://arxiv.org/abs/1702.03118>`_ and `Swish:
+    a Self-Gated Activation Function <https://arxiv.org/abs/1710.05941v1>`_
     where the SiLU was experimented with later.
 
 Shape:
@@ -898,7 +883,7 @@ Examples::
     argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="inplace"
     )
-    argument_parser.add_argument("--inplace", type=bool, required=True, default=False)
+    argument_parser.add_argument("--inplace", type=bool)
     return argument_parser
 
 
@@ -964,7 +949,6 @@ Returns:
     a Tensor of the same dimension and shape as the input with
     values in the range [0, 1]
 
-
 .. note::
     This module doesn't work directly with NLLLoss,
     which expects the Log to be computed between the Softmax and itself.
@@ -1004,7 +988,6 @@ Shape:
     - Input: :math:`(N, C, H, W)`
     - Output: :math:`(N, C, H, W)` (same shape as input)
 
-
 Examples::
 
     >>> m = nn.Softmax2d()
@@ -1037,7 +1020,6 @@ Shape:
     - Input: :math:`(*)` where `*` means, any number of additional
       dimensions
     - Output: :math:`(*)`, same shape as the input
-
 
 
 Examples::
@@ -1075,7 +1057,6 @@ to constrain the output of a machine to always be positive.
 
 For numerical stability the implementation reverts to the linear function
 when :math:`input \\times \\beta > threshold`.
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
@@ -1128,7 +1109,6 @@ def SoftshrinkConfig(argument_parser):
     x + \\lambda, & \\text{ if } x < -\\lambda \\\\
     0, & \\text{ otherwise }
     \\end{cases}
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional
@@ -1265,7 +1245,6 @@ Threshold is defined as:
     x, &\\text{ if } x > \\text{threshold} \\\\
     \\text{value}, &\\text{ otherwise }
     \\end{cases}
-
 
 Shape:
     - Input: :math:`(N, *)` where `*` means, any number of additional

@@ -26,8 +26,8 @@ where :math:`N` is the batch size. If :attr:`reduction` is not ``'none'``
 
 .. math::
     \\ell(x, y) = \\begin{cases}
-        \\operatorname{mean}(L), & \\text{if reduction} = \\text{'mean';}\\\\
-        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{'sum'.}
+        \\operatorname{mean}(L), & \\text{if reduction} = \\text{`mean';}\\\\
+        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{`sum'.}
     \\end{cases}
 
 This is used for measuring the error of a reconstruction in for example
@@ -50,15 +50,6 @@ Our solution is that BCELoss clamps its log function outputs to be greater than
 or equal to -100. This way, we can always have a finite loss value and a linear
 backward method.
 
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
-
 Shape:
     - Input: :math:`(N, *)` where :math:`*` means, any number of additional
       dimensions
@@ -78,6 +69,7 @@ Examples::
         "--weight",
         help="""a manual rescaling weight given to the loss of each batch element. If given, has to be a Tensor of
 size `nbatch`.""",
+        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -85,7 +77,7 @@ size `nbatch`.""",
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -97,9 +89,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -130,8 +131,8 @@ where :math:`N` is the batch size. If :attr:`reduction` is not ``'none'``
 
 .. math::
     \\ell(x, y) = \\begin{cases}
-        \\operatorname{mean}(L), & \\text{if reduction} = \\text{'mean';}\\\\
-        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{'sum'.}
+        \\operatorname{mean}(L), & \\text{if reduction} = \\text{`mean';}\\\\
+        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{`sum'.}
     \\end{cases}
 
 This is used for measuring the error of a reconstruction in for example
@@ -166,17 +167,6 @@ Examples::
     >>> criterion(output, target)  # -log(sigmoid(1.5))
     tensor(0.2014)
 
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-        pos_weight (Tensor, optional): a weight of positive examples.
-                Must be a vector with length equal to the number of classes.
-
-
 Shape:
     - Input: :math:`(N, *)` where :math:`*` means, any number of additional dimensions
     - Target: :math:`(N, *)`, same shape as the input
@@ -194,6 +184,7 @@ Shape:
         "--weight",
         help="""a manual rescaling weight given to the loss of each batch element. If given, has to be a Tensor of
 size `nbatch`.""",
+        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -201,7 +192,7 @@ size `nbatch`.""",
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -212,8 +203,20 @@ for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``F
 loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
-    argument_parser.add_argument("--pos_weight")
+    argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
+        "--pos_weight",
+        help="a weight of positive examples. Must be a vector with length equal to the number of classes.",
+    )
     return argument_parser
 
 
@@ -234,17 +237,11 @@ probability of possible alignments of input to target, producing a loss value wh
 with respect to each input node. The alignment of input to target is assumed to be "many-to-one", which
 limits the length of the target sequence such that it must be :math:`\\leq` the input length.
 
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the output losses will be divided by the target lengths and
-            then the mean over the batch is taken. Default: ``'mean'``
     zero_infinity (bool, optional):
-            Whether to zero infinite losses and the associated gradients.
-            Default: ``False``
-            Infinite losses mainly occur when the inputs are too short
-            to be aligned to the targets.
-
+        Whether to zero infinite losses and the associated gradients.
+        Default: ``False``
+        Infinite losses mainly occur when the inputs are too short
+        to be aligned to the targets.
 
 Shape:
     - Log_probs: Tensor of size :math:`(T, N, C)`,
@@ -348,12 +345,17 @@ Note:
         default=0,
     )
     argument_parser.add_argument(
-        "--zero_infinity", type=bool, required=True, default=False
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the output losses will be divided by the target lengths and
+then the mean over the batch is taken.""",
+        required=True,
+        default="mean",
     )
     argument_parser.add_argument(
         "--__constants__", type=loads, required=True, default='["blank", "reduction"]'
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
+    argument_parser.add_argument("--zero_infinity", type=bool)
     return argument_parser
 
 
@@ -380,15 +382,7 @@ The loss function for each sample is:
     \\begin{cases}
     1 - \\cos(x_1, x_2), & \\text{if } y = 1 \\\\
     \\max(0, \\cos(x_1, x_2) - \\text{margin}), & \\text{if } y = -1
-    \\end{cases}
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``"""
+    \\end{cases}"""
     argument_parser.add_argument(
         "--margin",
         type=float,
@@ -403,7 +397,7 @@ The loss function for each sample is:
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -415,9 +409,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=loads, required=True, default='["margin", "reduction"]'
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -431,7 +434,7 @@ def CrossEntropyLossConfig(argument_parser):
     :returns: argument_parser
     :rtype: ```ArgumentParser```
     """
-    argument_parser.description = """This criterion combines :func:`nn.LogSoftmax` and :func:`nn.NLLLoss` in one single class.
+    argument_parser.description = """This criterion combines :class:`~torch.nn.LogSoftmax` and :class:`~torch.nn.NLLLoss` in one single class.
 
 It is useful when training a classification problem with `C` classes.
 If provided, the optional argument :attr:`weight` should be a 1D `Tensor`
@@ -471,16 +474,6 @@ an input of size :math:`(minibatch, C, d_1, d_2, ..., d_K)` with :math:`K \\geq 
 where :math:`K` is the number of dimensions, and a target of appropriate shape
 (see below).
 
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will
-            be applied, ``'mean'``: the weighted mean of the output is taken,
-            ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in
-            the meantime, specifying either of those two args will override
-            :attr:`reduction`. Default: ``'mean'``
-
-
 Shape:
     - Input: :math:`(N, C)` where `C = number of classes`, or
       :math:`(N, C, d_1, d_2, ..., d_K)` with :math:`K \\geq 1`
@@ -504,6 +497,7 @@ Examples::
     argument_parser.add_argument(
         "--weight",
         help="a manual rescaling weight given to each class. If given, has to be a Tensor of size `C`",
+        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -511,7 +505,7 @@ Examples::
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -531,12 +525,114 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the weighted mean of the output is taken, ``'sum'``: the
+output will be summed. Note: :attr:`size_average` and :attr:`reduce` are in the process of being
+deprecated, and in the meantime, specifying either of those two args will override
+:attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
         default='["ignore_index", "reduction"]',
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
+    return argument_parser
+
+
+def GaussianNLLLossConfig(argument_parser):
+    """
+    Set CLI arguments
+
+    :param argument_parser: argument parser
+    :type argument_parser: ```ArgumentParser```
+
+    :returns: argument_parser
+    :rtype: ```ArgumentParser```
+    """
+    argument_parser.description = """Gaussian negative log likelihood loss.
+
+The targets are treated as samples from Gaussian distributions with
+expectations and variances predicted by the neural network. For a
+D-dimensional ``target`` tensor modelled as having heteroscedastic Gaussian
+distributions with a D-dimensional tensor of expectations ``input`` and a
+D-dimensional tensor of positive variances ``var`` the loss is:
+
+.. math::
+    \\text{loss} = \\frac{1}{2}\\sum_{i=1}^D \\left(\\log\\left(\\text{max}\\left(\\text{var}[i],
+    \\ \\text{eps}\\right)\\right) + \\frac{\\left(\\text{input}[i] - \\text{target}[i]\\right)^2}
+    {\\text{max}\\left(\\text{var}[i], \\ \\text{eps}\\right)}\\right) + \\text{const.}
+
+where :attr:`eps` is used for stability. By default, the constant term of
+the loss function is omitted unless :attr:`full` is ``True``. If ``var`` is
+a scalar (implying ``target`` tensor has homoscedastic Gaussian
+distributions) it is broadcasted to be the same size as the input.
+
+Shape:
+    - Input: :math:`(N, *)` where :math:`*` means any number of additional
+      dimensions
+    - Target: :math:`(N, *)`, same shape as the input
+    - Var: :math:`(N, 1)` or :math:`(N, *)`, same shape as the input
+    - Output: scalar if :attr:`reduction` is ``'mean'`` (default) or
+      ``'sum'``. If :attr:`reduction` is ``'none'``, then :math:`(N)`
+
+Examples::
+
+    >>> loss = nn.GaussianNLLLoss()
+    >>> input = torch.randn(5, 2, requires_grad=True)
+    >>> target = torch.randn(5, 2)
+    >>> var = torch.ones(5, 2, requires_grad=True) #heteroscedastic
+    >>> output = loss(input, target, var)
+    >>> output.backward()
+
+
+    >>> loss = nn.GaussianNLLLoss()
+    >>> input = torch.randn(5, 2, requires_grad=True)
+    >>> target = torch.randn(5, 2)
+    >>> var = torch.ones(5, 1, requires_grad=True) #homoscedastic
+    >>> output = loss(input, target, var)
+    >>> output.backward()
+
+Note:
+    The clamping of ``var`` is ignored with respect to autograd, and so the
+    gradients are unaffected by it.
+
+Reference:
+    Nix, D. A. and Weigend, A. S., "Estimating the mean and variance of the
+    target probability distribution", Proceedings of 1994 IEEE International
+    Conference on Neural Networks (ICNN'94), Orlando, FL, USA, 1994, pp. 55-60
+    vol.1, doi: 10.1109/ICNN.1994.374138."""
+    argument_parser.add_argument(
+        "--full",
+        type=bool,
+        help="include the constant term in the loss calculation.",
+        required=True,
+        default=False,
+    )
+    argument_parser.add_argument(
+        "--eps",
+        type=float,
+        help="value used to clamp ``var`` (see note below), for stability.",
+        required=True,
+        default=1e-06,
+    )
+    argument_parser.add_argument(
+        "--reduction",
+        help="""specifies the reduction to apply to the output:``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the output is the average of all batch member losses,
+``'sum'``: the output is the sum of all batch member losses.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
+        "--__constants__",
+        type=loads,
+        required=True,
+        default='["full", "eps", "reduction"]',
+    )
     return argument_parser
 
 
@@ -568,20 +664,11 @@ and the total loss functions is
 
 .. math::
     \\ell(x, y) = \\begin{cases}
-        \\operatorname{mean}(L), & \\text{if reduction} = \\text{'mean';}\\\\
-        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{'sum'.}
+        \\operatorname{mean}(L), & \\text{if reduction} = \\text{`mean';}\\\\
+        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{`sum'.}
     \\end{cases}
 
 where :math:`L = \\{l_1,\\dots,l_N\\}^\\top`.
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
 
 Shape:
     - Input: :math:`(*)` where :math:`*` means, any number of dimensions. The sum operation
@@ -601,7 +688,7 @@ Shape:
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -613,9 +700,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=loads, required=True, default='["margin", "reduction"]'
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -654,8 +750,8 @@ shape as ``input``. If :attr:`reduction` is not ``'none'`` (default ``'mean'``),
 
 .. math::
     \\ell(x, y) = \\begin{cases}
-        \\operatorname{mean}(L), & \\text{if reduction} = \\text{'mean';} \\\\
-        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{'sum'.}
+        \\operatorname{mean}(L), & \\text{if reduction} = \\text{`mean';} \\\\
+        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{`sum'.}
     \\end{cases}
 
 In default :attr:`reduction` mode ``'mean'``, the losses are averaged for each minibatch over observations
@@ -664,18 +760,6 @@ are averaged over batch dimension only. ``'mean'`` mode's behavior will be chang
 ``'batchmean'`` in the next major release.
 
 .. _`kullback-leibler divergence`: https://en.wikipedia.org/wiki/Kullback-Leibler_divergence
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'batchmean'`` | ``'sum'`` | ``'mean'``.
-            ``'none'``: no reduction will be applied.
-            ``'batchmean'``: the sum of the output will be divided by batchsize.
-            ``'sum'``: the output will be summed.
-            ``'mean'``: the output will be divided by the number of elements in the output.
-            Default: ``'mean'``
-        log_target (bool, optional): Specifies whether `target` is passed in the log space.
-            Default: ``False``
-
 
 .. note::
     :attr:`size_average` and :attr:`reduce` are in the process of being deprecated,
@@ -698,7 +782,7 @@ Shape:
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -710,12 +794,24 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
-        "--__constants__", type=str, action="append", required=True, default="reduction"
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'batchmean'`` | ``'sum'`` |
+``'mean'``. ``'none'``: no reduction will be applied. ``'batchmean'``: the sum of the output will be
+divided by batchsize. ``'sum'``: the output will be summed. ``'mean'``: the output will be divided
+by the number of elements in the output.""",
+        required=True,
+        default="mean",
     )
     argument_parser.add_argument(
-        "--log_target", type=bool, required=True, default=False
+        "--log_target",
+        type=bool,
+        help="Specifies whether `target` is passed in the log space.",
+        required=True,
+        default=False,
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
+    argument_parser.add_argument(
+        "--__constants__", type=str, action="append", required=True, default="reduction"
+    )
     return argument_parser
 
 
@@ -744,8 +840,8 @@ where :math:`N` is the batch size. If :attr:`reduction` is not ``'none'``
 .. math::
     \\ell(x, y) =
     \\begin{cases}
-        \\operatorname{mean}(L), & \\text{if reduction} = \\text{'mean';}\\\\
-        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{'sum'.}
+        \\operatorname{mean}(L), & \\text{if reduction} = \\text{`mean';}\\\\
+        \\operatorname{sum}(L),  & \\text{if reduction} = \\text{`sum'.}
     \\end{cases}
 
 :math:`x` and :math:`y` are tensors of arbitrary shapes with a total
@@ -755,14 +851,7 @@ The sum operation still operates over all the elements, and divides by :math:`n`
 
 The division by :math:`n` can be avoided if one sets ``reduction = 'sum'``.
 
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
+Supports real-valued and complex-valued inputs.
 
 Shape:
     - Input: :math:`(N, *)` where :math:`*` means, any number of additional
@@ -784,7 +873,7 @@ Examples::
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -796,9 +885,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -827,8 +925,8 @@ where :math:`N` is the batch size. If :attr:`reduction` is not ``'none'``
 .. math::
     \\ell(x, y) =
     \\begin{cases}
-        \\operatorname{mean}(L), &  \\text{if reduction} = \\text{'mean';}\\\\
-        \\operatorname{sum}(L),  &  \\text{if reduction} = \\text{'sum'.}
+        \\operatorname{mean}(L), &  \\text{if reduction} = \\text{`mean';}\\\\
+        \\operatorname{sum}(L),  &  \\text{if reduction} = \\text{`sum'.}
     \\end{cases}
 
 :math:`x` and :math:`y` are tensors of arbitrary shapes with a total
@@ -837,15 +935,6 @@ of :math:`n` elements each.
 The mean operation still operates over all the elements, and divides by :math:`n`.
 
 The division by :math:`n` can be avoided if one sets ``reduction = 'sum'``.
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
 
 Shape:
     - Input: :math:`(N, *)` where :math:`*` means, any number of additional
@@ -865,7 +954,7 @@ Examples::
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -877,9 +966,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -904,15 +1002,6 @@ The loss function for each pair of samples in the mini-batch is:
 
 .. math::
     \\text{loss}(x1, x2, y) = \\max(0, -y * (x1 - x2) + \\text{margin})
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
 
 Shape:
     - Input1: :math:`(N)` where `N` is the batch size.
@@ -941,7 +1030,7 @@ Examples::
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -953,9 +1042,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=loads, required=True, default='["margin", "reduction"]'
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -989,15 +1087,6 @@ starts at the front.
 
 This allows for different samples to have variable amounts of target classes.
 
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
-
 Shape:
     - Input: :math:`(C)` or :math:`(N, C)` where `N` is the batch size and `C`
       is the number of classes.
@@ -1019,7 +1108,7 @@ Examples::
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1031,9 +1120,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1059,15 +1157,6 @@ For each sample in the minibatch:
 where :math:`i \\in \\left\\{0, \\; \\cdots , \\; \\text{x.nElement}() - 1\\right\\}`,
 :math:`y[i] \\in \\left\\{0, \\; 1\\right\\}`.
 
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
-
 Shape:
     - Input: :math:`(N, C)` where `N` is the batch size and `C` is the number of classes.
     - Target: :math:`(N, C)`, label targets padded by -1 ensuring same shape as the input.
@@ -1076,6 +1165,7 @@ Shape:
         "--weight",
         help="""a manual rescaling weight given to each class. If given, it has to be a Tensor of size `C`.
 Otherwise, it is treated as if having all ones.""",
+        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -1083,7 +1173,7 @@ Otherwise, it is treated as if having all ones.""",
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1095,9 +1185,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1131,15 +1230,7 @@ a 1D :attr:`weight` tensor into the constructor.
 The loss function then becomes:
 
 .. math::
-    \\text{loss}(x, y) = \\frac{\\sum_i \\max(0, w[y] * (\\text{margin} - x[y] + x[i]))^p)}{\\text{x.size}(0)}
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``"""
+    \\text{loss}(x, y) = \\frac{\\sum_i \\max(0, w[y] * (\\text{margin} - x[y] + x[i]))^p)}{\\text{x.size}(0)}"""
     argument_parser.add_argument(
         "--p",
         type=int,
@@ -1158,6 +1249,7 @@ The loss function then becomes:
         "--weight",
         help="""a manual rescaling weight given to each class. If given, it has to be a Tensor of size `C`.
 Otherwise, it is treated as if having all ones.""",
+        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -1165,7 +1257,7 @@ Otherwise, it is treated as if having all ones.""",
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1177,12 +1269,21 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
         default='["p", "margin", "reduction"]',
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1231,25 +1332,15 @@ where :math:`x` is the input, :math:`y` is the target, :math:`w` is the weight, 
 .. math::
     \\ell(x, y) = \\begin{cases}
         \\sum_{n=1}^N \\frac{1}{\\sum_{n=1}^N w_{y_n}} l_n, &
-        \\text{if reduction} = \\text{'mean';}\\\\
+        \\text{if reduction} = \\text{`mean';}\\\\
         \\sum_{n=1}^N l_n,  &
-        \\text{if reduction} = \\text{'sum'.}
+        \\text{if reduction} = \\text{`sum'.}
     \\end{cases}
 
 Can also be used for higher dimension inputs, such as 2D images, by providing
 an input of size :math:`(minibatch, C, d_1, d_2, ..., d_K)` with :math:`K \\geq 1`,
 where :math:`K` is the number of dimensions, and a target of appropriate shape
 (see below). In the case of images, it computes NLL loss per-pixel.
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will
-            be applied, ``'mean'``: the weighted mean of the output is taken,
-            ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in
-            the meantime, specifying either of those two args will override
-            :attr:`reduction`. Default: ``'mean'``
-
 
 Shape:
     - Input: :math:`(N, C)` where `C = number of classes`, or
@@ -1290,6 +1381,7 @@ Examples::
         "--weight",
         help="""a manual rescaling weight given to each class. If given, it has to be a Tensor of size `C`.
 Otherwise, it is treated as if having all ones.""",
+        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -1297,7 +1389,7 @@ Otherwise, it is treated as if having all ones.""",
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1317,12 +1409,21 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the weighted mean of the output is taken, ``'sum'``: the
+output will be summed. Note: :attr:`size_average` and :attr:`reduce` are in the process of being
+deprecated, and in the meantime, specifying either of those two args will override
+:attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
         default='["ignore_index", "reduction"]',
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1371,25 +1472,15 @@ where :math:`x` is the input, :math:`y` is the target, :math:`w` is the weight, 
 .. math::
     \\ell(x, y) = \\begin{cases}
         \\sum_{n=1}^N \\frac{1}{\\sum_{n=1}^N w_{y_n}} l_n, &
-        \\text{if reduction} = \\text{'mean';}\\\\
+        \\text{if reduction} = \\text{`mean';}\\\\
         \\sum_{n=1}^N l_n,  &
-        \\text{if reduction} = \\text{'sum'.}
+        \\text{if reduction} = \\text{`sum'.}
     \\end{cases}
 
 Can also be used for higher dimension inputs, such as 2D images, by providing
 an input of size :math:`(minibatch, C, d_1, d_2, ..., d_K)` with :math:`K \\geq 1`,
 where :math:`K` is the number of dimensions, and a target of appropriate shape
 (see below). In the case of images, it computes NLL loss per-pixel.
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will
-            be applied, ``'mean'``: the weighted mean of the output is taken,
-            ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in
-            the meantime, specifying either of those two args will override
-            :attr:`reduction`. Default: ``'mean'``
-
 
 Shape:
     - Input: :math:`(N, C)` where `C = number of classes`, or
@@ -1430,6 +1521,7 @@ Examples::
         "--weight",
         help="""a manual rescaling weight given to each class. If given, it has to be a Tensor of size `C`.
 Otherwise, it is treated as if having all ones.""",
+        required=True,
     )
     argument_parser.add_argument(
         "--size_average",
@@ -1437,7 +1529,7 @@ Otherwise, it is treated as if having all ones.""",
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
     )
     argument_parser.add_argument(
         "--ignore_index",
@@ -1454,7 +1546,16 @@ when reduce is ``False``.""",
 for each minibatch depending on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a
 loss per batch element instead and ignores :attr:`size_average`.""",
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
+    argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the weighted mean of the output is taken, ``'sum'``: the
+output will be summed. Note: :attr:`size_average` and :attr:`reduce` are in the process of being
+deprecated, and in the meantime, specifying either of those two args will override
+:attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
     return argument_parser
 
 
@@ -1471,9 +1572,7 @@ def PairwiseDistanceConfig(argument_parser):
     argument_parser.description = """Computes the batchwise pairwise distance between vectors :math:`v_1`, :math:`v_2` using the p-norm:
 
 .. math ::
-    \\Vert x \\Vert _p = \\left( \\sum_{i=1}^n  \\vert x_i \\vert ^ p \\right) ^ {1/p}.
-
-
+    \\Vert x \\Vert _p = \\left( \\sum_{i=1}^n  \\vert x_i \\vert ^ p \\right) ^ {1/p}.Shape:
     - Input1: :math:`(N, D)` where `D = vector dimension`
     - Input2: :math:`(N, D)`, same shape as the Input1
     - Output: :math:`(N)`. If :attr:`keepdim` is ``True``, then :math:`(N, 1)`.
@@ -1533,14 +1632,13 @@ The last term can be omitted or approximated with Stirling formula. The
 approximation is used for target values more than 1. For targets less or
 equal to 1 zeros are added to the loss.
 
-
         .. math::
             \\text{target}*\\log(\\text{target}) - \\text{target} + 0.5 * \\log(2\\pi\\text{target}).
     size_average (bool, optional): Deprecated (see :attr:`reduction`). By default,
         the losses are averaged over each loss element in the batch. Note that for
         some losses, there are multiple elements per sample. If the field :attr:`size_average`
         is set to ``False``, the losses are instead summed for each minibatch. Ignored
-        when reduce is ``False``. Default: ``True``
+        when :attr:`reduce` is ``False``. Default: ``True``
     eps (float, optional): Small value to avoid evaluation of :math:`\\log(0)` when
         :attr:`log_input = False`. Default: 1e-8
     reduce (bool, optional): Deprecated (see :attr:`reduction`). By default, the
@@ -1583,16 +1681,13 @@ Shape:
         required=True,
         default=False,
     )
+    argument_parser.add_argument("--eps", type=float)
     argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
         default='["log_input", "full", "eps", "reduction"]',
     )
-    argument_parser.add_argument("--eps", type=float, required=True, default=1e-08)
-    argument_parser.add_argument("--size_average")
-    argument_parser.add_argument("--reduction", required=True, default="mean")
-    argument_parser.add_argument("--reduce")
     return argument_parser
 
 
@@ -1608,9 +1703,9 @@ def SmoothL1LossConfig(argument_parser):
     """
     argument_parser.description = """Creates a criterion that uses a squared term if the absolute
 element-wise error falls below beta and an L1 term otherwise.
-It is less sensitive to outliers than the `MSELoss` and in some cases
+It is less sensitive to outliers than the :class:`torch.nn.MSELoss` and in some cases
 prevents exploding gradients (e.g. see `Fast R-CNN` paper by Ross Girshick).
-Also known as the Huber loss:
+Omitting a scaling factor of :attr:`beta`, this loss is also known as the Huber loss:
 
 .. math::
     \\text{loss}(x, y) = \\frac{1}{n} \\sum_{i} z_{i}
@@ -1627,23 +1722,12 @@ where :math:`z_{i}` is given by:
 :math:`x` and :math:`y` arbitrary shapes with a total of :math:`n` elements each
 the sum operation still operates over all the elements, and divides by :math:`n`.
 
-beta is an optional parameter that defaults to 1.
+:attr:`beta` is an optional parameter that defaults to 1.
 
-Note: When beta is set to 0, this is equivalent to :class:`L1Loss`.
-Passing a negative value in for beta will result in an exception.
+Note: When :attr:`beta` is set to 0, this is equivalent to :class:`L1Loss`.
+Passing a negative value in for :attr:`beta` will result in an exception.
 
 The division by :math:`n` can be avoided if sets ``reduction = 'sum'``.
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-        beta (float, optional): Specifies the threshold at which to change between L1 and L2 loss.
-            This value defaults to 1.0.
-
 
 Shape:
     - Input: :math:`(N, *)` where :math:`*` means, any number of additional
@@ -1657,7 +1741,7 @@ Shape:
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1669,10 +1753,25 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
+        "--beta",
+        type=float,
+        help="Specifies the threshold at which to change between L1 and L2 loss. This value",
+        required=True,
+        default=1.0,
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
-    argument_parser.add_argument("--beta", type=float, required=True, default=1.0)
     return argument_parser
 
 
@@ -1693,15 +1792,6 @@ logistic loss between input tensor :math:`x` and target tensor :math:`y`
 .. math::
     \\text{loss}(x, y) = \\sum_i \\frac{\\log(1 + \\exp(-y[i]*x[i]))}{\\text{x.nelement}()}
 
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
-
 Shape:
     - Input: :math:`(*)` where :math:`*` means, any number of additional
       dimensions
@@ -1713,7 +1803,7 @@ Shape:
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1725,9 +1815,18 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__", type=str, action="append", required=True, default="reduction"
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1765,15 +1864,6 @@ where
 
 See also :class:`~torch.nn.TripletMarginWithDistanceLoss`, which computes the
 triplet margin loss for input tensors using a custom distance function.
-
-
-    reduction (string, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in the meantime,
-            specifying either of those two args will override :attr:`reduction`. Default: ``'mean'``
-
 
 Shape:
     - Input: :math:`(N, D)` where :math:`D` is the vector dimension.
@@ -1813,7 +1903,7 @@ descriptors with triplet losses` by V. Balntas, E. Riba et al.""",
         help="""Deprecated (see :attr:`reduction`). By default, the losses are averaged over each loss element in
 the batch. Note that for some losses, there are multiple elements per sample. If the field
 :attr:`size_average` is set to ``False``, the losses are instead summed for each minibatch. Ignored
-when reduce is ``False``.""",
+when :attr:`reduce` is ``False``.""",
         default=True,
     )
     argument_parser.add_argument(
@@ -1825,13 +1915,22 @@ loss per batch element instead and ignores :attr:`size_average`.""",
         default=True,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no
+reduction will be applied, ``'mean'``: the sum of the output will be divided by the number of
+elements in the output, ``'sum'``: the output will be summed. Note: :attr:`size_average` and
+:attr:`reduce` are in the process of being deprecated, and in the meantime, specifying either of
+those two args will override :attr:`reduction`.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument("--eps", type=float)
+    argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
         default='["margin", "p", "eps", "swap", "reduction"]',
     )
-    argument_parser.add_argument("--eps", type=float, required=True, default=1e-06)
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1861,7 +1960,7 @@ can be described as:
 
 where :math:`N` is the batch size; :math:`d` is a nonnegative, real-valued function
 quantifying the closeness of two tensors, referred to as the :attr:`distance_function`;
-and :math:`margin` is a non-negative margin representing the minimum difference
+and :math:`margin` is a nonnegative margin representing the minimum difference
 between the positive and negative distances that is required for the loss to
 be 0.  The input tensors have :math:`N` elements each and can be of any shape
 that the distance function can handle.
@@ -1880,13 +1979,6 @@ See also :class:`~torch.nn.TripletMarginLoss`, which computes the triplet
 loss for input tensors using the :math:`l_p` distance as the distance function.
 
 
-    reduction (string, optional): Specifies the (optional) reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will be applied,
-            ``'mean'``: the sum of the output will be divided by the number of
-            elements in the output, ``'sum'``: the output will be summed. Default: ``'mean'``
-
-
-
 Shape:
     - Input: :math:`(N, *)` where :math:`*` represents any number of additional dimensions
       as supported by the distance function.
@@ -1897,9 +1989,9 @@ Examples::
 
 >>> # Initialize embeddings
 >>> embedding = nn.Embedding(1000, 128)
->>> anchor_ids = torch.randint(0, 1000, (1,), requires_grad=True)
->>> positive_ids = torch.randint(0, 1000, (1,), requires_grad=True)
->>> negative_ids = torch.randint(0, 1000, (1,), requires_grad=True)
+>>> anchor_ids = torch.randint(0, 1000, (1,))
+>>> positive_ids = torch.randint(0, 1000, (1,))
+>>> negative_ids = torch.randint(0, 1000, (1,))
 >>> anchor = embedding(anchor_ids)
 >>> positive = embedding(positive_ids)
 >>> negative = embedding(negative_ids)
@@ -1937,9 +2029,9 @@ Reference:
     argument_parser.add_argument(
         "--margin",
         type=float,
-        help="""A non-negative margin representing the minimum difference between the positive and negative
-distances required for the loss to be 0. Larger margins penalize cases where the negative examples
-are not distant enough from the anchors, relative to the positives.""",
+        help="""A nonnegative margin representing the minimum difference between the positive and negative distances
+required for the loss to be 0. Larger margins penalize cases where the negative examples are not
+distant enough from the anchors, relative to the positives.""",
         required=True,
         default=1.0,
     )
@@ -1954,12 +2046,19 @@ the loss computation.""",
         default=False,
     )
     argument_parser.add_argument(
+        "--reduction",
+        help="""Specifies the (optional) reduction to apply to the output: ``'none'`` | ``'mean'`` | ``'sum'``.
+``'none'``: no reduction will be applied, ``'mean'``: the sum of the output will be divided by the
+number of elements in the output, ``'sum'``: the output will be summed.""",
+        required=True,
+        default="mean",
+    )
+    argument_parser.add_argument(
         "--__constants__",
         type=loads,
         required=True,
         default='["margin", "swap", "reduction"]',
     )
-    argument_parser.add_argument("--reduction", required=True, default="mean")
     return argument_parser
 
 
@@ -1969,6 +2068,7 @@ __all__ = [
     "CTCLossConfig",
     "CosineEmbeddingLossConfig",
     "CrossEntropyLossConfig",
+    "GaussianNLLLossConfig",
     "HingeEmbeddingLossConfig",
     "KLDivLossConfig",
     "L1LossConfig",

@@ -84,6 +84,7 @@ class TrainConfig(object):
         "CTCLoss",
         "CosineEmbeddingLoss",
         "CrossEntropyLoss",
+        "GaussianNLLLoss",
         "HingeEmbeddingLoss",
         "KLDivLoss",
         "L1Loss",
@@ -189,6 +190,7 @@ class LoadDataConfig(object):
         "USPS",
         "VOCDetection",
         "VOCSegmentation",
+        "WIDERFace",
     ] = None
     data_loader: Optional[
         Callable[

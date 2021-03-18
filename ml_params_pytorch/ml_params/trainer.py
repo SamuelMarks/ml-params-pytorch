@@ -99,6 +99,7 @@ class TorchTrainer(BaseTrainer):
             "USPS",
             "VOCDetection",
             "VOCSegmentation",
+            "WIDERFace",
         ],
         data_loader: Optional[
             Callable[
@@ -274,6 +275,7 @@ class TorchTrainer(BaseTrainer):
             "CTCLoss",
             "CosineEmbeddingLoss",
             "CrossEntropyLoss",
+            "GaussianNLLLoss",
             "HingeEmbeddingLoss",
             "KLDivLoss",
             "L1Loss",

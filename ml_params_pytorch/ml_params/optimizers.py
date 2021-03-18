@@ -17,7 +17,6 @@ def ASGDConfig(argument_parser):
 It has been proposed in `Acceleration of stochastic approximation by
 averaging`_.
 
-
 .. _Acceleration of stochastic approximation by averaging:
     https://dl.acm.org/citation.cfm?id=131098"""
     argument_parser.add_argument(
@@ -54,7 +53,6 @@ def AdadeltaConfig(argument_parser):
     argument_parser.description = """Implements Adadelta algorithm.
 
 It has been proposed in `ADADELTA: An Adaptive Learning Rate Method`__.
-
 
 __ https://arxiv.org/abs/1212.5701"""
     argument_parser.add_argument(
@@ -101,7 +99,6 @@ def AdagradConfig(argument_parser):
 It has been proposed in `Adaptive Subgradient Methods for Online Learning
 and Stochastic Optimization`_.
 
-
 .. _Adaptive Subgradient Methods for Online Learning and Stochastic
     Optimization: http://jmlr.org/papers/v12/duchi11a.html"""
     argument_parser.add_argument(
@@ -122,7 +119,6 @@ and Stochastic Optimization`_.
         help="term added to the denominator to improve numerical stability",
         default=1e-10,
     )
-    argument_parser.add_argument("--initial_accumulator_value")
     return argument_parser
 
 
@@ -141,7 +137,6 @@ def AdamConfig(argument_parser):
 It has been proposed in `Adam: A Method for Stochastic Optimization`_.
 The implementation of the L2 penalty follows changes proposed in
 `Decoupled Weight Decay Regularization`_.
-
 
 .. _Adam\\: A Method for Stochastic Optimization:
     https://arxiv.org/abs/1412.6980
@@ -197,7 +192,6 @@ def AdamWConfig(argument_parser):
 The original Adam algorithm was proposed in `Adam: A Method for Stochastic Optimization`_.
 The AdamW variant was proposed in `Decoupled Weight Decay Regularization`_.
 
-
 .. _Adam\\: A Method for Stochastic Optimization:
     https://arxiv.org/abs/1412.6980
 .. _Decoupled Weight Decay Regularization:
@@ -250,7 +244,6 @@ def AdamaxConfig(argument_parser):
     argument_parser.description = """Implements Adamax algorithm (a variant of Adam based on infinity norm).
 
 It has been proposed in `Adam: A Method for Stochastic Optimization`__.
-
 
 __ https://arxiv.org/abs/1412.6980"""
     argument_parser.add_argument(
@@ -344,7 +337,6 @@ def LBFGSConfig(argument_parser):
     argument_parser.add_argument(
         "--line_search_fn", help="either 'strong_wolfe' or None"
     )
-    argument_parser.add_argument("--params")
     return argument_parser
 
 
@@ -449,7 +441,6 @@ def SGDConfig(argument_parser):
 Nesterov momentum is based on the formula from
 `On the importance of initialization and momentum in deep learning`__.
 
-
 Example:
     >>> optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
     >>> optimizer.zero_grad()
@@ -520,7 +511,6 @@ def SparseAdamConfig(argument_parser):
 
 In this variant, only moments that show up in the gradient get updated, and
 only those portions of the gradient get applied to the parameters.
-
 
 .. _Adam\\: A Method for Stochastic Optimization:
     https://arxiv.org/abs/1412.6980"""

@@ -38,7 +38,6 @@ It has been proposed in
 `SGDR: Stochastic Gradient Descent with Warm Restarts`_. Note that this only
 implements the cosine annealing part of SGDR, and not the restarts.
 
-
 .. _SGDR\\: Stochastic Gradient Descent with Warm Restarts:
     https://arxiv.org/abs/1608.03983"""
     argument_parser.add_argument(
@@ -91,7 +90,6 @@ When :math:`T_{cur}=0` after restart, set :math:`\\eta_t=\\eta_{max}`.
 
 It has been proposed in
 `SGDR: Stochastic Gradient Descent with Warm Restarts`_.
-
 
 .. _SGDR\\: Stochastic Gradient Descent with Warm Restarts:
     https://arxiv.org/abs/1608.03983"""
@@ -209,48 +207,6 @@ This class has three built-in policies, as put forth in the paper:
 
 This implementation was adapted from the github repo: `bckenstler/CLR`_
 
-
-    gamma (float): Constant in 'exp_range' scaling function:
-            gamma**(cycle iterations)
-            Default: 1.0
-        scale_fn (function): Custom scaling policy defined by a single
-            argument lambda function, where
-            0 <= scale_fn(x) <= 1 for all x >= 0.
-            If specified, then 'mode' is ignored.
-            Default: None
-        scale_mode (str): {'cycle', 'iterations'}.
-            Defines whether scale_fn is evaluated on
-            cycle number or cycle iterations (training
-            iterations since start of cycle).
-            Default: 'cycle'
-        cycle_momentum (bool): If ``True``, momentum is cycled inversely
-            to learning rate between 'base_momentum' and 'max_momentum'.
-            Default: True
-        base_momentum (float or list): Lower momentum boundaries in the cycle
-            for each parameter group. Note that momentum is cycled inversely
-            to learning rate; at the peak of a cycle, momentum is
-            'base_momentum' and learning rate is 'max_lr'.
-            Default: 0.8
-        max_momentum (float or list): Upper momentum boundaries in the cycle
-            for each parameter group. Functionally,
-            it defines the cycle amplitude (max_momentum - base_momentum).
-            The momentum at any cycle is the difference of max_momentum
-            and some scaling of the amplitude; therefore
-            base_momentum may not actually be reached depending on
-            scaling function. Note that momentum is cycled inversely
-            to learning rate; at the start of a cycle, momentum is 'max_momentum'
-            and learning rate is 'base_lr'
-            Default: 0.9
-        last_epoch (int): The index of the last batch. This parameter is used when
-            resuming a training job. Since `step()` should be invoked after each
-            batch instead of after each epoch, this number represents the total
-            number of *batches* computed, not the total number of epochs computed.
-            When last_epoch=-1, the schedule is started from the beginning.
-            Default: -1
-        verbose (bool): If ``True``, prints a message to stdout for
-            each update. Default: ``False``.
-
-
 Example:
     >>> optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
     >>> scheduler = torch.optim.lr_scheduler.CyclicLR(optimizer, base_lr=0.01, max_lr=0.1)
@@ -299,15 +255,69 @@ scale_fn is not None, this argument is ignored.""",
         default="triangular",
     )
     argument_parser.add_argument(
-        "--base_momentum", type=int, required=True, default=2000
+        "--gamma",
+        type=float,
+        help="Constant in 'exp_range' scaling function: gamma**(cycle iterations)",
+        required=True,
+        default=1.0,
     )
-    argument_parser.add_argument("--max_momentum")
-    argument_parser.add_argument("--gamma")
-    argument_parser.add_argument("--scale_mode")
-    argument_parser.add_argument("--last_epoch", required=True, default="triangular")
-    argument_parser.add_argument("--verbose", type=float, required=True, default=1.0)
-    argument_parser.add_argument("--scale_fn")
-    argument_parser.add_argument("--cycle_momentum")
+    argument_parser.add_argument(
+        "--scale_fn",
+        help="""Custom scaling policy defined by a single argument lambda function, where 0 <= scale_fn(x) <= 1 for
+all x >= 0. If specified, then 'mode' is ignored.""",
+    )
+    argument_parser.add_argument(
+        "--scale_mode",
+        help="""{'cycle', 'iterations'}. Defines whether scale_fn is evaluated on cycle number or cycle iterations
+(training iterations since start of cycle).""",
+        required=True,
+        default="cycle",
+    )
+    argument_parser.add_argument(
+        "--cycle_momentum",
+        type=bool,
+        help="""If ``True``, momentum is cycled inversely to learning rate between 'base_momentum' and
+'max_momentum'.""",
+        required=True,
+        default=True,
+    )
+    argument_parser.add_argument(
+        "--base_momentum",
+        type=float,
+        help="""Lower momentum boundaries in the cycle for each parameter group. Note that momentum is cycled
+inversely to learning rate; at the peak of a cycle, momentum is 'base_momentum' and learning rate is
+'max_lr'.""",
+        required=True,
+        default=0.8,
+    )
+    argument_parser.add_argument(
+        "--max_momentum",
+        type=float,
+        help="""Upper momentum boundaries in the cycle for each parameter group. Functionally, it defines the cycle
+amplitude (max_momentum - base_momentum). The momentum at any cycle is the difference of
+max_momentum and some scaling of the amplitude; therefore base_momentum may not actually be reached
+depending on scaling function. Note that momentum is cycled inversely to learning rate; at the start
+of a cycle, momentum is 'max_momentum' and learning rate is 'base_lr'""",
+        required=True,
+        default=0.9,
+    )
+    argument_parser.add_argument(
+        "--last_epoch",
+        type=int,
+        help="""The index of the last batch. This parameter is used when resuming a training job. Since `step()`
+should be invoked after each batch instead of after each epoch, this number represents the total
+number of *batches* computed, not the total number of epochs computed. When last_epoch=-1, the
+schedule is started from the beginning.""",
+        required=True,
+        default=-1,
+    )
+    argument_parser.add_argument(
+        "--verbose",
+        type=bool,
+        help="If ``True``, prints a message to stdout for each update.",
+        required=True,
+        default=False,
+    )
     return argument_parser
 
 
@@ -362,7 +372,6 @@ def LambdaLRConfig(argument_parser):
     argument_parser.description = """Sets the learning rate of each parameter group to the initial lr
 times a given function. When last_epoch=-1, sets initial lr as lr.
 
-
 Example:
     >>> # Assuming optimizer has two groups.
     >>> lambda1 = lambda epoch: epoch // 30
@@ -412,7 +421,6 @@ def MultiStepLRConfig(argument_parser):
 number of epoch reaches one of the milestones. Notice that such decay can
 happen simultaneously with other changes to the learning rate from outside
 this scheduler. When last_epoch=-1, sets initial lr as lr.
-
 
 Example:
     >>> # Assuming optimizer uses lr = 0.05 for all groups
@@ -466,7 +474,6 @@ def MultiplicativeLRConfig(argument_parser):
     """
     argument_parser.description = """Multiply the learning rate of each parameter group by the factor given
 in the specified function. When last_epoch=-1, sets initial lr as lr.
-
 
 Example:
     >>> lmbda = lambda epoch: 0.95
@@ -536,6 +543,9 @@ of two ways (listed in order of precedence):
 You must either provide a value for total_steps or provide a value for both
 epochs and steps_per_epoch.
 
+The default behaviour of this scheduler follows the fastai implementation of 1cycle, which
+claims that "unpublished work has shown even better results by using only two phases". To
+mimic the behaviour of the original paper instead, set ``three_phase=True``.
 
 Example:
     >>> data_loader = torch.utils.data.DataLoader(...)
@@ -630,6 +640,15 @@ at the start of a cycle, momentum is 'max_momentum' and learning rate is 'base_l
         default=10000.0,
     )
     argument_parser.add_argument(
+        "--three_phase",
+        type=bool,
+        help="""If ``True``, use a third phase of the schedule to annihilate the learning rate according to
+'final_div_factor' instead of modifying the second phase (the first two phases will be symmetrical
+about the step indicated by 'pct_start').""",
+        required=True,
+        default=False,
+    )
+    argument_parser.add_argument(
         "--last_epoch",
         type=int,
         help="""The index of the last batch. This parameter is used when resuming a training job. Since `step()`
@@ -664,7 +683,6 @@ Models often benefit from reducing the learning rate by a factor
 of 2-10 once learning stagnates. This scheduler reads a metrics
 quantity and if no improvement is seen for a 'patience' number
 of epochs, the learning rate is reduced.
-
 
 Example:
     >>> optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
@@ -762,7 +780,6 @@ def StepLRConfig(argument_parser):
 step_size epochs. Notice that such decay can happen simultaneously with
 other changes to the learning rate from outside this scheduler. When
 last_epoch=-1, sets initial lr as lr.
-
 
 Example:
     >>> # Assuming optimizer uses lr = 0.05 for all groups

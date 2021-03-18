@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Basic helper to generate CLI arguments for `doctrans` (see README.md)
+Basic helper to generate CLI arguments for `cdd` (see README.md)
 """
 
 import sys
@@ -9,13 +9,12 @@ from collections import namedtuple
 from importlib import import_module
 from importlib.util import find_spec
 from os import path
-from typing import List, Optional
 
 from ml_params_pytorch import get_logger
 
 p = (
-    get_logger("doctrans_cli_gen").warning(
-        "For `doctrans_cli_gen` to work well, you should `pip install inflect`"
+    get_logger("cdd_cli_gen").warning(
+        "For `cdd_cli_gen` to work well, you should `pip install inflect`"
     )
     or namedtuple("NotInflect", ("singular_noun",))(
         lambda s: s[:-2] if s.endswith("es") else s[:-1]
@@ -25,11 +24,12 @@ p = (
 )
 
 
-def main(argv: Optional[List[str]] = None):
+def main(argv=None):
     """
-    CLI main function for doctrans_cli_gen
+    CLI main function for cdd_cli_gen
 
     :param argv: argv, defaults to ```sys.argv```
+    :type argv: ```Optional[List[str]]```
     """
     argv = argv or sys.argv
     usage = "Usage: {executable} {script} <module_name>".format(
@@ -51,30 +51,29 @@ def main(argv: Optional[List[str]] = None):
             "{tab}--{opt} '{val!s}'".format(tab=tab, opt=opt.replace("_", "-"), val=val)
             for opt, val in dict(
                 name_tpl="{name}Config",
-                input_mapping=(
-                    "ml_params_pytorch.ml_params.type_generators.exposed_{mod_pl}"
-                    .format(mod_pl=mod_pl)
+                input_mapping="ml_params_pytorch.ml_params.type_generators.exposed_{mod_pl}".format(
+                    mod_pl=mod_pl
                 ),
-                prepend=(
-                    '""" Generated {mod_cap} CLI parsers """\\n'
-                    "from typing import Optional, Union\\n"
-                    "from {typing} import Literal\\n\\n"
-                    "from dataclasses import dataclass\\n\\n"
-                    "from yaml import safe_load as loads\\n\\n".format(
-                        mod_cap=mod_cap,
-                        typing="typing"
-                        if sys.version_info[:2] < (3, 8)
-                        else "typing_extensions",
-                    )
+                prepend='""" Generated {mod_cap} CLI parsers """\\n'
+                "import tensorflow as tf\\n"
+                "from typing import Any, Optional, Union, List, Iterator, Iterable, Generator\\n"
+                "from {typing} import Literal\\n\\n"
+                "from dataclasses import dataclass\\n\\n"
+                "from yaml import safe_load as loads\\n"
+                "\\n".format(
+                    mod_cap=mod_cap,
+                    typing="typing"
+                    if sys.version_info[:2] < (3, 8)
+                    else "typing_extensions",
                 ),
                 # imports_from_file=None,
-                type="argparse",
+                emit="argparse",
                 output_filename=path.join(
                     "ml_params_pytorch",
                     "ml_params",
                     "{mod_pl}.py".format(mod_pl=mod_pl),
                 ),
-                # decorator="dataclass",
+                decorator="dataclass",
             ).items()
         )
     )
@@ -87,3 +86,5 @@ def run_main():
 
 
 run_main()
+
+__all__ = ["run_main"]

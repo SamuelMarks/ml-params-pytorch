@@ -1,10 +1,10 @@
 """
 Type generators. Use these to generate the type annotations throughout this ml-params implementation.
 
-Install doctrans then run, for example:
+Install cdd then run, for example:
 
-    python -m doctrans sync_properties \
-                       --input-file 'ml_params_pytorch/ml_params/type_generators.py' \
+    python -m cdd sync_properties \
+                       --input-filename 'ml_params_pytorch/ml_params/type_generators.py' \
                        --input-eval \
                        --output-file 'ml_params_pytorch/ml_params/trainer.py' \
                        --input-param 'exposed_activations_keys' \
